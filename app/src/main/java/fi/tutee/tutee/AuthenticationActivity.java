@@ -1,5 +1,6 @@
 package fi.tutee.tutee;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,9 @@ public class AuthenticationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+
+        Intent intent = getIntent();
+        String isTutor = intent.getStringExtra(MainActivity.IS_TUTOR);
 
         loginBtn = (Button) findViewById(R.id.loginButton);
         registerBtn = (Button) findViewById(R.id.registerButton);

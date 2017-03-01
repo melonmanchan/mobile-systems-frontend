@@ -13,14 +13,14 @@
             android:name=".UserTypeSelectionActivity"
             android:label="@string/title_activity_user_type_selection"
             android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".AuthenticationActivity">
+
         </activity>
     </application>
 
