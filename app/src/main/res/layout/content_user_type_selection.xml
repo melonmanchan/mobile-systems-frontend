@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_user_type_selection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fi.tutee.tutee.UserTypeSelectionActivity"
+    tools:showIn="@layout/activity_user_type_selection">
+
+    <Button
+        android:id = "@+id/userTypeSelectionTutor"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "Tutor"
+        />
+
+    <Button
+        android:id = "@+id/userTypeSelectionTutee"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "Tutee"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/userTypeSelectionTutor"
+        android:layout_marginStart="33dp" />
+</RelativeLayout>
+
+
