@@ -8,15 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.TuteeApplication;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
+import fi.tutee.tutee.utils.ActivityUtils;
 
 public class AuthenticationActivity extends AppCompatActivity {
-    Button loginBtn;
-    Button registerBtn;
-    Button loginWithGoogleBtn;
-    Button loginWithFacebookBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,37 +22,22 @@ public class AuthenticationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String isTutor = intent.getStringExtra(UserTypeSelectionFragment.IS_TUTOR);
 
-        loginBtn = (Button) findViewById(R.id.loginButton);
-        registerBtn = (Button) findViewById(R.id.registerButton);
-        loginWithGoogleBtn = (Button) findViewById(R.id.googleLoginButton);
-        loginWithFacebookBtn = (Button) findViewById(R.id.facebookLoginButton);
+        TuteeApplication app = (TuteeApplication)  getApplication();
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("loginbuttonclick");
-            }
-        });
+        AuthenticationFragment authenticationFragment = (AuthenticationFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.contentFrame);
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("registerbuttonclick");
-            }
-        });
+        if (authenticationFragment == null) {
+            authenticationFragment = AuthenticationFragment.newInstance();
 
-        loginWithGoogleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("google login buttonclick");
-            }
-        });
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    authenticationFragment, R.id.contentFrame);
+        }
 
-        loginWithFacebookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("login with fb buttonclick");
-            }
-        });
+        new AuthenticationPresenter(
+                app.repository,
+                authenticationFragment
+        );
+
     }
 }

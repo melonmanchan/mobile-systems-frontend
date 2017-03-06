@@ -12,29 +12,9 @@
     android:gravity="center"
     tools:context="fi.tutee.tutee.pickauthentication.AuthenticationActivity">
 
-    <Button
-        android:id = "@+id/loginButton"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Log In"
-        />
-    <Button
-        android:id = "@+id/registerButton"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Register new account"
-        />
-    <Button
-        android:id = "@+id/googleLoginButton"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Login with Google"
-        />
-    <Button
-        android:id = "@+id/facebookLoginButton"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Login with Facebook"
-        />
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

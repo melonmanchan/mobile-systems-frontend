@@ -17,7 +17,6 @@ public class UserTypeSelectionFragment extends Fragment implements UserTypeSelec
 
     public final static String IS_TUTOR = "fi.tutee.tutee";
 
-
     private UserTypeSelectionContract.Presenter presenter;
 
 
