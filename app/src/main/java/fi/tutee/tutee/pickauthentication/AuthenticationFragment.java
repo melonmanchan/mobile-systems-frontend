@@ -50,6 +50,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                presenter.login("hello", "world");
                 System.out.println("loginbuttonclick");
             }
         });

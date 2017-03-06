@@ -25,4 +25,9 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
     public void start() {
 
     }
+
+    @Override
+    public void login(String username, String password) {
+        repository.basicLogin(username, password);
+    }
 }

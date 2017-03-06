@@ -13,6 +13,6 @@ public interface AuthenticationContract {
     }
 
     interface Presenter extends BasePresenter {
-
+        void login(String username, String password);
     }
 }
