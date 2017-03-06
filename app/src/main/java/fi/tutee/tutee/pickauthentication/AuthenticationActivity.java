@@ -1,4 +1,4 @@
-package fi.tutee.tutee;
+package fi.tutee.tutee.pickauthentication;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import android.widget.Button;
+
+import fi.tutee.tutee.R;
+import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
 
 public class AuthenticationActivity extends AppCompatActivity {
     Button loginBtn;
