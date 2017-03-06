@@ -19,7 +19,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authentication);
 
         Intent intent = getIntent();
-        String isTutor = intent.getStringExtra(MainActivity.IS_TUTOR);
+        String isTutor = intent.getStringExtra(UserTypeSelectionActivity.IS_TUTOR);
 
         loginBtn = (Button) findViewById(R.id.loginButton);
         registerBtn = (Button) findViewById(R.id.registerButton);
