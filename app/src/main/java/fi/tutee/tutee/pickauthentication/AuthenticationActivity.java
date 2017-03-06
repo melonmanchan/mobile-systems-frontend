@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
+import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 
 public class AuthenticationActivity extends AppCompatActivity {
     Button loginBtn;
@@ -22,7 +23,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authentication);
 
         Intent intent = getIntent();
-        String isTutor = intent.getStringExtra(UserTypeSelectionActivity.IS_TUTOR);
+        String isTutor = intent.getStringExtra(UserTypeSelectionFragment.IS_TUTOR);
 
         loginBtn = (Button) findViewById(R.id.loginButton);
         registerBtn = (Button) findViewById(R.id.registerButton);
