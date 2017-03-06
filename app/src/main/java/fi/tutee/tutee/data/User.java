@@ -16,11 +16,21 @@ public class User {
     @NonNull
     private String email;
 
+    private UserType userType;
+
     public User(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public User(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String email, UserType userType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userType = userType;
     }
 
     @NonNull
@@ -76,5 +86,13 @@ public class User {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + email.hashCode();
         return result;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }
