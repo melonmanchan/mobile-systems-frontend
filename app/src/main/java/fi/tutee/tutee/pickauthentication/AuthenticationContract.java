@@ -9,7 +9,9 @@ import fi.tutee.tutee.BaseView;
 
 public interface AuthenticationContract {
     interface View extends BaseView<Presenter> {
+        void loginSucceeded();
 
+        void loginFailed();
     }
 
     interface Presenter extends BasePresenter {
