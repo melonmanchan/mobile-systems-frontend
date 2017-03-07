@@ -9,6 +9,7 @@ import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +42,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     private Retrofit buildAuthenticatedRetrofit(final String authToken) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
@@ -49,29 +52,51 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
                 Request original = chain.request();
 
                 Request request = original.newBuilder()
+                        .header("Accept", "application/json")
                         .header("Authorization", "Bearer: " + authToken)
                         .method(original.method(), original.body())
                         .build();
 
                 return chain.proceed(request);
             }
-        });
+        })
+        .addInterceptor(logging);
 
         OkHttpClient client = httpClient.build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://apartheidfun.club")
-                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         return retrofit;
     }
 
     private Retrofit buildUnauthenticatedRetrofit () {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().
+                addInterceptor(interceptor)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
+
+                        Request request = original.newBuilder()
+                                .header("Accept", "application/json")
+                                .method(original.method(), original.body())
+                                .build();
+
+                        return chain.proceed(request);
+                    }
+                })
+                .build();
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://apartheidfun.club")
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
