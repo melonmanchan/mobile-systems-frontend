@@ -1,8 +1,10 @@
 package fi.tutee.tutee.data.source;
 
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.RegisterRequest;
-import fi.tutee.tutee.data.User;
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
 import retrofit2.Call;
@@ -37,20 +39,22 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void basicLogin(LoginRequest req, final Callback<User> cb) {
+    public void basicLogin(LoginRequest req, final Callback<APIResponse<AuthResponse>> cb) {
 
-        remote.basicLogin(req, new Callback<User>() {
+        remote.basicLogin(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
+                APIResponse<AuthResponse> resp = response.body();
+
                 if (response.isSuccessful()) {
-                    loggedInUser = response.body();
+                    loggedInUser = resp.getResponse().getUser();
                 }
 
                 cb.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
                 cb.onFailure(call, t);
             }
         });

@@ -1,4 +1,4 @@
-package fi.tutee.tutee.data;
+package fi.tutee.tutee.data.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

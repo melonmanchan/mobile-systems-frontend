@@ -1,8 +1,10 @@
 package fi.tutee.tutee.data.source.remote;
 
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.RegisterRequest;
-import fi.tutee.tutee.data.User;
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -14,7 +16,7 @@ import retrofit2.http.POST;
 public interface TuteeService {
 
     @POST("auth/login")
-    Call<User> basicLogin(@Body LoginRequest req);
+    Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);
 
     @POST("auth/register")
     Call<User> register(@Body RegisterRequest req);

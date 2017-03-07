@@ -1,8 +1,10 @@
 package fi.tutee.tutee.data.source.local;
 
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.RegisterRequest;
-import fi.tutee.tutee.data.User;
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import retrofit2.Callback;
 
@@ -22,7 +24,7 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
-    public void basicLogin(LoginRequest req, Callback<User> cb) {
+    public void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb) {
         cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
     }
 

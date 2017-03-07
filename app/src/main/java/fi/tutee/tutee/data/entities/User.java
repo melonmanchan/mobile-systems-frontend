@@ -1,7 +1,8 @@
-package fi.tutee.tutee.data;
+package fi.tutee.tutee.data.entities;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -10,17 +11,27 @@ public class User {
     private final int id;
 
     @NonNull
+    @Expose
     @SerializedName("first_name")
     private String firstName;
 
     @NonNull
+    @Expose
     @SerializedName("last_name")
     private String lastName;
 
     @NonNull
+    @Expose
     @SerializedName("email")
     private String email;
 
+
+    @SerializedName("auth_method")
+    @Expose
+    private AuthMethod authMethod;
+
+    @SerializedName("user_type")
+    @Expose
     private UserType userType;
 
     public User(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String email) {
@@ -99,5 +110,13 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public AuthMethod getAuthMethod() {
+        return authMethod;
+    }
+
+    public void setAuthMethod(AuthMethod authMethod) {
+        this.authMethod = authMethod;
     }
 }

@@ -2,9 +2,11 @@ package fi.tutee.tutee.data.source.remote;
 
 import java.io.IOException;
 
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.RegisterRequest;
-import fi.tutee.tutee.data.User;
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -12,7 +14,6 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -104,8 +105,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void basicLogin(LoginRequest req, Callback<User> cb) {
-        Call<User> call = service.basicLogin(req);
+    public void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb) {
+        Call<APIResponse<AuthResponse>> call = service.basicLogin(req);
         call.enqueue(cb);
         /*
         call.enqueue(new Callback<User>() {

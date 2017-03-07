@@ -1,8 +1,11 @@
 package fi.tutee.tutee.pickauthentication;
 
-import fi.tutee.tutee.data.APIError;
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.User;
+import java.util.List;
+
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,17 +38,23 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
     @Override
     public void login(String email, String password) {
         LoginRequest req = new LoginRequest(email, password);
-        repository.basicLogin(req, new Callback<User>() {
+        repository.basicLogin(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
+                AuthResponse resp = response.body().getResponse();
+                List<String> errors  = response.body().getErrors();
+
                 if (response.isSuccessful()) {
-                    User user = response.body();
+                    User user = resp.getUser();
                     view.loginSucceeded();
+                } else {
+                    System.out.println(errors);
+                    view.loginFailed();
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
                 view.loginFailed();
             }
         });

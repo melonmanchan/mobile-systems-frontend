@@ -1,8 +1,10 @@
 package fi.tutee.tutee.data.source;
 
-import fi.tutee.tutee.data.LoginRequest;
-import fi.tutee.tutee.data.RegisterRequest;
-import fi.tutee.tutee.data.User;
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.LoginRequest;
+import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.User;
 import retrofit2.Callback;
 
 /**
@@ -10,7 +12,7 @@ import retrofit2.Callback;
  */
 
 public interface TuteeDataSource {
-    void basicLogin(LoginRequest req, Callback<User> cb);
+    void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
     void googleLogin(String token);
 
     void register(RegisterRequest req, Callback<User> cb);
