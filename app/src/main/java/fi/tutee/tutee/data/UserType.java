@@ -1,7 +1,11 @@
 package fi.tutee.tutee.data;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserType {
+
+    @SerializedName("user_type")
     private String type;
 
     public UserType(String type) {

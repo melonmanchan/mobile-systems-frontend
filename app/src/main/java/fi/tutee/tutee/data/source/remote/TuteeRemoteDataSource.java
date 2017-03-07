@@ -1,14 +1,24 @@
 package fi.tutee.tutee.data.source.remote;
 
 import fi.tutee.tutee.data.source.TuteeDataSource;
-
-/**
- * Created by mat on 06/03/2017.
- */
-
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TuteeRemoteDataSource implements TuteeDataSource {
-    private  static TuteeRemoteDataSource instance;
+    private static TuteeRemoteDataSource instance;
+
+    private Retrofit retrofit;
+    private TuteeService service;
+
+    public TuteeRemoteDataSource() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://apartheidfun.club")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        service = retrofit.create(TuteeService.class);
+
+    }
 
     public static TuteeRemoteDataSource getInstance() {
         if (instance == null) {

@@ -2,18 +2,23 @@ package fi.tutee.tutee.data;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     @NonNull
     private final int id;
 
     @NonNull
+    @SerializedName("first_name")
     private String firstName;
 
     @NonNull
+    @SerializedName("last_name")
     private String lastName;
 
     @NonNull
+    @SerializedName("email")
     private String email;
 
     private UserType userType;
