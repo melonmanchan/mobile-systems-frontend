@@ -11,7 +11,7 @@ import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
  * Created by mat on 06/03/2017.
  */
 
-public class TuteeApplication extends Application{
+public class TuteeApplication extends Application {
 
     public static TuteeApplication instance = null;
 

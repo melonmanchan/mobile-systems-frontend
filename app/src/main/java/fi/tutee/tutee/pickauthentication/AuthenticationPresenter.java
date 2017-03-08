@@ -1,5 +1,6 @@
 package fi.tutee.tutee.pickauthentication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -41,11 +42,10 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
         repository.basicLogin(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
-                AuthResponse resp = response.body().getResponse();
-                List<String> errors  = response.body().getErrors();
+                APIResponse resp = response.body();
+                ArrayList<String> errors =  resp.getErrors();
 
-                if (response.isSuccessful()) {
-                    User user = resp.getUser();
+                if (resp.isSuccesful()) {
                     view.loginSucceeded();
                 } else {
                     System.out.println(errors);

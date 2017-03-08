@@ -45,7 +45,7 @@ public class TuteeRepository implements TuteeDataSource {
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
                 APIResponse<AuthResponse> resp = response.body();
 
-                if (resp != null) {
+                if (resp != null && resp.isSuccesful()) {
                     AuthResponse authResponse = resp.getResponse();
                     loggedInUser = authResponse.getUser();
                 }
