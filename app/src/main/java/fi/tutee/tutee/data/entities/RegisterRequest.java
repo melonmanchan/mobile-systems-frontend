@@ -25,6 +25,14 @@ public class RegisterRequest {
     @Expose
     private String userType;
 
+    public RegisterRequest(String firstName, String lastName, String email, String password, String userType) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+    }
+
     public String getEmail() {
         return email;
     }

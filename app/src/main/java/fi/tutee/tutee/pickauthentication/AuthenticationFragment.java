@@ -22,7 +22,7 @@ import fi.tutee.tutee.register.RegisterActivity;
 
 public class AuthenticationFragment  extends Fragment implements AuthenticationContract.View {
     private Button loginBtn;
-    private Button registerBtn;
+    private Button registerNewAccountBtn;
     private Button loginWithGoogleBtn;
     private Button loginWithFacebookBtn;
 
@@ -53,7 +53,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
         View root = inflater.inflate(R.layout.content_authentication, container, false);
 
         loginBtn = (Button) root.findViewById(R.id.loginButton);
-        registerBtn = (Button) root.findViewById(R.id.registerButton);
+        registerNewAccountBtn = (Button) root.findViewById(R.id.registerNewAccountButton);
         loginWithGoogleBtn = (Button) root.findViewById(R.id.googleLoginButton);
         loginWithFacebookBtn = (Button) root.findViewById(R.id.facebookLoginButton);
 
@@ -72,7 +72,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
             }
         });
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        registerNewAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("registerbuttonclick");
