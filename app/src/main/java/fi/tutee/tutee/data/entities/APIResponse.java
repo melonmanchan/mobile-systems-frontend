@@ -14,18 +14,9 @@ public class APIResponse <T> {
     @Expose
     private List<String> errors = null;
 
-    @SerializedName("response")
+    @SerializedName("results")
     @Expose
     private T response = null;
-
-    public APIResponse(List<String> errors, T response) {
-        this.errors = errors;
-        this.response = response;
-    }
-
-    public  APIResponse(T response) {
-        this.response = response;
-    }
 
     public List<String> getErrors() {
         return errors;
