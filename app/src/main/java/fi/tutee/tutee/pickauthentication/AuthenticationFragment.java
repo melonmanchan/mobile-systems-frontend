@@ -1,5 +1,6 @@
 package fi.tutee.tutee.pickauthentication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.register.RegisterActivity;
 
 /**
  * Created by mat on 06/03/2017.
@@ -74,6 +76,9 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
             @Override
             public void onClick(View v) {
                 System.out.println("registerbuttonclick");
+                Intent intent = new Intent(getContext(), RegisterActivity.class);
+                startActivity(intent);
+
             }
         });
 

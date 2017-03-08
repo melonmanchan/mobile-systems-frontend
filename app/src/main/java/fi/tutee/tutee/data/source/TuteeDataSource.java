@@ -15,5 +15,5 @@ public interface TuteeDataSource {
     void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
     void googleLogin(String token);
 
-    void register(RegisterRequest req, Callback<User> cb);
+    void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb);
 }

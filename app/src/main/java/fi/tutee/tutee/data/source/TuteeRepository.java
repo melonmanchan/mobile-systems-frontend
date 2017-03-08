@@ -40,7 +40,6 @@ public class TuteeRepository implements TuteeDataSource {
 
     @Override
     public void basicLogin(LoginRequest req, final Callback<APIResponse<AuthResponse>> cb) {
-
         remote.basicLogin(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
@@ -67,20 +66,23 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void register(RegisterRequest req, final Callback<User> cb) {
+    public void register(RegisterRequest req, final Callback<APIResponse<AuthResponse>> cb) {
 
-        remote.register(req, new Callback<User>() {
+        remote.register(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    loggedInUser = response.body();
+            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
+                APIResponse<AuthResponse> resp = response.body();
+
+                if (resp != null) {
+                    AuthResponse authResponse = resp.getResponse();
+                    loggedInUser = authResponse.getUser();
                 }
 
                 cb.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
                 cb.onFailure(call, t);
             }
         });

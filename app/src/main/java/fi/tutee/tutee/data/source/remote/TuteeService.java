@@ -19,5 +19,5 @@ public interface TuteeService {
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);
 
     @POST("auth/register")
-    Call<User> register(@Body RegisterRequest req);
+    Call<APIResponse<AuthResponse>> register(@Body RegisterRequest req);
 }

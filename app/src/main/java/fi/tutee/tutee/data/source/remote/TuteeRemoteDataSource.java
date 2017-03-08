@@ -131,8 +131,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void register(RegisterRequest req, Callback<User> cb) {
-        Call<User> call = service.register(req);
+    public void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb) {
+        Call<APIResponse<AuthResponse>> call = service.register(req);
         call.enqueue(cb);
     }
 }

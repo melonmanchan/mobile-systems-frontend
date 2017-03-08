@@ -33,7 +33,7 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
-    public void register(RegisterRequest req, Callback<User> cb) {
+    public void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb) {
         cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
     }
 }
