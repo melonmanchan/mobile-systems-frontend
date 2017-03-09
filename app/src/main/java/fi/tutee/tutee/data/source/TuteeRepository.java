@@ -4,6 +4,7 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
@@ -87,4 +88,29 @@ public class TuteeRepository implements TuteeDataSource {
             }
         });
     }
+
+    @Override
+    public void registerTutorExtra(RegisterTutorExtraRequest req, final Callback<APIResponse<AuthResponse>> cb) {
+
+        remote.registerTutorExtra(req, new Callback<APIResponse<AuthResponse>>() {
+            @Override
+            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
+                APIResponse<AuthResponse> resp = response.body();
+
+                if (resp != null) {
+                    AuthResponse authResponse = resp.getResponse();
+                    loggedInUser = authResponse.getUser();
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
+    }
+
+
 }

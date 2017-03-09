@@ -6,6 +6,7 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.Interceptor;
@@ -133,6 +134,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb) {
         Call<APIResponse<AuthResponse>> call = service.register(req);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb) {
+        Call<APIResponse<AuthResponse>> call = service.registerTutorExtra(req);
         call.enqueue(cb);
     }
 }

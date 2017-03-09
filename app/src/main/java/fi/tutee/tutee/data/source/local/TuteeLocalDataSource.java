@@ -4,6 +4,7 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
+import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import retrofit2.Callback;
@@ -36,4 +37,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     public void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb) {
         cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
     }
+
+    @Override
+    public void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb) {
+        cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
+    }
+
+
 }

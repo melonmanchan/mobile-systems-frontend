@@ -27,6 +27,10 @@
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".registertutorextra.RegisterTutorExtraActivity"
+            android:label="RegisterTutorExtraActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
