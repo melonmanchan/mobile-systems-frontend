@@ -23,7 +23,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private EditText registerLastname;
     private TextInputEditText registerPassword;
     private Button registerBtn;
-    private Spinner registerCountrySpin;
 
     private RegisterContract.Presenter presenter;
 
@@ -49,7 +48,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         registerPassword = (TextInputEditText) root.findViewById(R.id.registerPassword);
         registerBtn = (Button) root.findViewById(R.id.registerButton);
 
-        Spinner registerCountrySpin = (Spinner) root.findViewById(R.id.countrySpinner);
+        Spinner registerCountrySpin = (Spinner) root.findViewById(R.id.registerCountrySpinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),
                 R.array.countries_array, android.R.layout.simple_spinner_item);

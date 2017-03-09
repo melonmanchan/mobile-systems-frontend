@@ -49,7 +49,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
-        android:id="@+id/countrySpinner"
+        android:id="@+id/registerCountrySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
