@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import fi.tutee.tutee.R;
 
@@ -21,6 +23,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private EditText registerLastname;
     private TextInputEditText registerPassword;
     private Button registerBtn;
+    private Spinner registerCountrySpin;
 
     private RegisterContract.Presenter presenter;
 
@@ -45,6 +48,13 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         registerLastname = (EditText) root.findViewById(R.id.registerLastname);
         registerPassword = (TextInputEditText) root.findViewById(R.id.registerPassword);
         registerBtn = (Button) root.findViewById(R.id.registerButton);
+
+        Spinner registerCountrySpin = (Spinner) root.findViewById(R.id.countrySpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),
+                R.array.countries_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        registerCountrySpin.setAdapter(adapter);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
