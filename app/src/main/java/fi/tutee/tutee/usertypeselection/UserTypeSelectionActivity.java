@@ -16,6 +16,10 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
+
         setContentView(R.layout.activity_user_type_selection);
 
         TuteeApplication app = (TuteeApplication)  getApplication();
