@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by lehtone1 on 09/03/17.
  */
 
-public class RegisterTutorExtraRequest {
+public class RegisterTutorExtraRequest  {
 
     @SerializedName("description")
     @Expose

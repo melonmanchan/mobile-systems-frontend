@@ -1,6 +1,7 @@
 package fi.tutee.tutee.register;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,6 +16,12 @@ import android.widget.Spinner;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.registertutorextra.RegisterTutorExtraActivity;
+import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
+
+
+
+
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -68,10 +75,19 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     presenter.register(firstName, lastName, email, password, "TUTOR");
 
+
+
                 }
+
+                //Intent intent = getActivity().getIntent();
+                //System.out.println(UserTypeSelectionFragment.IS_TUTOR);
+                //boolean isTutor = intent.getBooleanExtra(UserTypeSelectionFragment.IS_TUTOR, false);
+                //System.out.println(isTutor);
+
                 System.out.println("registerbuttonclick");
-                Intent intent = new Intent(getContext(), RegisterTutorExtraActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(getContext(), RegisterTutorExtraActivity.class);
+                startActivity(intent2);
+
             }
         });
 

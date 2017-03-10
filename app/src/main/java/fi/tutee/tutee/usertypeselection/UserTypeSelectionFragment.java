@@ -2,6 +2,7 @@ package fi.tutee.tutee.usertypeselection;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class UserTypeSelectionFragment extends Fragment implements UserTypeSelec
     private void moveToAuthentication(Boolean isTutor) {
         Intent intent = new Intent(getContext(), AuthenticationActivity.class);
         intent.putExtra(IS_TUTOR, isTutor);
+        System.out.println("IS_TUTOR: " + IS_TUTOR);
         startActivity(intent);
     }
 
