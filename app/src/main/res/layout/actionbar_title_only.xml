@@ -10,7 +10,7 @@ android:orientation="vertical">
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:id="@+id/action_bar_title"
-    android:text="TUTEE"
+    android:text="Tutee"
     android:textColor="#ffffff"
     android:textSize="24sp" />
 </LinearLayout>

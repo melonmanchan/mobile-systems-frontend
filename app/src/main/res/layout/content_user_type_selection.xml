@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_user_type_selection"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,23 +13,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity"
-    tools:showIn="@layout/activity_user_type_selection">
+    android:weightSum="1">
 
-    <Button
-        android:id = "@+id/userTypeSelectionTutor"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Tutor"
-        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am..."
+        android:textSize="24sp" />
 
-    <Button
-        android:id = "@+id/userTypeSelectionTutee"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Tutee"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/userTypeSelectionTutor"
-        android:layout_marginStart="33dp" />
-</RelativeLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/userTypeSelectionTutor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="a Tutor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/userTypeSelectionTutee"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="a Student"
+            android:layout_toEndOf="@+id/userTypeSelectionTutor"/>
+
+    </LinearLayout>
+</LinearLayout>
 
 
