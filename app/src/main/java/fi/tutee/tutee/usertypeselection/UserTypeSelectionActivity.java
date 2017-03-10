@@ -14,20 +14,9 @@ import fi.tutee.tutee.utils.ActivityUtils;
 
 public class UserTypeSelectionActivity extends AppCompatActivity {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type_selection);
-
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.show();
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 

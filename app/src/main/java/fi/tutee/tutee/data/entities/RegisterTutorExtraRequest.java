@@ -13,8 +13,6 @@ public class RegisterTutorExtraRequest  {
     @Expose
     private String description;
 
-
-
     public RegisterTutorExtraRequest(String description) {
         this.description = description;
 
@@ -27,6 +25,4 @@ public class RegisterTutorExtraRequest  {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 }
