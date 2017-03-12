@@ -38,16 +38,18 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         repository.register(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
-                if (response.isSuccessful()) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
                     view.onRegisterSuccess();
                 } else {
-                    view.onRegisterFail();
+                    view.onRegisterFail(resp.getErrors());
                 }
             }
 
             @Override
             public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
-                view.onRegisterFail();
+                view.onRegisterFail(null);
             }
         });
     }

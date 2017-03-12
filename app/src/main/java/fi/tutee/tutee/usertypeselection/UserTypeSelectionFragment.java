@@ -21,7 +21,6 @@ public class UserTypeSelectionFragment extends Fragment implements UserTypeSelec
 
     private UserTypeSelectionContract.Presenter presenter;
 
-
     public static UserTypeSelectionFragment newInstance() {
         Bundle arguments = new Bundle();
         UserTypeSelectionFragment fragment = new UserTypeSelectionFragment();

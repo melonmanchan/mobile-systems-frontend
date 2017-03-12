@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
+import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -32,8 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .findFragmentById(R.id.contentFrame);
 
         if (registerFragment == null) {
-            registerFragment = RegisterFragment.newInstance();
-
+            registerFragment = RegisterFragment.newInstance(getIntent().getBooleanExtra(UserTypeSelectionFragment.IS_TUTOR, false));
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     registerFragment, R.id.contentFrame);
         }

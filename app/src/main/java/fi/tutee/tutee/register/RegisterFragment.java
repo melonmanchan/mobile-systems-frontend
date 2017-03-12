@@ -1,5 +1,7 @@
 package fi.tutee.tutee.register;
 
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.registertutorextra.RegisterTutorExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
+import fi.tutee.tutee.utils.ActivityUtils;
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     private EditText registerEmail;
@@ -24,11 +31,11 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     private RegisterContract.Presenter presenter;
 
-    public RegisterFragment() {
-    }
+    public RegisterFragment() {}
 
-    public static RegisterFragment newInstance() {
+    public static RegisterFragment newInstance(boolean isTutor) {
         Bundle arguments = new Bundle();
+        arguments.putBoolean(UserTypeSelectionFragment.IS_TUTOR, isTutor);
         RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -40,7 +47,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
         View root = inflater.inflate(R.layout.content_register, container, false);
 
-        this.isTutor = savedInstanceState.getBoolean(UserTypeSelectionFragment.IS_TUTOR, false);
+        this.isTutor = getArguments().getBoolean(UserTypeSelectionFragment.IS_TUTOR, false);
 
         registerEmail = (EditText) root.findViewById(R.id.registerEmail);
         registerFirstname = (EditText) root.findViewById(R.id.registerFirstname);
@@ -56,8 +63,10 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 String firstName = registerFirstname.getText().toString();
                 String lastName = registerLastname.getText().toString();
 
-                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
+                     && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
                     registerBtn.setEnabled(false);
+                    ActivityUtils.hideKeyboard(getActivity());
                     presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
                 }
             }
@@ -73,12 +82,24 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     @Override
     public void onRegisterSuccess() {
-        System.out.println("registersuccess");
+        if (this.isTutor) {
+            Intent intent = new Intent(getContext(), RegisterTutorExtraActivity.class);
+            startActivity(intent);
+        } else {
+
+        }
     }
 
     @Override
-    public void onRegisterFail() {
-        System.out.println("registerfail");
+    public void onRegisterFail(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
 
+        registerBtn.setEnabled(true);
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 }

@@ -44,7 +44,7 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
                 APIResponse resp = response.body();
 
-                if (resp.isSuccesful()) {
+                if (resp.isSuccessful()) {
                     view.loginSucceeded();
                 } else {
                     view.loginFailed(resp.getErrors());

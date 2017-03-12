@@ -21,10 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
+
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register"></activity>
+
         <activity
             android:name=".registertutorextra.RegisterTutorExtraActivity"
             android:label="RegisterTutorExtraActivity"></activity>

@@ -29,7 +29,7 @@ public class APIResponse <T> {
         return response;
     }
 
-    public boolean isSuccesful() {
+    public boolean isSuccessful() {
         return (!(this.status >= 400) && this.errors.size() == 0);
     }
 }
