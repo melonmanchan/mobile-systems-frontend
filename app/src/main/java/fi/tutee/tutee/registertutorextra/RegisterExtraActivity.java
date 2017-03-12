@@ -24,7 +24,7 @@ public class RegisterExtraActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Register");
+        title.setText("Fill your profile");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 

@@ -42,10 +42,11 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
         repository.basicLogin(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
-                APIResponse resp = response.body();
+                APIResponse<AuthResponse> resp = response.body();
 
                 if (resp.isSuccessful()) {
-                    view.loginSucceeded();
+                    AuthResponse authResponse = resp.getResponse();
+                    view.loginSucceeded(authResponse.getUser());
                 } else {
                     view.loginFailed(resp.getErrors());
                 }

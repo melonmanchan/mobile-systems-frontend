@@ -1,13 +1,17 @@
 package fi.tutee.tutee.data.entities;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.w3c.dom.Text;
+
 public class User {
 
     @NonNull
+    @SerializedName("id")
     private final int id;
 
     @NonNull
@@ -25,6 +29,9 @@ public class User {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     @SerializedName("auth_method")
     @Expose
@@ -34,19 +41,9 @@ public class User {
     @Expose
     private UserType userType;
 
-    public User(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String email) {
+    public User(@NonNull int id, String description) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public User(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String email, UserType userType) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.userType = userType;
+        this.description = description;
     }
 
     @NonNull
@@ -110,6 +107,14 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public boolean needsToFillProfile() {
+        if (this.userType.equals(UserType.TUTOR) && TextUtils.isEmpty(this.description)) {
+            return true;
+        }
+
+        return false;
     }
 
     public AuthMethod getAuthMethod() {

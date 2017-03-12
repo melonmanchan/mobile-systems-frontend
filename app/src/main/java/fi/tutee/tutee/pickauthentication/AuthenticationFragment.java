@@ -17,7 +17,9 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.register.RegisterActivity;
+import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
 import fi.tutee.tutee.utils.ActivityUtils;
 
@@ -93,9 +95,14 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
     }
 
     @Override
-    public void loginSucceeded() {
+    public void loginSucceeded(User currentUser) {
         loginBtn.setEnabled(true);
         Toast.makeText(getContext(), "Login success", Toast.LENGTH_LONG).show();
+
+        if (currentUser.needsToFillProfile()) {
+            Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
