@@ -42,6 +42,5 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
                 app.repository,
                 userTypeSelectionFragment
         );
-
     }
 }
