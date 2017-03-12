@@ -64,6 +64,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
                 String password = loginPassword.getText().toString();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    loginBtn.setEnabled(false);
                     presenter.login(email, password);
                 }
             }
@@ -87,11 +88,13 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
 
     @Override
     public void loginSucceeded() {
+        loginBtn.setEnabled(true);
         Toast.makeText(getContext(), "Login success", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void loginFailed() {
+        loginBtn.setEnabled(true);
         Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
     }
 }

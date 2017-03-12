@@ -1,7 +1,5 @@
 package fi.tutee.tutee.register;
 
-import android.content.Intent;
-import android.os.SystemClock;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,29 +7,20 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import fi.tutee.tutee.R;
-import fi.tutee.tutee.registertutorextra.RegisterTutorExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 
-
-
-
-
-
-/**
- * A placeholder fragment containing a simple view.
- */
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     private EditText registerEmail;
     private EditText registerFirstname;
     private EditText registerLastname;
     private TextInputEditText registerPassword;
     private Button registerBtn;
+
+    private boolean isTutor;
 
     private RegisterContract.Presenter presenter;
 
@@ -51,18 +40,13 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
         View root = inflater.inflate(R.layout.content_register, container, false);
 
+        this.isTutor = savedInstanceState.getBoolean(UserTypeSelectionFragment.IS_TUTOR, false);
+
         registerEmail = (EditText) root.findViewById(R.id.registerEmail);
         registerFirstname = (EditText) root.findViewById(R.id.registerFirstname);
         registerLastname = (EditText) root.findViewById(R.id.registerLastname);
         registerPassword = (TextInputEditText) root.findViewById(R.id.registerPassword);
         registerBtn = (Button) root.findViewById(R.id.registerButton);
-
-        Spinner registerCountrySpin = (Spinner) root.findViewById(R.id.registerCountrySpinner);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),
-                R.array.countries_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        registerCountrySpin.setAdapter(adapter);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,21 +57,9 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 String lastName = registerLastname.getText().toString();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-                    presenter.register(firstName, lastName, email, password, "TUTOR");
-
-
-
+                    registerBtn.setEnabled(false);
+                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
                 }
-
-                //Intent intent = getActivity().getIntent();
-                //System.out.println(UserTypeSelectionFragment.IS_TUTOR);
-                //boolean isTutor = intent.getBooleanExtra(UserTypeSelectionFragment.IS_TUTOR, false);
-                //System.out.println(isTutor);
-
-                System.out.println("registerbuttonclick");
-                Intent intent2 = new Intent(getContext(), RegisterTutorExtraActivity.class);
-                startActivity(intent2);
-
             }
         });
 
