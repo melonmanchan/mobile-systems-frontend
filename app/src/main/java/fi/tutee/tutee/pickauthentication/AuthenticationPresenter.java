@@ -43,19 +43,17 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
                 APIResponse resp = response.body();
-                ArrayList<String> errors =  resp.getErrors();
 
                 if (resp.isSuccesful()) {
                     view.loginSucceeded();
                 } else {
-                    System.out.println(errors);
-                    view.loginFailed();
+                    view.loginFailed(resp.getErrors());
                 }
             }
 
             @Override
             public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
-                view.loginFailed();
+                view.loginFailed(null);
             }
         });
     }

@@ -13,9 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.register.RegisterActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
+import fi.tutee.tutee.utils.ActivityUtils;
 
 /**
  * Created by mat on 06/03/2017.
@@ -64,6 +68,8 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
                 String password = loginPassword.getText().toString();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    ActivityUtils.hideKeyboard(getActivity());
+
                     loginBtn.setEnabled(false);
                     presenter.login(email, password);
                 }
@@ -93,8 +99,15 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
     }
 
     @Override
-    public void loginFailed() {
+    public void loginFailed(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
         loginBtn.setEnabled(true);
-        Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 }
