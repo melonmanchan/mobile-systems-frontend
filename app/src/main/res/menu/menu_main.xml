@@ -3,27 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_calendar"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_perm_contact_calendar_white_24dp"
-        android:title="Calendar"/>
-
-    <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_search_white_24dp"
-        android:title="Search"/>
-
-    <item
-        android:id="@+id/action_message"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_message_white_24dp"
-        android:title="Messages"/>
-
-    <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         app:showAsAction="never"
