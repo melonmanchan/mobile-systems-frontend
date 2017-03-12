@@ -1,11 +1,7 @@
 package fi.tutee.tutee.registertutorextra;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,29 +10,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.lang.reflect.Array;
 
 import fi.tutee.tutee.R;
 /**
  * Created by lehtone1 on 09/03/17.
  */
 
-public class RegisterTutorExtraFragment extends Fragment implements RegisterTutorExtraContract.View {
+public class RegisterExtraFragment extends Fragment implements RegisterExtraContract.View {
     private EditText registerTutorExtraDescription;
     private Button registerTutorExtraBtn;
     private Button registerTutorExtraNewSkillBtn;
     private LinearLayout registerTutorExtraSkillsLayout;
 
-    private RegisterTutorExtraContract.Presenter presenter;
+    private RegisterExtraContract.Presenter presenter;
 
-    public RegisterTutorExtraFragment() {
+    public RegisterExtraFragment() {
             }
 
-    public static RegisterTutorExtraFragment newInstance() {
+    public static RegisterExtraFragment newInstance() {
             Bundle arguments = new Bundle();
-            RegisterTutorExtraFragment fragment = new RegisterTutorExtraFragment();
+            RegisterExtraFragment fragment = new RegisterExtraFragment();
             fragment.setArguments(arguments);
             return fragment;
             }
@@ -45,7 +38,7 @@ public class RegisterTutorExtraFragment extends Fragment implements RegisterTuto
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-            View root = inflater.inflate(R.layout.content_register_tutor_extra, container, false);
+            View root = inflater.inflate(R.layout.content_register_extra, container, false);
 
             registerTutorExtraDescription = (EditText) root.findViewById(R.id.registerTutorExtraDescription);
             registerTutorExtraBtn = (Button) root.findViewById(R.id.registerTutorExtraButton);
@@ -125,7 +118,7 @@ public class RegisterTutorExtraFragment extends Fragment implements RegisterTuto
 
 
     @Override
-    public void setPresenter(RegisterTutorExtraContract.Presenter presenter) {
+    public void setPresenter(RegisterExtraContract.Presenter presenter) {
             this.presenter = presenter;
             }
 

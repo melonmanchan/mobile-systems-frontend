@@ -29,7 +29,7 @@
             android:label="@string/title_activity_register"></activity>
 
         <activity
-            android:name=".registertutorextra.RegisterTutorExtraActivity"
+            android:name=".registertutorextra.RegisterExtraActivity"
             android:label="RegisterTutorExtraActivity"></activity>
     </application>
 

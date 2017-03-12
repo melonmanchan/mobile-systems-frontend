@@ -52,17 +52,15 @@
 
     <Button
         android:id = "@+id/registerTutorExtraNewSkillButton"
-        android:layout_width = "wrap_content"
+        android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:text = "Add skill"
-        />
+        android:text = "Add skill"/>
 
     <Button
-        android:id = "@+id/registerTutorExtraButton"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Register"
-        />
+        android:id="@+id/registerTutorExtraButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "Register"/>
 
 
 

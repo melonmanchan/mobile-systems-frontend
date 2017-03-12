@@ -20,8 +20,12 @@ public class APIResponse <T> {
     private T response = null;
 
     public ArrayList<APIError> getErrors() {
-        ArrayList<APIError> errs = new ArrayList<>(this.errors.size());
-        errs.addAll(this.errors);
+        ArrayList<APIError> errs = new ArrayList<>();
+
+        if (this.errors != null) {
+            errs.addAll(this.errors);
+        }
+
         return errs;
     }
 
@@ -30,6 +34,11 @@ public class APIResponse <T> {
     }
 
     public boolean isSuccessful() {
-        return (!(this.status >= 400) && this.errors.size() == 0);
+
+        if (this.errors != null && this.errors.size() > 0) {
+            return false;
+        }
+
+        return (!(this.status >= 400));
     }
 }

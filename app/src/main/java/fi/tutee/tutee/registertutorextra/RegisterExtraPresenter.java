@@ -2,7 +2,6 @@ package fi.tutee.tutee.registertutorextra;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
-import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
@@ -13,14 +12,14 @@ import retrofit2.Response;
  * Created by lehtone1 on 09/03/17.
  */
 
-public class RegisterTutorExtraPresenter implements RegisterTutorExtraContract.Presenter {
+public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
 
     private final TuteeRepository repository;
 
-    private final RegisterTutorExtraContract.View view;
+    private final RegisterExtraContract.View view;
 
-    public RegisterTutorExtraPresenter(TuteeRepository repository,
-                             RegisterTutorExtraContract.View view
+    public RegisterExtraPresenter(TuteeRepository repository,
+                                  RegisterExtraContract.View view
     ) {
         this.repository = repository;
         this.view = view;

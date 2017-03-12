@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.APIError;
-import fi.tutee.tutee.registertutorextra.RegisterTutorExtraActivity;
+import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
@@ -83,7 +83,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     @Override
     public void onRegisterSuccess() {
         if (this.isTutor) {
-            Intent intent = new Intent(getContext(), RegisterTutorExtraActivity.class);
+            Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
             startActivity(intent);
         } else {
 
@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
         registerBtn.setEnabled(true);
 
-        if (errors != null) {
+        if (errors != null && errors.size() > 0) {
             errorMessage = errors.get(0).getMessage();
         }
 

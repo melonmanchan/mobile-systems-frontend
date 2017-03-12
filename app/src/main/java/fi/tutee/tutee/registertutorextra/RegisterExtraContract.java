@@ -7,7 +7,7 @@ import fi.tutee.tutee.BaseView;
  * Created by lehtone1 on 09/03/17.
  */
 
-public interface RegisterTutorExtraContract {
+public interface RegisterExtraContract {
 
     interface View extends BaseView<Presenter> {
         void onRegisterSuccess();
