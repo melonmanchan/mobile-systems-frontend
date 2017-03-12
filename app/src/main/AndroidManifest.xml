@@ -13,8 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".usertypeselection.UserTypeSelectionActivity"
-            android:label=""
+            android:name=".pickauthentication.AuthenticationActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pickauthentication.AuthenticationActivity"></activity>
+        <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register"></activity>

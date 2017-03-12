@@ -23,8 +23,6 @@ import fi.tutee.tutee.register.RegisterActivity;
 public class AuthenticationFragment  extends Fragment implements AuthenticationContract.View {
     private Button loginBtn;
     private Button registerNewAccountBtn;
-    private Button loginWithGoogleBtn;
-    private Button loginWithFacebookBtn;
 
     private EditText loginEmail;
     private TextInputEditText loginPassword;
@@ -54,8 +52,6 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
 
         loginBtn = (Button) root.findViewById(R.id.loginButton);
         registerNewAccountBtn = (Button) root.findViewById(R.id.registerNewAccountButton);
-        loginWithGoogleBtn = (Button) root.findViewById(R.id.googleLoginButton);
-        loginWithFacebookBtn = (Button) root.findViewById(R.id.facebookLoginButton);
 
         loginEmail = (EditText) root.findViewById(R.id.loginEmail);
         loginPassword = (TextInputEditText) root.findViewById(R.id.loginPassword);
@@ -79,20 +75,6 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
                 Intent intent = new Intent(getContext(), RegisterActivity.class);
                 startActivity(intent);
 
-            }
-        });
-
-        loginWithGoogleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("google login buttonclick");
-            }
-        });
-
-        loginWithFacebookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("login with fb buttonclick");
             }
         });
 
