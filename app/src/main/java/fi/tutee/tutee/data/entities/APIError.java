@@ -1,21 +1,31 @@
 package fi.tutee.tutee.data.entities;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class APIError {
 
-    @SerializedName("errors")
+    @SerializedName("message")
     @Expose
-    private List<String> errors = null;
+    private String message;
 
-    public List<String> getErrors() {
-        return errors;
+    @SerializedName("code")
+    @Expose
+    private String code;
+
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

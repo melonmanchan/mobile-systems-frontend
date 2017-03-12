@@ -9,7 +9,7 @@ import java.util.List;
 public class APIResponse <T> {
     @SerializedName("errors")
     @Expose
-    private List<String> errors = new ArrayList<String>();
+    private List<APIError> errors = new ArrayList<>();
 
     @SerializedName("status")
     @Expose
@@ -19,33 +19,17 @@ public class APIResponse <T> {
     @Expose
     private T response = null;
 
-    public ArrayList<String> getErrors() {
-        ArrayList<String> errs = new ArrayList<>(this.errors.size());
+    public ArrayList<APIError> getErrors() {
+        ArrayList<APIError> errs = new ArrayList<>(this.errors.size());
         errs.addAll(this.errors);
         return errs;
-    }
-
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
     }
 
     public T getResponse() {
         return response;
     }
 
-    public void setResponse(T response) {
-        this.response = response;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public boolean isSuccesful() {
-        return !(this.status >= 400);
+        return (!(this.status >= 400) && this.errors.size() == 0);
     }
 }
