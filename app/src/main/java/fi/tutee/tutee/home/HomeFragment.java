@@ -27,6 +27,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private int[] tabIcons = {
+            R.drawable.ic_perm_contact_calendar_white_24dp,
+            R.drawable.ic_message_white_24dp,
+            R.drawable.ic_search_white_24dp
+    };
+
     public static HomeFragment newInstance() {
         Bundle arguments = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -53,6 +59,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         tabLayout.setupWithViewPager(viewPager);
 
+        for (int i = 0; i < tabIcons.length; i++) {
+            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+        }
+
         setHasOptionsMenu(true);
         return root;
     }
@@ -71,6 +81,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new HomeScheduleFragment(), "Schedule");
         adapter.addFragment(new HomeMessagesFragment(), "Messages");
+        adapter.addFragment(new HomeSearchFragment(), "Find tutors");
         viewPager.setAdapter(adapter);
     }
 
