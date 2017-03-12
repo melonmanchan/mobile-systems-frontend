@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.register.RegisterActivity;
+import fi.tutee.tutee.usertypeselection.UserTypeSelectionActivity;
 
 /**
  * Created by mat on 06/03/2017.
@@ -71,10 +72,8 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
         registerNewAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("registerbuttonclick");
-                Intent intent = new Intent(getContext(), RegisterActivity.class);
+                Intent intent = new Intent(getContext(), UserTypeSelectionActivity.class);
                 startActivity(intent);
-
             }
         });
 

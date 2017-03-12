@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.Window;
+import android.widget.TextView;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
@@ -19,6 +20,9 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
+
+        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+        title.setText("Register");
 
         setContentView(R.layout.activity_user_type_selection);
 
