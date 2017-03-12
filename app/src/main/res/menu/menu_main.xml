@@ -7,27 +7,26 @@
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/ic_perm_contact_calendar_white_24dp"
-        android:title="Refresh"/>
+        android:title="Calendar"/>
 
     <item
         android:id="@+id/action_search"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/ic_search_white_24dp"
-        android:title="Refresh"/>
+        android:title="Search"/>
 
     <item
         android:id="@+id/action_message"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/ic_message_white_24dp"
-        android:title="Refresh"/>
+        android:title="Messages"/>
 
     <item
-        android:id="@+id/action_more"
+        android:id="@+id/action_logout"
         android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_more_horiz_white_24dp"
-        android:title="Refresh"/>
+        app:showAsAction="never"
+        android:title="Log out"/>
 
 </menu>
