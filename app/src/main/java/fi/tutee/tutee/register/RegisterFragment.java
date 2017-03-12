@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.home.HomeActivity;
 import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
@@ -86,7 +87,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
             startActivity(intent);
         } else {
-
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            startActivity(intent);
         }
     }
 

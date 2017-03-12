@@ -31,6 +31,10 @@
         <activity
             android:name=".registertutorextra.RegisterExtraActivity"
             android:label="RegisterTutorExtraActivity"></activity>
+
+        <activity
+            android:name=".home.HomeActivity"
+            android:label="Home"></activity>
     </application>
 
 </manifest>
