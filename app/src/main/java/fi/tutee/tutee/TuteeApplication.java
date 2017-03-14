@@ -32,19 +32,19 @@ public class TuteeApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Stetho.InitializerBuilder initializerBuilder = Stetho.newInitializerBuilder(this);
-
-        initializerBuilder.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this));
-
-        Stetho.Initializer initializer = initializerBuilder.build();
-
-        Stetho.initialize(initializer);
-
         repository = TuteeRepository.getInstance(
                 TuteeRemoteDataSource.getInstance(this),
                 TuteeLocalDataSource.getInstance(this)
         );
 
         repository.fetchPersistedUserInfo();
+
+        initStetho(this);
+    }
+
+    private void initStetho(final Context context) {
+        Stetho.initialize(Stetho.newInitializerBuilder(context)
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
+        .build());
     }
 }
