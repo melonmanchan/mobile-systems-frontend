@@ -1,5 +1,6 @@
 package fi.tutee.tutee.registertutorextra;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     private Button registerTutorExtraBtn;
     private Button registerTutorExtraNewSkillBtn;
     private LinearLayout registerTutorExtraSkillsLayout;
+
 
     private RegisterExtraContract.Presenter presenter;
 
@@ -45,18 +47,35 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerTutorExtraNewSkillBtn = (Button) root.findViewById(R.id.registerTutorExtraNewSkillButton);
             registerTutorExtraSkillsLayout = (LinearLayout) root.findViewById(R.id.content_register_tutor_extra_skills_layout);
 
-            Spinner registerTutorExtraLevelSpin = (Spinner) root.findViewById(R.id.registerTutorExtraLevelSpinner);
 
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),
-                    R.array.level_array, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            registerTutorExtraLevelSpin.setAdapter(adapter);
+
 
 
             registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         String description = registerTutorExtraDescription.getText().toString();
+
+                        for(int index = 0; index < (registerTutorExtraSkillsLayout.getChildCount()); ++index) {
+                            LinearLayout skillWrapper = (LinearLayout)  ((registerTutorExtraSkillsLayout.getChildAt(index)));
+
+                            EditText skillDescription = (EditText) skillWrapper.getChildAt(0);
+
+                            Spinner skillLevelSpinner = (Spinner) skillWrapper.getChildAt(1);
+
+
+
+                            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
+                                    && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
+                                registerBtn.setEnabled(false);
+                                ActivityUtils.hideKeyboard(getActivity());
+                                presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
+                            }
+
+
+
+                        }
+
 
                     /**
                         if (!TextUtils.isEmpty(description) {
@@ -84,35 +103,12 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
 
     private LinearLayout createNewSkillLayout() {
-        final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-        final LinearLayout linearLayout = new LinearLayout(this.getContext());
-        linearLayout.setLayoutParams(lparams);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setPadding(0, 16, 0, 16);
-        linearLayout.addView(createNewEditText());
-        linearLayout.addView(createNewSpinner());
-        return linearLayout;
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout newLayout = (LinearLayout) inflater.inflate(R.layout.content_one_skill_layout, null);
+        return newLayout;
+
     }
 
-    private EditText createNewEditText() {
-        final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(600,LinearLayout.LayoutParams.WRAP_CONTENT);
-        final EditText editText = new EditText(this.getContext());
-        editText.setHint("Skill");
-        editText.setLayoutParams(lparams);
-        return editText;
-    }
-
-    private Spinner createNewSpinner() {
-        final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(300,LinearLayout.LayoutParams.WRAP_CONTENT);
-        final Spinner spinner = new Spinner(this.getContext());
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
-                R.array.level_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setLayoutParams(lparams);
-
-        return spinner;
-    }
 
 
 
