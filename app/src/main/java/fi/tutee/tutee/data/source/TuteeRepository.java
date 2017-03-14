@@ -48,6 +48,10 @@ public class TuteeRepository implements TuteeDataSource {
 
                 if (resp != null && resp.isSuccessful()) {
                     AuthResponse authResponse = resp.getResponse();
+
+                    remote.setToken(authResponse.getToken());
+                    local.persistUserLogin(authResponse);
+
                     loggedInUser = authResponse.getUser();
                 }
 
@@ -68,7 +72,6 @@ public class TuteeRepository implements TuteeDataSource {
 
     @Override
     public void register(RegisterRequest req, final Callback<APIResponse<AuthResponse>> cb) {
-
         remote.register(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
@@ -76,6 +79,10 @@ public class TuteeRepository implements TuteeDataSource {
 
                 if (resp != null && resp.isSuccessful()) {
                     AuthResponse authResponse = resp.getResponse();
+
+                    remote.setToken(authResponse.getToken());
+                    local.persistUserLogin(authResponse);
+
                     loggedInUser = authResponse.getUser();
                 }
 
@@ -112,5 +119,20 @@ public class TuteeRepository implements TuteeDataSource {
         });
     }
 
+    public AuthResponse fetchPersistedUserInfo() {
+        AuthResponse authResponse = local.fetchPersistedUserLogin();
 
+        if (authResponse != null) {
+            this.loggedInUser = authResponse.getUser();
+            remote.setToken(authResponse.getToken());
+        }
+
+        return authResponse;
+    }
+
+    @Override
+    public void logOut() {
+        this.remote.logOut();
+        this.local.logOut();
+    }
 }

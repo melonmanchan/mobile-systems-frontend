@@ -1,20 +1,12 @@
 package fi.tutee.tutee.pickauthentication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.LoginRequest;
-import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-/**
- * Created by mat on 06/03/2017.
- */
 
 public class AuthenticationPresenter implements AuthenticationContract.Presenter {
 
@@ -34,6 +26,12 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public AuthResponse getAutoLoginInfo() {
+        AuthResponse authResponse = repository.fetchPersistedUserInfo();
+        return authResponse;
     }
 
     @Override

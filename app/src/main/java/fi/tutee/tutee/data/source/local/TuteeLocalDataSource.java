@@ -1,11 +1,16 @@
 package fi.tutee.tutee.data.source.local;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.google.gson.Gson;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
-import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import retrofit2.Callback;
 
@@ -14,11 +19,19 @@ import retrofit2.Callback;
  */
 
 public class TuteeLocalDataSource implements TuteeDataSource{
-    private  static TuteeLocalDataSource instance;
+    private static TuteeLocalDataSource instance;
 
-    public static TuteeLocalDataSource getInstance() {
+    private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
+
+    private Context context;
+
+    public TuteeLocalDataSource(Context context) {
+        this.context = context;
+    }
+
+    public static TuteeLocalDataSource getInstance(Context context) {
         if (instance == null) {
-            instance = new TuteeLocalDataSource();
+            instance = new TuteeLocalDataSource(context);
         }
 
         return instance;
@@ -43,5 +56,28 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
     }
 
+    @Override
+    public void logOut() {
+        SharedPreferences mySPrefs =PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = mySPrefs.edit();
+        editor.remove(PERSIST_LOGIN_DATA);
+        editor.apply();
+    }
 
+    public void persistUserLogin(AuthResponse authResponse) {
+        Gson gson = new Gson();
+        String json = gson.toJson(authResponse);
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PERSIST_LOGIN_DATA, json).apply();
+    }
+
+    public AuthResponse fetchPersistedUserLogin() {
+        Gson gson = new Gson();
+        String json = PreferenceManager.getDefaultSharedPreferences(context).getString(PERSIST_LOGIN_DATA, null);
+
+        if (json == null) {
+            return null;
+        }
+
+        return gson.fromJson(json, AuthResponse.class);
+    }
 }

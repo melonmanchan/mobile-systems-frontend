@@ -1,5 +1,9 @@
 package fi.tutee.tutee.data.source.remote;
 
+import android.content.Context;
+
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.io.IOException;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -23,16 +27,17 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
 
     private Retrofit retrofit;
     private TuteeService service;
+    private Context context;
 
-    public TuteeRemoteDataSource() {
+    public TuteeRemoteDataSource(Context context) {
+        this.context = context;
         retrofit = buildUnauthenticatedRetrofit();
         service = retrofit.create(TuteeService.class);
-
     }
 
-    public static TuteeRemoteDataSource getInstance() {
+    public static TuteeRemoteDataSource getInstance(Context context) {
         if (instance == null) {
-            instance = new TuteeRemoteDataSource();
+            instance = new TuteeRemoteDataSource(context);
         }
 
         return instance;
@@ -48,6 +53,9 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        httpClient.addInterceptor(new StethoInterceptor());
+
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -93,6 +101,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
                         return chain.proceed(request);
                     }
                 })
+                .addInterceptor(new StethoInterceptor())
                 .build();
 
 
@@ -129,6 +138,11 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void googleLogin(String token) {
 
+    }
+
+    @Override
+    public void logOut() {
+        this.retrofit = buildUnauthenticatedRetrofit();
     }
 
     @Override

@@ -37,6 +37,5 @@ public class AuthenticationActivity extends AppCompatActivity {
                 app.repository,
                 authenticationFragment
         );
-
     }
 }

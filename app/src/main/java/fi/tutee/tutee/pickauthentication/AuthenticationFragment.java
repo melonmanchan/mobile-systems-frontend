@@ -1,5 +1,7 @@
 package fi.tutee.tutee.pickauthentication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.home.HomeActivity;
 import fi.tutee.tutee.register.RegisterActivity;
@@ -47,9 +50,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
     @Override
     public void onResume() {
         super.onResume();
-        if (presenter != null) {
-            presenter.start();
-        }
+        presenter.start();
     }
 
     @Override
@@ -120,5 +121,18 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
         }
 
         Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        AuthResponse response = presenter.getAutoLoginInfo();
+
+        if (response != null) {
+            Intent intent = new Intent(context, HomeActivity.class);
+            startActivity(intent);
+        }
     }
 }

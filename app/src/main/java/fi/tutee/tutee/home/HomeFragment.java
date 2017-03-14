@@ -78,13 +78,14 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new HomeScheduleFragment(), "Schedule");
         adapter.addFragment(new HomeMessagesFragment(), "Messages");
-        adapter.addFragment(new HomeSearchFragment(), "Find tutors");
+        adapter.addFragment(HomeSearchFragment.getInstance(), "Find tutors");
         viewPager.setAdapter(adapter);
     }
-
+  
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
