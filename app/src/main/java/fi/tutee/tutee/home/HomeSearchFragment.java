@@ -21,9 +21,20 @@ import fi.tutee.tutee.R;
 public class HomeSearchFragment extends Fragment {
     private List<Map<String, String>> subjectsList = new ArrayList<Map<String,String>>();
     private SimpleAdapter adapter;
+    private static HomeSearchFragment instance = null;
 
     public HomeSearchFragment() {
         // Required empty public constructor
+    }
+
+    public static HomeSearchFragment getInstance() {
+        if (instance == null) {
+            Bundle arguments = new Bundle();
+            instance = new HomeSearchFragment();
+            instance.setArguments(arguments);
+        }
+
+        return instance;
     }
 
     private void initList() {
@@ -52,6 +63,8 @@ public class HomeSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         initList();
+
+
 
         View root = inflater.inflate(R.layout.content_home_search, container, false);
         ListView list = (ListView) root.findViewById(R.id.listView);
