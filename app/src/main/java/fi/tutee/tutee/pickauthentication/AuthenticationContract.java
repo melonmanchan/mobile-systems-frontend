@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.User;
 
 /**
@@ -20,5 +21,6 @@ public interface AuthenticationContract {
 
     interface Presenter extends BasePresenter {
         void login(String username, String password);
+        AuthResponse getAutoLoginInfo();
     }
 }

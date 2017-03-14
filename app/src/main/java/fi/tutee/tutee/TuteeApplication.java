@@ -3,6 +3,9 @@ package fi.tutee.tutee;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
+
+import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
@@ -29,9 +32,19 @@ public class TuteeApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Stetho.InitializerBuilder initializerBuilder = Stetho.newInitializerBuilder(this);
+
+        initializerBuilder.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this));
+
+        Stetho.Initializer initializer = initializerBuilder.build();
+
+        Stetho.initialize(initializer);
+
         repository = TuteeRepository.getInstance(
-                TuteeRemoteDataSource.getInstance(),
-                TuteeLocalDataSource.getInstance()
+                TuteeRemoteDataSource.getInstance(this),
+                TuteeLocalDataSource.getInstance(this)
         );
+
+        repository.fetchPersistedUserInfo();
     }
 }
