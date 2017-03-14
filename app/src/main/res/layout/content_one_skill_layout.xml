@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <EditText
+        android:id = "@+id/registerTutorExtraSkill"
+        android:hint="Skill"
+        android:inputType="text"
+        android:layout_width="@dimen/skill_text_width"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/registerTutorExtraLevelSpinner"
+        android:layout_width="@dimen/skill_level_spinner_width"
+        android:layout_height="wrap_content"
+        android:entries="@array/level_array"/>
+
+
+
+</LinearLayout>
