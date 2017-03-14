@@ -10,7 +10,7 @@ import fi.tutee.tutee.usertypeselection.UserTypeSelectionContract;
 
 public interface HomeContract {
     interface Presenter extends BasePresenter{
-
+        void logOut();
     }
 
     interface View extends BaseView<Presenter> {

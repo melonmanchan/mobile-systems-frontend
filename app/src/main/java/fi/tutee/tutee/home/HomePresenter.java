@@ -23,4 +23,9 @@ public class HomePresenter implements HomeContract.Presenter {
     public void start() {
 
     }
+
+    @Override
+    public void logOut() {
+        this.repository.logOut();
+    }
 }

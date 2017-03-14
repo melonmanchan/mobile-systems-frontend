@@ -1,5 +1,6 @@
 package fi.tutee.tutee.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
 
 /**
  * Created by mat on 12/03/2017.
@@ -71,7 +73,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_logout:
-                Toast.makeText(getContext(), "asdasda", Toast.LENGTH_LONG).show();
+                presenter.logOut();
+                Intent intent = new Intent(getContext(), AuthenticationActivity.class);
+                startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,8 +84,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private void setupViewPager(ViewPager viewPager) {
         viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+
         adapter.addFragment(new HomeScheduleFragment(), "Schedule");
         adapter.addFragment(new HomeMessagesFragment(), "Messages");
+
         adapter.addFragment(HomeSearchFragment.getInstance(), "Find tutors");
         viewPager.setAdapter(adapter);
     }
