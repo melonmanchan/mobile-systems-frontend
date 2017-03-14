@@ -56,6 +56,27 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                 public void onClick(View v) {
                         String description = registerTutorExtraDescription.getText().toString();
 
+                        for(int index = 0; index < (registerTutorExtraSkillsLayout.getChildCount()); ++index) {
+                            LinearLayout skillWrapper = (LinearLayout)  ((registerTutorExtraSkillsLayout.getChildAt(index)));
+
+                            EditText skillDescription = (EditText) skillWrapper.getChildAt(0);
+
+                            Spinner skillLevelSpinner = (Spinner) skillWrapper.getChildAt(1);
+
+
+
+                            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
+                                    && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
+                                registerBtn.setEnabled(false);
+                                ActivityUtils.hideKeyboard(getActivity());
+                                presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
+                            }
+
+
+
+                        }
+
+
                     /**
                         if (!TextUtils.isEmpty(description) {
                         presenter.register(firstName, lastName, email, password, "TUTOR");
