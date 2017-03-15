@@ -11,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import java.nio.Buffer;
+import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.Skill;
+
 /**
  * Created by lehtone1 on 09/03/17.
  */
@@ -54,27 +58,26 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        String description = registerTutorExtraDescription.getText().toString();
+                        String description = (String) registerTutorExtraDescription.getText().toString();
+                        ArrayList<Skill> skills = new ArrayList<Skill>();
 
                         for(int index = 0; index < (registerTutorExtraSkillsLayout.getChildCount()); ++index) {
-                            LinearLayout skillWrapper = (LinearLayout)  ((registerTutorExtraSkillsLayout.getChildAt(index)));
+                            LinearLayout skillWrapper = (LinearLayout) ((registerTutorExtraSkillsLayout.getChildAt(index)));
 
                             EditText skillDescription = (EditText) skillWrapper.getChildAt(0);
 
                             Spinner skillLevelSpinner = (Spinner) skillWrapper.getChildAt(1);
 
+                            String skillText = (String) skillDescription.getText().toString();
 
+                            String level = (String) skillLevelSpinner.getSelectedItem().toString();
 
-                            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
-                                    && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
-                                registerBtn.setEnabled(false);
-                                ActivityUtils.hideKeyboard(getActivity());
-                                presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
-                            }
-
-
-
+                            skills.add(new Skill(skillText, level));
                         }
+
+                        presenter.registerTutorExtra(description, skills);
+
+
 
 
                     /**

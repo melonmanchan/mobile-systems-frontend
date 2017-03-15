@@ -1,7 +1,10 @@
 package fi.tutee.tutee.registertutorextra;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
+import fi.tutee.tutee.data.entities.Skill;
 
 /**
  * Created by lehtone1 on 09/03/17.
@@ -15,6 +18,6 @@ public interface RegisterExtraContract {
     }
 
     interface Presenter extends BasePresenter {
-        void registerTutorExtra(String description);
+        void registerTutorExtra(String description, ArrayList<Skill> skills);
     }
 }

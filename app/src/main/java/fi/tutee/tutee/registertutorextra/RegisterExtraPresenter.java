@@ -1,8 +1,11 @@
 package fi.tutee.tutee.registertutorextra;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.Skill;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,8 +36,8 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
     }
 
     @Override
-    public void registerTutorExtra(String description) {
-        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(description);
+    public void registerTutorExtra(String description, ArrayList<Skill> skills) {
+        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(description, skills);
         repository.registerTutorExtra(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
