@@ -64,7 +64,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
 
                 Request request = original.newBuilder()
                         .header("Accept", "application/json")
-                        .header("Authorization", "Bearer: " + authToken)
+                        .header("Authorization", "Bearer " + authToken)
                         .method(original.method(), original.body())
                         .build();
 
