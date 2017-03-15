@@ -20,8 +20,6 @@ public class TuteeApplication extends Application {
 
     public static TuteeRepository repository;
 
-    private String deviceToken;
-
     public static Context getInstance() {
         if (instance == null) {
             instance = new TuteeApplication();
@@ -51,6 +49,8 @@ public class TuteeApplication extends Application {
     }
 
     public void setDeviceToken(String deviceToken) {
-        this.deviceToken = deviceToken;
+        if (repository != null) {
+            repository.setDeviceToken(deviceToken);
+        }
     }
 }

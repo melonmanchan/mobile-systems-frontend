@@ -1,7 +1,13 @@
 package fi.tutee.tutee.data.source;
 
+import android.text.TextUtils;
+
+import com.facebook.stetho.common.StringUtil;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -20,10 +26,16 @@ public class TuteeRepository implements TuteeDataSource {
 
     private final TuteeLocalDataSource local;
 
+    private String deviceToken;
+
     private User loggedInUser;
 
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
     public TuteeRepository(TuteeRemoteDataSource remote, TuteeLocalDataSource local) {
@@ -117,6 +129,24 @@ public class TuteeRepository implements TuteeDataSource {
                 cb.onFailure(call, t);
             }
         });
+    }
+
+    @Override
+    public void registerUserDevice(DeviceRegisterRequest req) {
+        try {
+            if (this.deviceToken == null || TextUtils.isEmpty(deviceToken)) {
+                deviceToken = FirebaseInstanceId.getInstance().getToken();
+            }
+
+            if (deviceToken != null) {
+                req.setToken(deviceToken);
+                this.remote.registerUserDevice(req);
+            }
+
+        } catch(NullPointerException ex) {
+            System.out.println(ex);
+        }
+
     }
 
     public AuthResponse fetchPersistedUserInfo() {

@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -20,6 +21,7 @@ public interface TuteeDataSource {
 
     void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb);
 
-
     void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb);
+
+    void registerUserDevice(DeviceRegisterRequest req);
 }
