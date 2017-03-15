@@ -20,6 +20,8 @@ public class TuteeApplication extends Application {
 
     public static TuteeRepository repository;
 
+    private String deviceToken;
+
     public static Context getInstance() {
         if (instance == null) {
             instance = new TuteeApplication();
@@ -46,5 +48,9 @@ public class TuteeApplication extends Application {
         Stetho.initialize(Stetho.newInitializerBuilder(context)
         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
         .build());
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 }
