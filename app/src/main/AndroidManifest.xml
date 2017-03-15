@@ -35,6 +35,10 @@
         <activity
             android:name=".home.HomeActivity"
             android:label="Home"></activity>
+
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:label="Profile"></activity>
     </application>
 
 </manifest>
