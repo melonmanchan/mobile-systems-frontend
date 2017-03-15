@@ -64,10 +64,8 @@ public class HomeSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         initList();
 
-
-
         View root = inflater.inflate(R.layout.content_home_search, container, false);
-        ListView list = (ListView) root.findViewById(R.id.listView);
+        ListView list = (ListView) root.findViewById(R.id.subjectListView);
 
         // This is a simple adapter that accepts as parameter
         // Context

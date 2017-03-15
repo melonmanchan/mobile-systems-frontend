@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         adapter.addFragment(new HomeScheduleFragment(), "Schedule");
         adapter.addFragment(new HomeMessagesFragment(), "Messages");
         adapter.addFragment(HomeSearchFragment.getInstance(), "Find tutors");
-        adapter.addFragment(new HomeSettingsFragment(), "Settings");
+        adapter.addFragment(HomeSettingsFragment.getInstance(), "Settings");
         viewPager.setAdapter(adapter);
     }
   
