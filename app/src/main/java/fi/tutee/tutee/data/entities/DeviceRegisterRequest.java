@@ -12,10 +12,6 @@ public class DeviceRegisterRequest {
     @Expose
     private String token;
 
-    public DeviceRegisterRequest(String token) {
-        this.token = token;
-    }
-
     public String getToken() {
         return token;
     }

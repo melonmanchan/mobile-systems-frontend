@@ -94,7 +94,6 @@ public class TuteeRepository implements TuteeDataSource {
 
                     remote.setToken(authResponse.getToken());
                     local.persistUserLogin(authResponse);
-
                     loggedInUser = authResponse.getUser();
                 }
 
@@ -135,11 +134,11 @@ public class TuteeRepository implements TuteeDataSource {
     public void registerUserDevice(DeviceRegisterRequest req) {
         try {
             if (this.deviceToken == null || TextUtils.isEmpty(deviceToken)) {
-                deviceToken = FirebaseInstanceId.getInstance().getToken();
+                this.deviceToken = FirebaseInstanceId.getInstance().getToken();
             }
 
-            if (deviceToken != null) {
-                req.setToken(deviceToken);
+            if (this.deviceToken != null) {
+                req.setToken(this.deviceToken);
                 this.remote.registerUserDevice(req);
             }
 
