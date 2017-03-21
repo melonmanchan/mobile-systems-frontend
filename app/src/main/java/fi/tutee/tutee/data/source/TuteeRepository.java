@@ -11,9 +11,11 @@ import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
+import fi.tutee.tutee.utils.EmptyCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -157,6 +159,26 @@ public class TuteeRepository implements TuteeDataSource {
         }
 
         return authResponse;
+    }
+
+    @Override
+    public void updateUser(final UpdateUserRequest req, final Callback<APIResponse<User>> cb) {
+        remote.updateUser(req, new Callback<APIResponse<User>>() {
+            @Override
+            public void onResponse(Call<APIResponse<User>> call, Response<APIResponse<User>> response) {
+                APIResponse<User> resp = response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    local.updateUser(req, new EmptyCallback<APIResponse<User>>());
+                }
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<User>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
     }
 
     @Override

@@ -12,6 +12,8 @@ import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.UpdateUserRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
 import okhttp3.Interceptor;
@@ -147,5 +149,11 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     public void registerUserDevice(DeviceRegisterRequest req) {
         Call call = service.registerUserDevice(req);
         call.enqueue(new EmptyCallback());
+    }
+
+    @Override
+    public void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb) {
+        Call<APIResponse<User>> call = service.updateUser(req);
+        call.enqueue(cb);
     }
 }

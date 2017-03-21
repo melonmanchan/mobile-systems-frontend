@@ -6,7 +6,9 @@ import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import retrofit2.Call;
 import retrofit2.Callback;
 
 /**
@@ -24,4 +26,6 @@ public interface TuteeDataSource {
     void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb);
 
     void registerUserDevice(DeviceRegisterRequest req);
+
+    void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb);
 }

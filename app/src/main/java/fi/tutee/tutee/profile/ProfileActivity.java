@@ -31,8 +31,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         new ProfilePresenter(
                 app.repository,
-                profileFragment
-        );
+                profileFragment,
+                app.repository.getLoggedInUser()
+        ).start();
     }
 
 }
