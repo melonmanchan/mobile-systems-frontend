@@ -29,7 +29,6 @@ public class RegisterTutorExtraRequest  {
         this.description = description;
         this.skills = skills;
 
-
     }
 
     public String getDescription() {

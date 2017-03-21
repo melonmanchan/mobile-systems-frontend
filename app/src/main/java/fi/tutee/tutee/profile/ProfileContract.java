@@ -2,6 +2,7 @@ package fi.tutee.tutee.profile;
 
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
+import fi.tutee.tutee.data.entities.User;
 
 /**
  * Created by emmilinkola on 15/03/17.
@@ -10,9 +11,12 @@ import fi.tutee.tutee.BaseView;
 public class ProfileContract {
 
     interface Presenter extends BasePresenter {
+        void updateUser(User user);
     }
 
     interface View extends BaseView<Presenter> {
-
+        void setUser(User user);
+        void onUpdateSuccess();
+        void onUpdateFailure();
     }
 }

@@ -12,6 +12,8 @@ import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.UpdateUserRequest;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import retrofit2.Callback;
 
@@ -74,6 +76,15 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         Gson gson = new Gson();
         String json = gson.toJson(authResponse);
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PERSIST_LOGIN_DATA, json).apply();
+    }
+
+    @Override
+    public void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb) {
+        AuthResponse persistedAuthResponse = fetchPersistedUserLogin();
+        if (persistedAuthResponse != null) {
+            persistedAuthResponse.setUser(req.getUser());
+            persistUserLogin(persistedAuthResponse);
+        }
     }
 
     public AuthResponse fetchPersistedUserLogin() {
