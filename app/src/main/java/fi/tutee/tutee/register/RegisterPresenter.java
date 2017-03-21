@@ -2,6 +2,7 @@ package fi.tutee.tutee.register;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
@@ -41,6 +42,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 APIResponse resp = response.body();
 
                 if (resp.isSuccessful()) {
+                    repository.registerUserDevice(new DeviceRegisterRequest());
                     view.onRegisterSuccess();
                 } else {
                     view.onRegisterFail(resp.getErrors());

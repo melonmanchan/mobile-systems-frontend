@@ -47,4 +47,10 @@ public class TuteeApplication extends Application {
         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
         .build());
     }
+
+    public void setDeviceToken(String deviceToken) {
+        if (repository != null) {
+            repository.setDeviceToken(deviceToken);
+        }
+    }
 }

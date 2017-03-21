@@ -8,11 +8,12 @@ import java.io.IOException;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
-import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
+import fi.tutee.tutee.utils.EmptyCallback;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -63,7 +64,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
 
                 Request request = original.newBuilder()
                         .header("Accept", "application/json")
-                        .header("Authorization", "Bearer: " + authToken)
+                        .header("Authorization", "Bearer " + authToken)
                         .method(original.method(), original.body())
                         .build();
 
@@ -118,21 +119,6 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     public void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb) {
         Call<APIResponse<AuthResponse>> call = service.basicLogin(req);
         call.enqueue(cb);
-        /*
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    User user = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
-            }
-        });
-        */
     }
 
     @Override
@@ -155,5 +141,11 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     public void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb) {
         Call<APIResponse<AuthResponse>> call = service.registerTutorExtra(req);
         call.enqueue(cb);
+    }
+
+    @Override
+    public void registerUserDevice(DeviceRegisterRequest req) {
+        Call call = service.registerUserDevice(req);
+        call.enqueue(new EmptyCallback());
     }
 }

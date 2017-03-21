@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -54,6 +55,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     @Override
     public void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb) {
         cb.onFailure(null, new UnsupportedOperationException("Register not implemented for local data source"));
+    }
+
+    @Override
+    public void registerUserDevice(DeviceRegisterRequest req) {
+        // No-op
     }
 
     @Override

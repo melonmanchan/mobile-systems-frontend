@@ -47,6 +47,20 @@
                 android:hint="Password"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id = "@+id/registerCountrySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/register_spinner_padding" />
+
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id = "@+id/registerCitySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/register_spinner_padding"/>
+
     </LinearLayout>
 
     <LinearLayout

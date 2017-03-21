@@ -8,6 +8,7 @@ public class LoginRequest {
     @SerializedName("email")
     @Expose
     private String email;
+
     @SerializedName("password")
     @Expose
     private String password;
