@@ -15,6 +15,6 @@ public interface RegisterContract {
     }
 
     interface Presenter extends BasePresenter {
-        void register(String firstname, String lastname, String email, String password, String usertype);
+        void register(String firstname, String lastname, String email, String password, String usertype, String country, String city);
     }
 }

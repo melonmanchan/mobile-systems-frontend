@@ -101,12 +101,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 String password = registerPassword.getText().toString();
                 String firstName = registerFirstname.getText().toString();
                 String lastName = registerLastname.getText().toString();
+                String country = registerCountrySpin.getSelectedItem().toString();
+                String city = registerCitySpin.getSelectedItem().toString();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
-                        && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
+                        && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)&& !TextUtils.isEmpty(country) && !TextUtils.isEmpty(city)) {
                     registerBtn.setEnabled(false);
                     ActivityUtils.hideKeyboard(getActivity());
-                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
+                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE", country, city );
                 }
             }
         });

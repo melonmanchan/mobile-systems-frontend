@@ -25,12 +25,24 @@ public class RegisterRequest {
     @Expose
     private String userType;
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, String userType) {
+    @SerializedName("country")
+    @Expose
+    private String country;
+
+    @SerializedName("city")
+    @Expose
+    private String city;
+
+
+
+    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, String country, String city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userType = userType;
+        this.country = country;
+        this.city = city;
     }
 
     public String getEmail() {
@@ -71,6 +83,20 @@ public class RegisterRequest {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) { this.country = country; }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city= city;
     }
 
 }
