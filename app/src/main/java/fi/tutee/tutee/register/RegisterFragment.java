@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -70,8 +71,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private EditText registerLastname;
     private TextInputEditText registerPassword;
     private Button registerBtn;
-    private Spinner registerCountrySpin;
-    private Spinner registerCitySpin;
     private int RESULT_LOAD_IMAGE = 1;
 
     private boolean isTutor;
@@ -104,9 +103,9 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         registerLastname = (EditText) root.findViewById(R.id.registerLastname);
         registerPassword = (TextInputEditText) root.findViewById(R.id.registerPassword);
         registerBtn = (Button) root.findViewById(R.id.registerButton);
-        registerCountrySpin = (Spinner) root.findViewById(R.id.registerCountrySpinner);
-        registerCitySpin = (Spinner) root.findViewById(R.id.registerCitySpinner);
 
+
+        //registerImgView.setDrawingCacheEnabled(true);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,14 +113,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 String password = registerPassword.getText().toString();
                 String firstName = registerFirstname.getText().toString();
                 String lastName = registerLastname.getText().toString();
-                String country = registerCountrySpin.getSelectedItem().toString();
-                String city = registerCitySpin.getSelectedItem().toString();
+                //Bitmap profilePicture = registerImgView.getDrawingCache();
+                Bitmap profilePicture = ((BitmapDrawable) registerImgView.getDrawable()).getBitmap();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
-                        && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)&& !TextUtils.isEmpty(country) && !TextUtils.isEmpty(city)) {
+                        && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
                     registerBtn.setEnabled(false);
                     ActivityUtils.hideKeyboard(getActivity());
-                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE", country, city );
+                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE", profilePicture );
                 }
             }
         });
@@ -141,25 +140,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
 
 
-        setPreferedAdress();
 
-        registerCountrySpin.post(new Runnable() {
-            @Override
-            public void run() {
-                registerCountrySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                        getCitiesFromJson((String) parent.getItemAtPosition(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-
-            }
-        });
 
 
 
@@ -178,7 +159,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
-                
+
                 registerImgView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -189,126 +170,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     }
 
 
-    private String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getActivity().getAssets().open("countriesToCities.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 
-    private void getCountriesFromJson() {
-        try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-            Iterator<String> iterator = obj.keys();
-            ArrayAdapter<String> adapter;
-            List<String> list;
-
-            list = new ArrayList<String>();
-            while (iterator.hasNext()) {
-                list.add(iterator.next());
-            }
-
-            Collections.sort(list);
-
-            adapter = new ArrayAdapter<String>(
-                    this.getActivity(), android.R.layout.simple_spinner_item, list);
-
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            registerCountrySpin.setAdapter(adapter);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void getCitiesFromJson(String country) {
-        try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-
-
-            JSONArray jsonArray;
-            ArrayAdapter<String> adapter;
-            List<String> list;
-
-            jsonArray = obj.getJSONArray(country);
-
-            list = new ArrayList<String>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                list.add(jsonArray.getString(i));
-            }
-
-            Collections.sort(list);
-
-            adapter = new ArrayAdapter<String>(
-                    this.getActivity(), android.R.layout.simple_spinner_item, list);
-
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            registerCitySpin.setAdapter(adapter);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setPreferedAdress() {
-
-        Geocoder geocoder;
-        LocationManager lm;
-
-        lm = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        getCountriesFromJson();
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        double longitude = location.getLongitude();
-
-        double latitude = location.getLatitude();
-
-
-        try {
-            geocoder = new Geocoder(this.getActivity(), Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Address obj = addresses.get(0);
-
-            String country = obj.getCountryName();
-            String city = obj.getLocality();
-
-            registerCountrySpin.setSelection(((ArrayAdapter) registerCountrySpin.getAdapter()).getPosition(country));
-            getCitiesFromJson(country);
-            registerCitySpin.setSelection(((ArrayAdapter) registerCitySpin.getAdapter()).getPosition(city));
-
-
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
 
 

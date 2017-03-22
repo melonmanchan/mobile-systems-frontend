@@ -36,8 +36,8 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
     }
 
     @Override
-    public void registerTutorExtra(String description, ArrayList<Skill> skills) {
-        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(description, skills);
+    public void registerTutorExtra(String country, String city, String description, ArrayList<Skill> skills) {
+        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(country, city, description, skills);
         repository.registerTutorExtra(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {

@@ -15,6 +15,14 @@ import java.util.ArrayList;
 
 public class RegisterTutorExtraRequest  {
 
+    @SerializedName("country")
+    @Expose
+    private String country;
+
+    @SerializedName("city")
+    @Expose
+    private String city;
+
     @SerializedName("description")
     @Expose
     private String description;
@@ -25,9 +33,12 @@ public class RegisterTutorExtraRequest  {
 
 
 
-    public RegisterTutorExtraRequest(String description, ArrayList<Skill> skills) {
+    public RegisterTutorExtraRequest(String country, String city, String description, ArrayList<Skill> skills) {
+        this.country = country;
+        this.city = city;
         this.description = description;
         this.skills = skills;
+
 
     }
 
@@ -45,6 +56,20 @@ public class RegisterTutorExtraRequest  {
 
     public void setSkills(ArrayList<Skill>  skills) {
         this.skills = skills;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) { this.country = country; }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city= city;
     }
 
 }

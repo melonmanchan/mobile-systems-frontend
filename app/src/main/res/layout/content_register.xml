@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context="fi.tutee.tutee.register.RegisterFragment">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,8 +17,9 @@
         <ImageView
             android:id="@+id/registerImgView"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></ImageView>
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:src="@drawable/profile_picture"></ImageView>
         <Button
             android:id="@+id/registerLoadPictureButton"
             android:layout_width="wrap_content"
@@ -62,22 +64,12 @@
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id = "@+id/registerCountrySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/register_spinner_padding" />
-
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id = "@+id/registerCitySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/register_spinner_padding"/>
 
 
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:orientation="vertical"

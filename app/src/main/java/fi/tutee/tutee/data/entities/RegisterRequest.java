@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.ByteArrayOutputStream;
+
 public class RegisterRequest {
 
     @SerializedName("email")
@@ -27,29 +29,21 @@ public class RegisterRequest {
     @Expose
     private String userType;
 
-    @SerializedName("country")
-    @Expose
-    private String country;
-
-    @SerializedName("city")
-    @Expose
-    private String city;
-
     @SerializedName("profilePicture")
     @Expose
-    private Bitmap profilePicture;
+    private byte[] profilePicture;
 
 
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, String country, String city, Bitmap profilePicture) {
+    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, Bitmap profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userType = userType;
-        this.country = country;
-        this.city = city;
-        this.profilePicture = profilePicture;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        profilePicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        this.profilePicture = stream.toByteArray();
     }
 
     public String getEmail() {
@@ -92,25 +86,11 @@ public class RegisterRequest {
         this.userType = userType;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) { this.country = country; }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city= city;
-    }
-
-    public Bitmap getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProilePicture(Bitmap profilePicture) {
+    public void setProilePicture(byte[] profilePicture) {
         this.profilePicture= profilePicture;
     }
 

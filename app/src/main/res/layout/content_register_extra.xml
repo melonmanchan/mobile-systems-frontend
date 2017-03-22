@@ -13,6 +13,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fi.tutee.tutee.register.RegisterFragment">
 
+    <android.support.v7.widget.AppCompatSpinner
+        android:id = "@+id/registerCountrySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/register_spinner_padding" />
+
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id = "@+id/registerCitySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/register_spinner_padding"/>
+
+
     <EditText
         android:id = "@+id/registerTutorExtraDescription"
         android:hint="Description"
