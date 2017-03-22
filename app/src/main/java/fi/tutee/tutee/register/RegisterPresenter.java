@@ -1,5 +1,7 @@
 package fi.tutee.tutee.register;
 
+import android.graphics.Bitmap;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -34,8 +36,8 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void register(String firstName, String lastName, String email, String password, String userType, String country, String city ) {
-        RegisterRequest req = new RegisterRequest(firstName, lastName, email, password, userType, country, city);
+    public void register(String firstName, String lastName, String email, String password, String userType, String country, String city, Bitmap profilePicture) {
+        RegisterRequest req = new RegisterRequest(firstName, lastName, email, password, userType, country, city, profilePicture);
         repository.register(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {

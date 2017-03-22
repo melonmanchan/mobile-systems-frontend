@@ -1,5 +1,7 @@
 package fi.tutee.tutee.data.entities;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,9 +35,13 @@ public class RegisterRequest {
     @Expose
     private String city;
 
+    @SerializedName("profilePicture")
+    @Expose
+    private Bitmap profilePicture;
 
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, String country, String city) {
+
+    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, String country, String city, Bitmap profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -43,6 +49,7 @@ public class RegisterRequest {
         this.userType = userType;
         this.country = country;
         this.city = city;
+        this.profilePicture = profilePicture;
     }
 
     public String getEmail() {
@@ -97,6 +104,14 @@ public class RegisterRequest {
 
     public void setCity(String city) {
         this.city= city;
+    }
+
+    public Bitmap getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProilePicture(Bitmap profilePicture) {
+        this.profilePicture= profilePicture;
     }
 
 }

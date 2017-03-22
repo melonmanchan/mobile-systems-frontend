@@ -1,5 +1,7 @@
 package fi.tutee.tutee.register;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 import fi.tutee.tutee.BasePresenter;
@@ -15,6 +17,6 @@ public interface RegisterContract {
     }
 
     interface Presenter extends BasePresenter {
-        void register(String firstname, String lastname, String email, String password, String usertype, String country, String city);
+        void register(String firstname, String lastname, String email, String password, String usertype, String country, String city, Bitmap profilePicture);
     }
 }
