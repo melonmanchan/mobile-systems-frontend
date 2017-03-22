@@ -4,10 +4,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 
@@ -33,12 +37,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.data.BitmapTeleporter;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -54,7 +60,11 @@ import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RegisterFragment extends Fragment implements RegisterContract.View {
+    private ImageView registerImgView;
+    private Button registerLoadPictureBtn;
     private EditText registerEmail;
     private EditText registerFirstname;
     private EditText registerLastname;
@@ -62,6 +72,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private Button registerBtn;
     private Spinner registerCountrySpin;
     private Spinner registerCitySpin;
+    private int RESULT_LOAD_IMAGE = 1;
 
     private boolean isTutor;
 
@@ -86,6 +97,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
         this.isTutor = getArguments().getBoolean(UserTypeSelectionFragment.IS_TUTOR, false);
 
+        registerImgView = (ImageView) root.findViewById(R.id.registerImgView);
+        registerLoadPictureBtn = (Button) root.findViewById(R.id.registerLoadPictureButton);
         registerEmail = (EditText) root.findViewById(R.id.registerEmail);
         registerFirstname = (EditText) root.findViewById(R.id.registerFirstname);
         registerLastname = (EditText) root.findViewById(R.id.registerLastname);
@@ -113,6 +126,21 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             }
         });
 
+        registerLoadPictureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+            }
+        });
+
+
+
+
+
         setPreferedAdress();
 
         registerCountrySpin.post(new Runnable() {
@@ -138,6 +166,26 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
 
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data.getData() != null ){
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
+                
+                registerImgView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

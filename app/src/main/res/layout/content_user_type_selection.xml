@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am..."
+        android:text="I am a..."
         android:textSize="24sp" />
 
     <LinearLayout
@@ -32,19 +32,19 @@
             android:id="@+id/userTypeSelectionTutor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="a Tutor"/>
+            android:text="Tutor"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="or"
+            android:text="or a"
             android:textSize="24sp" />
 
         <Button
             android:id="@+id/userTypeSelectionTutee"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="a Student"
+            android:text="Student"
             android:layout_toEndOf="@+id/userTypeSelectionTutor"/>
 
     </LinearLayout>
