@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
 
 /**
@@ -28,6 +29,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private HomeMessagesFragment messagesFragment;
+    private HomeScheduleFragment scheduleFragment;
+    private HomeSearchFragment searchFragment;
+    private HomeSettingsFragment settingsFragment;
 
     private int[] tabIcons = {
             R.drawable.ic_perm_contact_calendar_white_24dp,
@@ -86,13 +92,26 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
-        adapter.addFragment(new HomeScheduleFragment(), "Schedule");
-        adapter.addFragment(new HomeMessagesFragment(), "Messages");
-        adapter.addFragment(HomeSearchFragment.getInstance(), "Find tutors");
-        adapter.addFragment(HomeSettingsFragment.getInstance(), "Settings");
+        this.messagesFragment = new HomeMessagesFragment();
+        this.scheduleFragment = new HomeScheduleFragment();
+        this.searchFragment = HomeSearchFragment.getInstance();
+        this.settingsFragment = HomeSettingsFragment.getInstance();
+
+        this.messagesFragment.setPresenter(this.presenter);
+
+        adapter.addFragment(scheduleFragment, "Schedule");
+        adapter.addFragment(messagesFragment, "Messages");
+        adapter.addFragment(searchFragment, "Find tutors");
+        adapter.addFragment(settingsFragment, "Settings");
+
         viewPager.setAdapter(adapter);
     }
-  
+
+    @Override
+    public void setMessageUsers(ArrayList<User> users) {
+        this.messagesFragment.setMessageUsers(users);
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
