@@ -99,6 +99,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         this.settingsFragment = HomeSettingsFragment.getInstance();
 
         this.messagesFragment.setPresenter(this.presenter);
+        this.scheduleFragment.setPresenter(this.presenter);
+        this.searchFragment.setPresenter(this.presenter);
+        this.settingsFragment.setPresenter(this.presenter);
 
         adapter.addFragment(scheduleFragment, "");
         adapter.addFragment(messagesFragment, "");

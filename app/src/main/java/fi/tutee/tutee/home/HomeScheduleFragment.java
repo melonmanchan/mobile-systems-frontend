@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import fi.tutee.tutee.R;
 
-public class HomeScheduleFragment extends Fragment{
+public class HomeScheduleFragment extends HomeBaseFragment {
     public HomeScheduleFragment() {
         // Required empty public constructor
     }

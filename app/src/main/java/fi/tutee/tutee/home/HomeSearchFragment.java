@@ -18,7 +18,7 @@ import java.util.Map;
 
 import fi.tutee.tutee.R;
 
-public class HomeSearchFragment extends Fragment {
+public class HomeSearchFragment extends HomeBaseFragment {
     private List<Map<String, String>> subjectsList = new ArrayList<Map<String,String>>();
     private SimpleAdapter adapter;
     private static HomeSearchFragment instance = null;

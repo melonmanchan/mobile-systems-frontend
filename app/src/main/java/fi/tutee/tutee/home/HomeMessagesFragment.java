@@ -1,7 +1,6 @@
 package fi.tutee.tutee.home;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,10 @@ import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.UserChatListAdapter;
 import fi.tutee.tutee.data.entities.User;
 
-public class HomeMessagesFragment extends Fragment {
+public class HomeMessagesFragment extends HomeBaseFragment {
     private ListView messageUsersList;
-    private HomeContract.Presenter presenter;
 
     public HomeMessagesFragment() {}
-
-    public void setPresenter(HomeContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

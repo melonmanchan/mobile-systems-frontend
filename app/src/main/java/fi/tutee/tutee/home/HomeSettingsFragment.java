@@ -23,8 +23,9 @@ import fi.tutee.tutee.profile.ProfileActivity;
  * Created by emmilinkola on 15/03/17.
  */
 
-public class HomeSettingsFragment extends Fragment {
+public class HomeSettingsFragment extends HomeBaseFragment {
     private static HomeSettingsFragment instance = null;
+
     private List<Map<String, String>> settingsList = new ArrayList<>();
     private SimpleAdapter adapter;
 
