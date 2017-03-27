@@ -3,12 +3,15 @@ package fi.tutee.tutee.profile;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -61,9 +64,13 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
             @Override
             public void onClick(View v) {
                 edit.setEnabled(false);
-                user.setFirstName(firstname.getText().toString());
-                user.setLastName(lastname.getText().toString());
-                presenter.updateUser(user);
+
+                String firstName = firstname.getText().toString();
+                String lastName = lastname.getText().toString();
+
+                if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
+                    presenter.updateUser(firstName, lastName);
+                }
             }
         });
 
