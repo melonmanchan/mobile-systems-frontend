@@ -11,7 +11,7 @@ import fi.tutee.tutee.data.entities.User;
 public class ProfileContract {
 
     interface Presenter extends BasePresenter {
-        void updateUser(User user);
+        void updateUser(String firstName, String lastName);
     }
 
     interface View extends BaseView<Presenter> {

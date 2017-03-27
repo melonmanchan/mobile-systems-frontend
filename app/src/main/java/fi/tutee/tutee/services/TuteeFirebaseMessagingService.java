@@ -2,7 +2,6 @@ package fi.tutee.tutee.services;
 
 import android.text.TextUtils;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;

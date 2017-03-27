@@ -18,7 +18,7 @@ import java.util.Map;
 
 import fi.tutee.tutee.R;
 
-public class HomeSearchFragment extends Fragment {
+public class HomeSearchFragment extends HomeBaseFragment {
     private List<Map<String, String>> subjectsList = new ArrayList<Map<String,String>>();
     private SimpleAdapter adapter;
     private static HomeSearchFragment instance = null;
@@ -73,8 +73,8 @@ public class HomeSearchFragment extends Fragment {
         // The row layout that is used during the row creation
         // The keys used to retrieve the data
         // The View id used to show the data. The key number and the view id must match
-        adapter = new SimpleAdapter(getActivity(), subjectsList, android.R.layout.simple_list_item_1,
-                new String[] {"subject"}, new int[] {android.R.id.text1});
+        adapter = new SimpleAdapter(getActivity(), subjectsList, R.layout.search_list_item,
+                new String[] {"subject"}, new int[] {R.id.searchlistitem});
 
         list.setAdapter(adapter);
 

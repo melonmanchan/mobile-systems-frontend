@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -19,6 +20,12 @@
 
     <style name="TabFont" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="SearchListStyle" parent="android:style/Widget.ListView">
+        <item name="android:background">@color/colorLightBackground</item>
+        <item name="android:divider">@color/colorDivider</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 
 </resources>

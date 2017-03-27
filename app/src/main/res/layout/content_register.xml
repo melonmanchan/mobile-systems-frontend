@@ -14,19 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/registerImgView"
             android:layout_width="fill_parent"
             android:layout_height="150dp"
             android:layout_weight="1"
-            android:src="@drawable/profile_picture"></ImageView>
+            android:src="@drawable/profile_picture"/>
+
         <Button
             android:id="@+id/registerLoadPictureButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="Load Picture"
-            android:layout_gravity="center"></Button>
+            android:layout_gravity="center"/>
 
         <EditText
             android:id = "@+id/registerFirstname"

@@ -3,9 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/messages_user_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="@dimen/tab_icon_size"
+        android:layout_height="@dimen/tab_icon_size"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

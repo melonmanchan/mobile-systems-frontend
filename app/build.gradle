@@ -35,8 +35,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:mediarouter-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
     compile 'com.google.android.gms:play-services:10.2.0'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
+
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+
     compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
 }

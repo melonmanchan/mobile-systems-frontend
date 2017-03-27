@@ -1,5 +1,8 @@
 package fi.tutee.tutee.home;
 
+import java.util.ArrayList;
+
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 
 /**
@@ -27,5 +30,15 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void logOut() {
         this.repository.logOut();
+    }
+
+    @Override
+    public void getMessageUsers() {
+        User user = this.repository.getLoggedInUser();
+
+        ArrayList<User> users = new ArrayList<>();
+        users.add(user);
+
+        this.view.setMessageUsers(users);
     }
 }

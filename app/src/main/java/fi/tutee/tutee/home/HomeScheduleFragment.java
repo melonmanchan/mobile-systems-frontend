@@ -17,9 +17,10 @@ import java.util.List;
 
 import fi.tutee.tutee.R;
 
-public class HomeScheduleFragment extends Fragment{
+public class HomeScheduleFragment extends HomeBaseFragment{
     public WeekView mWeekView;
     public TabLayout days;
+
     public HomeScheduleFragment() {
         // Required empty public constructor
     }
@@ -58,10 +59,6 @@ public class HomeScheduleFragment extends Fragment{
         date.add(Calendar.DAY_OF_WEEK, 100);
         mWeekView.goToDate(date);
         return root;
-
-
-
-
     }
 
     MonthLoader.MonthChangeListener mMonthChangeListener = new MonthLoader.MonthChangeListener() {
