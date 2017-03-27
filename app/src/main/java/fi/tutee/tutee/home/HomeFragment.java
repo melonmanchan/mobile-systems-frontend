@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         for (int i = 0; i < tabIcons.length; i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+            tabLayout.getTabAt(i).setCustomView(R.layout.tab_item);
         }
 
         setHasOptionsMenu(true);
@@ -99,10 +100,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         this.messagesFragment.setPresenter(this.presenter);
 
-        adapter.addFragment(scheduleFragment, "Schedule");
-        adapter.addFragment(messagesFragment, "Messages");
-        adapter.addFragment(searchFragment, "Find tutors");
-        adapter.addFragment(settingsFragment, "Settings");
+        adapter.addFragment(scheduleFragment, "");
+        adapter.addFragment(messagesFragment, "");
+        adapter.addFragment(searchFragment, "");
+        adapter.addFragment(settingsFragment, "");
 
         viewPager.setAdapter(adapter);
     }
