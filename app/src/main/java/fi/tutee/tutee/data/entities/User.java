@@ -2,11 +2,14 @@ package fi.tutee.tutee.data.entities;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.webkit.URLUtil;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.w3c.dom.Text;
+import java.net.URL;
+
+import fi.tutee.tutee.R;
 
 public class User {
 
@@ -18,6 +21,10 @@ public class User {
     @Expose
     @SerializedName("first_name")
     private String firstName;
+
+    @Expose
+    @SerializedName("avatar_url")
+    private URL avatar;
 
     @NonNull
     @Expose
@@ -123,5 +130,9 @@ public class User {
 
     public void setAuthMethod(AuthMethod authMethod) {
         this.authMethod = authMethod;
+    }
+
+    public URL getAvatar() {
+        return avatar;
     }
 }
