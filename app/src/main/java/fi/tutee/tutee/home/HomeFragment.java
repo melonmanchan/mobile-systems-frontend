@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         for (int i = 0; i < tabIcons.length; i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+            tabLayout.getTabAt(i).setCustomView(R.layout.tab_item);
         }
 
         setHasOptionsMenu(true);
@@ -86,10 +87,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
-        adapter.addFragment(new HomeScheduleFragment(), "Schedule");
-        adapter.addFragment(new HomeMessagesFragment(), "Messages");
-        adapter.addFragment(HomeSearchFragment.getInstance(), "Find tutors");
-        adapter.addFragment(HomeSettingsFragment.getInstance(), "Settings");
+        adapter.addFragment(new HomeScheduleFragment(), "");
+        adapter.addFragment(new HomeMessagesFragment(), "");
+        adapter.addFragment(HomeSearchFragment.getInstance(), "");
+        adapter.addFragment(HomeSettingsFragment.getInstance(), "");
         viewPager.setAdapter(adapter);
     }
   
