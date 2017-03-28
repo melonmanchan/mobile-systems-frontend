@@ -1,12 +1,16 @@
 package fi.tutee.tutee.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.adapters.SubjectsListAdapter;
 
 public class HomeSearchFragment extends HomeBaseFragment {
     private List<Map<String, String>> subjectsList = new ArrayList<Map<String,String>>();
-    private SimpleAdapter adapter;
+    private ListAdapter adapter;
     private static HomeSearchFragment instance = null;
 
     public HomeSearchFragment() {
@@ -73,8 +78,9 @@ public class HomeSearchFragment extends HomeBaseFragment {
         // The row layout that is used during the row creation
         // The keys used to retrieve the data
         // The View id used to show the data. The key number and the view id must match
-        adapter = new SimpleAdapter(getActivity(), subjectsList, R.layout.search_list_item,
+        adapter = new SubjectsListAdapter(getContext(), subjectsList, R.layout.search_list_item,
                 new String[] {"subject"}, new int[] {R.id.searchlistitem});
+
 
         list.setAdapter(adapter);
 
@@ -84,7 +90,8 @@ public class HomeSearchFragment extends HomeBaseFragment {
             public void onItemClick(AdapterView parentView, View view, int position, long id) {
 
                 // We know the View is a TextView so we can cast it
-                TextView clickedView = (TextView) view;
+                RelativeLayout clickedLayout = (RelativeLayout) view;
+                TextView clickedView = (TextView) clickedLayout.findViewById(R.id.searchlistitem);
 
                 Toast.makeText(getActivity(), "Item with id ["+id+"] - Position ["+position+"] - Subject ["+clickedView.getText()+"]",
                         Toast.LENGTH_SHORT).show();

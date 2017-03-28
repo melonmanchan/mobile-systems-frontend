@@ -128,11 +128,13 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        AuthResponse response = presenter.getAutoLoginInfo();
+        if (presenter != null) {
+            AuthResponse response = presenter.getAutoLoginInfo();
 
-        if (response != null) {
-            Intent intent = new Intent(context, HomeActivity.class);
-            startActivity(intent);
+            if (response != null) {
+                Intent intent = new Intent(context, HomeActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }
