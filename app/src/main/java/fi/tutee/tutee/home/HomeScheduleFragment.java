@@ -7,19 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import fi.tutee.tutee.R;
 
 public class HomeScheduleFragment extends HomeBaseFragment{
     public WeekView mWeekView;
     public TabLayout days;
+    private Calendar day;
 
     public HomeScheduleFragment() {
         // Required empty public constructor
@@ -38,8 +44,34 @@ public class HomeScheduleFragment extends HomeBaseFragment{
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);
+        day = Calendar.getInstance();
 
-        days.addTab(days.newTab().setText("Ding"));
+        days.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                SimpleDateFormat format = new SimpleDateFormat("d/M", Locale.getDefault());
+                String date = tab.getText().toString();
+
+                Date selected = format.parse(date, new ParsePosition(0));
+
+                Calendar newCalendarInstance = Calendar.getInstance();
+                newCalendarInstance.setTime(selected);
+                mWeekView.goToDate(newCalendarInstance);
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
 
         // Set an action when any event is clicked.
@@ -55,9 +87,11 @@ public class HomeScheduleFragment extends HomeBaseFragment{
 
         // Inflate the layout for this fragment
 
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.DAY_OF_WEEK, 100);
-        mWeekView.goToDate(date);
+        //Calendar date = Calendar.getInstance();
+       // date.add(Calendar.DAY_OF_WEEK, 100);
+        // mWeekView.goToDate(date);
+        setupDateTimeInterpreter();
+        showMoreDates();
         return root;
     }
 
@@ -73,8 +107,46 @@ public class HomeScheduleFragment extends HomeBaseFragment{
     private List<WeekViewEvent> getEvents(int newYear, int newMonth) {
 
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
         return events;
     }
+
+
+
+    private void showMoreDates() {
+
+        for (int i = 0; i < 20; i++) {
+            String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
+            String month = Integer.toString(day.get(Calendar.MONTH) +1);
+            days.addTab(days.newTab().setText(weekday + "/" + month));
+            day.add(Calendar.DAY_OF_MONTH, 1);
+
+        }
+
+
+    }
+
+    private void setupDateTimeInterpreter() {
+        mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
+            @Override
+            public String interpretDate(Calendar date) {
+                SimpleDateFormat format = new SimpleDateFormat(" EEE d/M", Locale.getDefault());
+
+                // All android api level do not have a standard way of getting the first letter of
+                // the week day name. Hence we get the first char programmatically.
+                // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
+
+                return format.format(date.getTime());
+            }
+
+            @Override
+            public String interpretTime(int hour) {
+                return String.format("%1$02d:00", hour);
+            }
+        });
+    }
+
+
 
 
 }

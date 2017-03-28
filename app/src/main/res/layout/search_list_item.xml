@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/list_height"
+    android:layout_centerInParent="true"
+    >
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/searchlistitem"
-        android:minHeight="@dimen/list_height"/>
+        android:orientation="horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_centerInParent="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        >
 
-</LinearLayout>
+    <ImageView
+        android:id="@android:id/icon"
+        android:src="@drawable/ic_face_black_24dp"
+        android:tint="@color/colorPrimary"
+        android:layout_width="@dimen/tab_icon_size"
+        android:layout_height="@dimen/tab_icon_size"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchlistitem"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/list_text_size"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>

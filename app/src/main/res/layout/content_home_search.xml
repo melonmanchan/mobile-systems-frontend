@@ -7,12 +7,7 @@ android:layout_height="match_parent">
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         style="@style/SearchListStyle"
+        android:listSelector="#00000000"
         />
-
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:text="Find tutors"
-        android:layout_height="wrap_content" />
 
 </RelativeLayout>
