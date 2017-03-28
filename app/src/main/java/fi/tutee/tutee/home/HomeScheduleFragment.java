@@ -12,9 +12,11 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +46,31 @@ public class HomeScheduleFragment extends HomeBaseFragment{
         days = (TabLayout) root.findViewById(R.id.days);
         day = Calendar.getInstance();
 
+        days.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                SimpleDateFormat format = new SimpleDateFormat("d/M", Locale.getDefault());
+                String date = tab.getText().toString();
+
+                Date selected = format.parse(date, new ParsePosition(0));
+
+                Calendar newCalendarInstance = Calendar.getInstance();
+                newCalendarInstance.setTime(selected);
+                mWeekView.goToDate(newCalendarInstance);
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
 
@@ -84,6 +111,8 @@ public class HomeScheduleFragment extends HomeBaseFragment{
         return events;
     }
 
+
+
     private void showMoreDates() {
 
         for (int i = 0; i < 20; i++) {
@@ -112,7 +141,7 @@ public class HomeScheduleFragment extends HomeBaseFragment{
 
             @Override
             public String interpretTime(int hour) {
-                return Integer.toString(hour);
+                return String.format("%1$02d:00", hour);
             }
         });
     }

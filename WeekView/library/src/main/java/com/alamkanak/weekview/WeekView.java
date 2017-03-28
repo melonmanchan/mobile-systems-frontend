@@ -162,6 +162,61 @@ public class WeekView extends View {
             return true;
         }
 
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            // Check if view is zoomed.
+            if (mIsZooming)
+                return true;
+
+            switch (mCurrentScrollDirection) {
+                case NONE: {
+                    // Allow scrolling only in one direction.
+                    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+                        if (distanceX > 0) {
+                            mCurrentScrollDirection = Direction.LEFT;
+                        } else {
+                            mCurrentScrollDirection = Direction.RIGHT;
+                        }
+                    } else {
+                        mCurrentScrollDirection = Direction.VERTICAL;
+                    }
+                    break;
+                }
+
+            }
+
+            // Calculate the new origin after scroll.
+            switch (mCurrentScrollDirection) {
+                case VERTICAL:
+                    mCurrentOrigin.y -= distanceY;
+                    ViewCompat.postInvalidateOnAnimation(WeekView.this);
+                    break;
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (mIsZooming)
+                return true;
+
+            if (mCurrentFlingDirection == Direction.VERTICAL && !mVerticalFlingEnabled) {
+                return true;
+            }
+
+            mScroller.forceFinished(true);
+
+            mCurrentFlingDirection = mCurrentScrollDirection;
+            switch (mCurrentFlingDirection) {
+                case VERTICAL:
+                    mScroller.fling((int) mCurrentOrigin.x, (int) mCurrentOrigin.y, 0, (int) velocityY, Integer.MIN_VALUE, Integer.MAX_VALUE, (int) -(mHourHeight * 24 + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight/2 - getHeight()), 0);
+                    break;
+            }
+
+            ViewCompat.postInvalidateOnAnimation(WeekView.this);
+            return true;
+        }
+
        
 
         @Override
