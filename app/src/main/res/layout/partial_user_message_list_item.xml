@@ -14,7 +14,7 @@
         android:id="@+id/partial_message_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/profile_picture"/>
+        />
 
     <LinearLayout
         android:layout_weight="0.8"

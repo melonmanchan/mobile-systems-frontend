@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -78,11 +79,9 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
 
         final User user = users.get(position);
 
-        URL avatar = user.getAvatar();
+        URI avatar = user.getAvatar();
 
-        if (avatar != null) {
-            Picasso.with(context).load(avatar.toString()).into(holder.avatar);
-        }
+        Picasso.with(context).load(avatar.toString()).into(holder.avatar);
 
         holder.userName.setText(user.getFirstName() + " " + user.getLastName());
         holder.latestMessage.setText("Lorem ipsum lorem ipsum");

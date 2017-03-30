@@ -1,5 +1,6 @@
 package fi.tutee.tutee.data.entities;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
@@ -7,6 +8,8 @@ import android.webkit.URLUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import fi.tutee.tutee.R;
@@ -132,7 +135,19 @@ public class User {
         this.authMethod = authMethod;
     }
 
-    public URL getAvatar() {
-        return avatar;
+    public URI getAvatar() {
+        URI url = null;
+
+        if (avatar != null) {
+            try {
+                url = avatar.toURI();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            url = URI.create("android.resource://fi.tutee.tutee/drawable/profile_picture");
+        }
+
+        return url;
     }
 }
