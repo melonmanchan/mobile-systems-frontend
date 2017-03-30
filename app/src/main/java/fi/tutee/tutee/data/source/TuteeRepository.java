@@ -16,6 +16,7 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +83,11 @@ public class TuteeRepository implements TuteeDataSource {
     @Override
     public void googleLogin(String token) {
 
+    }
+
+    @Override
+    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
+        this.remote.changeAvatar(body, cb);
     }
 
     @Override

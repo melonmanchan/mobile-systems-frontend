@@ -30,6 +30,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
     private static int CHANGE_AVATAR = 1;
     private boolean avatarChanged = false;
+    private Uri avatarUri;
 
     private ImageView avatar;
     private TextView firstname;

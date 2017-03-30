@@ -17,6 +17,7 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -126,6 +127,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void googleLogin(String token) {
 
+    }
+
+    @Override
+    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.changeAvatar(body);
+        call.enqueue(cb);
     }
 
     @Override

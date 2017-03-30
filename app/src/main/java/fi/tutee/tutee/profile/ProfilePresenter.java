@@ -1,9 +1,17 @@
 package fi.tutee.tutee.profile;
 
+import android.content.Context;
+import android.net.Uri;
+
+import java.io.File;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,15 +23,18 @@ import retrofit2.Response;
 public class ProfilePresenter implements ProfileContract.Presenter {
     private final TuteeRepository repository;
     private final ProfileContract.View view;
+    private Context context;
     private User user;
 
     public ProfilePresenter(TuteeRepository repository,
-                             ProfileContract.View view,
-                            User user
+                            ProfileContract.View view,
+                            User user,
+                            Context context
     ) {
         this.repository = repository;
         this.view = view;
         this.user = user;
+        this.context = context;
 
         view.setPresenter(this);
     }
@@ -59,5 +70,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             }
         });
 
+    }
+
+    @Override
+    public void changeAvatar(Uri avatarUri) {
+        File avatarFile = new File(avatarUri.getPath());
+        RequestBody req = RequestBody.create(MediaType.parse(context.getContentResolver().getType(avatarUri)), avatarFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", avatarFile.getName(), req);
     }
 }

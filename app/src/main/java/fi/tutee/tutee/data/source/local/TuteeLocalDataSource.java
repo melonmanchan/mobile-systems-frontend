@@ -15,6 +15,7 @@ import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
+import okhttp3.MultipartBody;
 import retrofit2.Callback;
 
 /**
@@ -47,6 +48,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
 
     @Override
     public void googleLogin(String token) {
+    }
+
+    @Override
+    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot change local avatar"));
     }
 
     @Override

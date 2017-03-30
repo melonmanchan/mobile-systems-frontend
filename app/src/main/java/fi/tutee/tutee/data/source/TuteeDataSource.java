@@ -8,6 +8,7 @@ import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -18,6 +19,8 @@ import retrofit2.Callback;
 public interface TuteeDataSource {
     void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
     void googleLogin(String token);
+
+    void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb);
 
     void logOut();
 

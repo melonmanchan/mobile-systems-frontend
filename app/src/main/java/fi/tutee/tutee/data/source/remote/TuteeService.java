@@ -8,10 +8,13 @@ import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 
 /**
  * Created by mat on 07/03/2017.
@@ -23,7 +26,7 @@ public interface TuteeService {
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);
 
     @POST("user/register_device")
-    Call<APIResponse<AuthResponse>> registerUserDevice(@Body DeviceRegisterRequest req);
+    Call<APIResponse> registerUserDevice(@Body DeviceRegisterRequest req);
 
     @POST("auth/register")
     Call<APIResponse<AuthResponse>> register(@Body RegisterRequest req);
@@ -33,4 +36,8 @@ public interface TuteeService {
 
     @PUT("user/update_profile")
     Call<APIResponse<User>> updateUser(@Body UpdateUserRequest req);
+
+    @Multipart
+    @PUT("user/change_avatar")
+    Call<APIResponse> changeAvatar(@Part MultipartBody.Part file);
 }
