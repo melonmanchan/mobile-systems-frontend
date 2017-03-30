@@ -2,8 +2,11 @@ package fi.tutee.tutee.profile;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.User;
 
 /**
@@ -19,7 +22,11 @@ public class ProfileContract {
 
     interface View extends BaseView<Presenter> {
         void setUser(User user);
+
         void onUpdateSuccess();
         void onUpdateFailure();
+
+        void onAvatarFailed(ArrayList<APIError> errors );
+        void onAvatarSuccess();
     }
 }

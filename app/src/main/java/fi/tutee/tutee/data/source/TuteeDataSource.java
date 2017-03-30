@@ -20,7 +20,7 @@ public interface TuteeDataSource {
     void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
     void googleLogin(String token);
 
-    void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb);
+    void changeAvatar(MultipartBody.Part body, Callback<APIResponse<User>> cb);
 
     void logOut();
 

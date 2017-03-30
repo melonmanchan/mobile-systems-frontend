@@ -130,8 +130,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
-        Call<APIResponse> call = service.changeAvatar(body);
+    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse<User>> cb) {
+        Call<APIResponse<User>> call = service.changeAvatar(body);
         call.enqueue(cb);
     }
 

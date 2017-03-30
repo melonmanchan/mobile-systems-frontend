@@ -3,6 +3,7 @@ package fi.tutee.tutee.data.source;
 import android.text.TextUtils;
 
 import com.facebook.stetho.common.StringUtil;
+import com.google.android.gms.nearby.messages.internal.Update;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -86,8 +87,25 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
-        this.remote.changeAvatar(body, cb);
+    public void changeAvatar(MultipartBody.Part body, final Callback<APIResponse<User>> cb) {
+        this.remote.changeAvatar(body, new Callback<APIResponse<User>>() {
+            @Override
+            public void onResponse(Call<APIResponse<User>> call, Response<APIResponse<User>> response) {
+                APIResponse<User> resp = response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    UpdateUserRequest updateUserRequest = new UpdateUserRequest(resp.getResponse());
+                    local.updateUser(updateUserRequest, new EmptyCallback<APIResponse<User>>());
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<User>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
     }
 
     @Override
@@ -177,6 +195,7 @@ public class TuteeRepository implements TuteeDataSource {
                 if (resp != null && resp.isSuccessful()) {
                     local.updateUser(req, new EmptyCallback<APIResponse<User>>());
                 }
+
                 cb.onResponse(call, response);
             }
 

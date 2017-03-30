@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
+import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 
@@ -70,7 +72,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         email.setText(user.getEmail());
 
         avatar = (ImageView)  root.findViewById(R.id.profile_avatar);
-        URI avatarSrc = user.getAvatar();
+        final URI avatarSrc = user.getAvatar();
         Picasso.with(getActivity()).load(avatarSrc.toString()).into(avatar);
 
         edit = (Button) root.findViewById(R.id.save_profile);
@@ -84,6 +86,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
                 if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
                     presenter.updateUser(firstName, lastName);
+                }
+
+                if (avatarChanged) {
+                    presenter.changeAvatar(Uri.parse(avatarSrc.toString()));
                 }
             }
         });
@@ -126,6 +132,15 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         String errorMessage = "Successfully updated!";
         Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onAvatarFailed(ArrayList<APIError> errors) {
+        String errorMessage = "Changing avatar failed!";
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAvatarSuccess() {}
 
     @Override
     public void onUpdateFailure() {

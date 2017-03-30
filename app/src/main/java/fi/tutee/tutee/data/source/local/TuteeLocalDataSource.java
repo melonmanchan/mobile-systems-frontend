@@ -51,7 +51,7 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
-    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse> cb) {
+    public void changeAvatar(MultipartBody.Part body, Callback<APIResponse<User>> cb) {
         cb.onFailure(null, new Exception("Cannot change local avatar"));
     }
 
@@ -87,6 +87,7 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     @Override
     public void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb) {
         AuthResponse persistedAuthResponse = fetchPersistedUserLogin();
+
         if (persistedAuthResponse != null) {
             persistedAuthResponse.setUser(req.getUser());
             persistUserLogin(persistedAuthResponse);
