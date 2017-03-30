@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
+
+import java.net.URI;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -23,7 +26,8 @@ import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 
 public class ProfileFragment extends Fragment implements ProfileContract.View  {
     private ProfileContract.Presenter presenter;
-    private boolean isTutor;
+
+    private ImageView avatar;
     private TextView firstname;
     private TextView lastname;
     private TextView email;
@@ -58,6 +62,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
         email = (EditText) root.findViewById(R.id.profile_email);
         email.setText(user.getEmail());
+
+        avatar = (ImageView)  root.findViewById(R.id.profile_avatar);
+        URI avatarSrc = user.getAvatar();
+        Picasso.with(getActivity()).load(avatarSrc.toString()).into(avatar);
 
         edit = (Button) root.findViewById(R.id.save_profile);
         edit.setOnClickListener(new View.OnClickListener() {
