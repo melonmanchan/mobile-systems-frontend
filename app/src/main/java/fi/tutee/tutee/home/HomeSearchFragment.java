@@ -26,20 +26,9 @@ import fi.tutee.tutee.adapters.SubjectsListAdapter;
 public class HomeSearchFragment extends HomeBaseFragment {
     private List<Map<String, String>> subjectsList = new ArrayList<Map<String,String>>();
     private ListAdapter adapter;
-    private static HomeSearchFragment instance = null;
 
     public HomeSearchFragment() {
         // Required empty public constructor
-    }
-
-    public static HomeSearchFragment getInstance() {
-        if (instance == null) {
-            Bundle arguments = new Bundle();
-            instance = new HomeSearchFragment();
-            instance.setArguments(arguments);
-        }
-
-        return instance;
     }
 
     private void initList() {
