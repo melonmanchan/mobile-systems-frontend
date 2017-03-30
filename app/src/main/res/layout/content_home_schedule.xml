@@ -12,8 +12,6 @@
         app:tabMode="scrollable"
         app:tabIndicatorHeight="5dp" />
 
-
-
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
         android:layout_width="wrap_content"
@@ -31,17 +29,4 @@
         app:todayBackgroundColor="#1848adff"
         app:headerColumnBackground="#ffffffff"
         android:layout_below="@+id/days"/>
-
-
-
-
-
-
-
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:text="Schedule"
-        android:layout_height="wrap_content" />
-
 </RelativeLayout>

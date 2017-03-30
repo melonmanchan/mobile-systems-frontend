@@ -96,6 +96,4 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         String errorMessage = "Something went wrong!";
         Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
-
-
 }

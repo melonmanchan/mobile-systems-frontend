@@ -6,11 +6,4 @@
     <ListView android:id="@+id/settingsListView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
-
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:text="Settings"
-        android:layout_height="wrap_content" />
-
 </RelativeLayout>
