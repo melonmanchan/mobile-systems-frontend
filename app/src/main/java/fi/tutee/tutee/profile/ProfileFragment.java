@@ -1,5 +1,8 @@
 package fi.tutee.tutee.profile;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,18 +23,20 @@ import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 
-/**
- * Created by emmilinkola on 15/03/17.
- */
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements ProfileContract.View  {
     private ProfileContract.Presenter presenter;
+
+    private static int CHANGE_AVATAR = 1;
+    private boolean avatarChanged = false;
 
     private ImageView avatar;
     private TextView firstname;
     private TextView lastname;
     private TextView email;
     private Button edit;
+    private Button changeAvatar;
     private User user;
 
     public ProfileFragment() {}
@@ -82,13 +87,36 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
             }
         });
 
+        changeAvatar = (Button) root.findViewById(R.id.change_avatar);
+
+        changeAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), CHANGE_AVATAR);
+            }
+        });
+
         return root;
     }
 
     @Override
     public void setUser(User user) {
         this.user = user;
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CHANGE_AVATAR && resultCode == RESULT_OK && data.getData() != null ){
+            avatarChanged = true;
+            Uri uri = data.getData();
+            Picasso.with(getContext()).load(uri.toString()).into(avatar);
+        }
     }
 
     @Override

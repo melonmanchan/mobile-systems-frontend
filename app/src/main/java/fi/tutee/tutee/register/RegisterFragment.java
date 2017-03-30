@@ -77,8 +77,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     private RegisterContract.Presenter presenter;
 
-    public RegisterFragment() {
-    }
+    public RegisterFragment() {}
 
     public static RegisterFragment newInstance(boolean isTutor) {
         Bundle arguments = new Bundle();
@@ -136,16 +135,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             }
         });
 
-
-
-
-
-
-
-
-
-
-
         return root;
     }
 
@@ -154,12 +143,10 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data.getData() != null ){
-
             Uri uri = data.getData();
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
-
                 registerImgView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -168,13 +155,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             }
         }
     }
-
-
-
-
-
-
-
 
     @Override
     public void setPresenter(RegisterContract.Presenter presenter) {

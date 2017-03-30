@@ -48,18 +48,16 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     private Button registerTutorExtraNewSkillBtn;
     private LinearLayout registerTutorExtraSkillsLayout;
 
-
     private RegisterExtraContract.Presenter presenter;
 
-    public RegisterExtraFragment() {
-            }
+    public RegisterExtraFragment() {}
 
     public static RegisterExtraFragment newInstance() {
-            Bundle arguments = new Bundle();
-            RegisterExtraFragment fragment = new RegisterExtraFragment();
-            fragment.setArguments(arguments);
-            return fragment;
-            }
+        Bundle arguments = new Bundle();
+        RegisterExtraFragment fragment = new RegisterExtraFragment();
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,10 +71,6 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerTutorExtraBtn = (Button) root.findViewById(R.id.registerTutorExtraButton);
             registerTutorExtraNewSkillBtn = (Button) root.findViewById(R.id.registerTutorExtraNewSkillButton);
             registerTutorExtraSkillsLayout = (LinearLayout) root.findViewById(R.id.content_register_tutor_extra_skills_layout);
-
-
-
-
 
             registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
