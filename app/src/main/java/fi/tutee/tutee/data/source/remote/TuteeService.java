@@ -38,6 +38,6 @@ public interface TuteeService {
     Call<APIResponse<User>> updateUser(@Body UpdateUserRequest req);
 
     @Multipart
-    @PUT("user/change_avatar")
+    @POST("user/change_avatar")
     Call<APIResponse<User>> changeAvatar(@Part MultipartBody.Part file);
 }
