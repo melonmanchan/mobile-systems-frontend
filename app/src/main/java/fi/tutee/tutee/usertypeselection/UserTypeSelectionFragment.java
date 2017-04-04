@@ -11,6 +11,8 @@ import android.widget.Button;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
 import fi.tutee.tutee.register.RegisterActivity;
+import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
+import fi.tutee.tutee.registertutorextra.RegisterExtraFragment;
 
 public class UserTypeSelectionFragment extends Fragment implements UserTypeSelectionContract.View {
     private Button tutorButton;
@@ -62,7 +64,7 @@ public class UserTypeSelectionFragment extends Fragment implements UserTypeSelec
     }
 
     private void moveToAuthentication(Boolean isTutor) {
-        Intent intent = new Intent(getContext(), RegisterActivity.class);
+        Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
         intent.putExtra(IS_TUTOR, isTutor);
         startActivity(intent);
     }

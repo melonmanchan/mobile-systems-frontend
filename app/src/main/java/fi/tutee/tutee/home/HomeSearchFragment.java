@@ -4,17 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
-import fi.tutee.tutee.adapters.SubjectsListAdapter;
+import fi.tutee.tutee.adapters.SubjectsSearchListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
 
 public class HomeSearchFragment extends HomeBaseFragment {
@@ -53,9 +48,9 @@ public class HomeSearchFragment extends HomeBaseFragment {
         // The row layout that is used during the row creation
         // The keys used to retrieve the data
         // The View id used to show the data. The key number and the view id must match
-        SubjectsListAdapter adapter = new SubjectsListAdapter(getContext(), R.layout.search_list_item, subjects);
+        SubjectsSearchListAdapter adapter = new SubjectsSearchListAdapter(getContext(), R.layout.search_list_item, subjects);
 
-        adapter.setListener(new SubjectsListAdapter.OnSubjectSelectedListener() {
+        adapter.setListener(new SubjectsSearchListAdapter.OnSubjectSelectedListener() {
             @Override
             public void onSelected(Subject user) {
 

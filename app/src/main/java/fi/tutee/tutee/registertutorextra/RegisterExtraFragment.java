@@ -7,6 +7,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -26,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -34,21 +35,18 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
-import fi.tutee.tutee.data.entities.Skill;
-
-/**
- * Created by lehtone1 on 09/03/17.
- */
+import fi.tutee.tutee.data.entities.Subject;
 
 public class RegisterExtraFragment extends Fragment implements RegisterExtraContract.View {
     private Spinner registerCountrySpin;
     private Spinner registerCitySpin;
     private EditText registerTutorExtraDescription;
     private Button registerTutorExtraBtn;
-    private Button registerTutorExtraNewSkillBtn;
-    private LinearLayout registerTutorExtraSkillsLayout;
 
     private RegisterExtraContract.Presenter presenter;
+
+    private ListView subjectsList;
+    private ArrayList<Subject> subjects;
 
     public RegisterExtraFragment() {}
 
@@ -69,55 +67,11 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerCitySpin = (Spinner) root.findViewById(R.id.registerCitySpinner);
             registerTutorExtraDescription = (EditText) root.findViewById(R.id.registerTutorExtraDescription);
             registerTutorExtraBtn = (Button) root.findViewById(R.id.registerTutorExtraButton);
-            registerTutorExtraNewSkillBtn = (Button) root.findViewById(R.id.registerTutorExtraNewSkillButton);
-            registerTutorExtraSkillsLayout = (LinearLayout) root.findViewById(R.id.content_register_tutor_extra_skills_layout);
+            subjectsList = (ListView)  root.findViewById(R.id.register_extra_subjects);
 
-            registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        String country = registerCountrySpin.getSelectedItem().toString();
-                        String city = registerCitySpin.getSelectedItem().toString();
-                        String description = (String) registerTutorExtraDescription.getText().toString();
-                        ArrayList<Skill> skills = new ArrayList<Skill>();
+            presenter.getSubjects();
 
-                        for(int index = 0; index < (registerTutorExtraSkillsLayout.getChildCount()); ++index) {
-                            LinearLayout skillWrapper = (LinearLayout) ((registerTutorExtraSkillsLayout.getChildAt(index)));
-
-                            EditText skillDescription = (EditText) skillWrapper.getChildAt(0);
-
-                            Spinner skillLevelSpinner = (Spinner) skillWrapper.getChildAt(1);
-
-                            String skillText = (String) skillDescription.getText().toString();
-
-                            String level = (String) skillLevelSpinner.getSelectedItem().toString();
-
-                            skills.add(new Skill(skillText, level));
-                        }
-
-                        presenter.registerTutorExtra(country, city, description, skills);
-
-
-
-
-                    /**
-                        if (!TextUtils.isEmpty(description) {
-                        presenter.register(firstName, lastName, email, password, "TUTOR");
-                        }
-                     **/
-                }
-
-            });
-
-
-            registerTutorExtraNewSkillBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    registerTutorExtraSkillsLayout.addView(createNewSkillLayout());
-                }
-
-            });
-
-            setPreferedAdress();
+            //setPreferredAddress();
 
             registerCountrySpin.post(new Runnable() {
                 @Override
@@ -137,11 +91,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                 }
             });
 
-
-
-
             return root;
-
     }
 
     private String loadJSONFromAsset() {
@@ -217,8 +167,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
         }
     }
 
-    private void setPreferedAdress() {
-
+    private void setPreferredAddress() {
         Geocoder geocoder;
         LocationManager lm;
 
@@ -253,46 +202,29 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerCountrySpin.setSelection(((ArrayAdapter) registerCountrySpin.getAdapter()).getPosition(country));
             getCitiesFromJson(country);
             registerCitySpin.setSelection(((ArrayAdapter) registerCitySpin.getAdapter()).getPosition(city));
-
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
-
-
-    private LinearLayout createNewSkillLayout() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout newLayout = (LinearLayout) inflater.inflate(R.layout.content_one_skill_layout, null);
-        return newLayout;
-
-    }
-
-
-
-
 
     @Override
     public void setPresenter(RegisterExtraContract.Presenter presenter) {
-            this.presenter = presenter;
-            }
+        this.presenter = presenter;
+    }
 
     @Override
     public void onRegisterSuccess() {
-            System.out.println("registersuccess");
-            }
+        Snackbar.make(getView(), "Extra register succeeded!", Snackbar.LENGTH_LONG).show();
+    }
 
     @Override
     public void onRegisterFail() {
-            System.out.println("registerfail");
+        Snackbar.make(getView(), "Extra register failed!", Snackbar.LENGTH_LONG).show();
+    }
 
-            }
-            }
+    @Override
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+}
 

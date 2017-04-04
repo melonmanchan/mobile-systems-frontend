@@ -54,4 +54,9 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void getSubjects() {
+
+    }
 }
