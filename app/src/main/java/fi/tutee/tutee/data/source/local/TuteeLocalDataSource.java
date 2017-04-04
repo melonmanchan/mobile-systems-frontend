@@ -112,6 +112,10 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         }
     }
 
+    public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {
+        this.cachedSubjects = cachedSubjects;
+    }
+
     public boolean hasCachedSubjects() {
         return (this.cachedSubjects != null && this.cachedSubjects.size() > 0);
     }

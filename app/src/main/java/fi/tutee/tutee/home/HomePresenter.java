@@ -2,12 +2,13 @@ package fi.tutee.tutee.home;
 
 import java.util.ArrayList;
 
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
-
-/**
- * Created by mat on 12/03/2017.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomePresenter implements HomeContract.Presenter {
     private final TuteeRepository repository;
@@ -40,5 +41,25 @@ public class HomePresenter implements HomeContract.Presenter {
         users.add(user);
 
         this.view.setMessageUsers(users);
+    }
+
+    @Override
+    public void getSubjects() {
+        this.repository.getSubjects(new Callback<APIResponse<ArrayList<Subject>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<Subject>>> call, Response<APIResponse<ArrayList<Subject>>> response) {
+                APIResponse<ArrayList<Subject>> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    ArrayList<Subject> subjects = resp.getResponse();
+                    view.setSubjects(subjects);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<Subject>>> call, Throwable t) {
+                // TODO
+            }
+        });
     }
 }

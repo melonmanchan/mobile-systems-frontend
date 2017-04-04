@@ -22,7 +22,7 @@ import retrofit2.http.Part;
 
 public interface TuteeService {
 
-    @GET("subjects/")
+    @GET("subject/")
     Call<APIResponse<ArrayList<Subject>>> getSubjects();
 
     @POST("auth/login")

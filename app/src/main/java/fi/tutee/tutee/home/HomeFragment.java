@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
 
@@ -114,6 +115,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void setMessageUsers(ArrayList<User> users) {
         this.messagesFragment.setMessageUsers(users);
+    }
+
+    @Override
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.searchFragment.setSubjects(subjects);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
