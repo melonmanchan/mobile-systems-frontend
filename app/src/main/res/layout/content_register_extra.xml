@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_register_tutor_extra"
     android:layout_width="match_parent"
@@ -11,6 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     tools:context="fi.tutee.tutee.register.RegisterFragment">
 
     <android.support.v7.widget.AppCompatSpinner
@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/register_spinner_padding" />
-
 
     <android.support.v7.widget.AppCompatSpinner
         android:id = "@+id/registerCitySpinner"
@@ -29,7 +28,7 @@
     <ListView
         android:id="@+id/register_extra_subjects"
         android:layout_width="match_parent"
-        android:layout_height="160dp" />
+        android:layout_height="300dp" />
 
     <EditText
         android:id = "@+id/registerTutorExtraDescription"

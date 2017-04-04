@@ -42,18 +42,12 @@ public class HomeSearchFragment extends HomeBaseFragment {
     public void setSubjects(ArrayList<Subject> subjects) {
         this.subjects = subjects;
 
-        // This is a simple adapter that accepts as parameter
-        // Context
-        // Data list
-        // The row layout that is used during the row creation
-        // The keys used to retrieve the data
-        // The View id used to show the data. The key number and the view id must match
         SubjectsSearchListAdapter adapter = new SubjectsSearchListAdapter(getContext(), R.layout.search_list_item, subjects);
 
         adapter.setListener(new SubjectsSearchListAdapter.OnSubjectSelectedListener() {
             @Override
             public void onSelected(Subject user) {
-
+                // TODO
             }
         });
 

@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -35,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.adapters.SubjectExtraListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
 
 public class RegisterExtraFragment extends Fragment implements RegisterExtraContract.View {
@@ -225,6 +225,21 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     @Override
     public void setSubjects(ArrayList<Subject> subjects) {
         this.subjects = subjects;
+
+        SubjectExtraListAdapter adapter = new SubjectExtraListAdapter(getContext(), R.layout.partial_extra_subject_list_item, subjects);
+        adapter.setListener(new SubjectExtraListAdapter.OnSubjectExtraSelectedListener() {
+            @Override
+            public void onSelected(Subject subject) {
+                Snackbar.make(getView(), "Selected " + subject.getType(), Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onDeselected(Subject subject) {
+                Snackbar.make(getView(), "Deselected " + subject.getType(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        subjectsList.setAdapter(adapter);
     }
 }
 

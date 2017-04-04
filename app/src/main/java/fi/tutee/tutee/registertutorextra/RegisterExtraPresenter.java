@@ -6,6 +6,7 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Skill;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +58,22 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
 
     @Override
     public void getSubjects() {
+        this.repository.getSubjects(new Callback<APIResponse<ArrayList<Subject>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<Subject>>> call, Response<APIResponse<ArrayList<Subject>>> response) {
+                APIResponse<ArrayList<Subject>> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    ArrayList<Subject> subjects = resp.getResponse();
+                    view.setSubjects(subjects);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<Subject>>> call, Throwable t) {
+                // TODO
+            }
+        });
 
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/partial_extra_subject_list_id"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp">
+
+    <CheckedTextView
+        android:layout_gravity="center_horizontal"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:id="@+id/partial_extra_subject_list_name"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" />
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
     private Set<Integer> selectedSubjectIds;
     private Context context;
 
-    private  OnSubjectExtraSelectedListener listener;
+    private OnSubjectExtraSelectedListener listener;
 
     public SubjectExtraListAdapter(@NonNull Context context, @LayoutRes int resource, ArrayList<Subject> subjects) {
         super(context, resource, subjects);
@@ -34,6 +35,10 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
         this.selectedSubjectIds = new HashSet<Integer>();
     }
 
+    public void setListener(OnSubjectExtraSelectedListener listener) {
+        this.listener = listener;
+    }
+
     public interface OnSubjectExtraSelectedListener {
         void onSelected(Subject subject);
         void onDeselected(Subject subject);
@@ -41,20 +46,20 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
 
     protected class SubjectExtraHolder {
         View wrapper;
-        TextView name;
-        CheckBox selected;
+        CheckedTextView name;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        SubjectExtraHolder holder;
+        final SubjectExtraHolder holder;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.search_list_item, null);
+            convertView = inflater.inflate(R.layout.partial_extra_subject_list_item, null);
 
             holder = new SubjectExtraHolder();
-            holder.wrapper = (View) convertView.findViewById(R.id.search_list_id);
+            holder.wrapper = (View) convertView.findViewById(R.id.partial_extra_subject_list_id);
+            holder.name = (CheckedTextView)  convertView.findViewById(R.id.partial_extra_subject_list_name);
 
             convertView.setTag(holder);
         } else {
@@ -63,10 +68,12 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
 
         final Subject subject = subjects.get(position);
 
+        holder.name.setText(subject.getType());
+
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener == null) {
                     return;
                 }
 
@@ -74,9 +81,11 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
 
                 if (selectedSubjectIds.contains(id)) {
                     selectedSubjectIds.remove(id);
+                    holder.name.setChecked(false);
                     listener.onDeselected(subject);
                 } else {
                     selectedSubjectIds.add(id);
+                    holder.name.setChecked(true);
                     listener.onSelected(subject);
                 }
             }
