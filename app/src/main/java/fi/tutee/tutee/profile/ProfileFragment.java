@@ -1,12 +1,15 @@
 package fi.tutee.tutee.profile;
 
+import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
     private ProfileContract.Presenter presenter;
 
     private static int CHANGE_AVATAR = 1;
+    private static int REQUEST_AVATAR_OPEN = 2;
+
     private boolean avatarChanged = false;
     private String avatarUri;
 
@@ -100,20 +105,47 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         changeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
-
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-
-                Intent chooserIntent = Intent.createChooser(getIntent, "Select Avatar");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
-                startActivityForResult(chooserIntent, CHANGE_AVATAR);
+                if (permittedToOpenFile()) {
+                    openFilePicker();
+                } else {
+                    requestFilePermission();
+                }
             }
         });
 
         return root;
+    }
+
+    private void openFilePicker() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Avatar");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+        startActivityForResult(chooserIntent, CHANGE_AVATAR);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode ==  REQUEST_AVATAR_OPEN && grantResults.length  == 1) {
+            openFilePicker();
+        } else {
+            Snackbar.make(getView(), "Please enable file picking", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean permittedToOpenFile() {
+        return (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestFilePermission() {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+            }, REQUEST_AVATAR_OPEN);
     }
 
     @Override
