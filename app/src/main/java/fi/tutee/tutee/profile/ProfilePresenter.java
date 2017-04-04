@@ -73,13 +73,14 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void changeAvatar(Uri avatarUri) {
-        File avatarFile = new File(avatarUri.getPath());
-        RequestBody req = RequestBody.create(MediaType.parse(context.getContentResolver().getType(avatarUri)), avatarFile);
+    public void changeAvatar(String avatarUri) {
+        File avatarFile = new File(avatarUri);
+        RequestBody req = RequestBody.create(MediaType.parse("image/*"), avatarFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", avatarFile.getName(), req);
-        this.repository.changeAvatar(body, new Callback<APIResponse>() {
+
+        this.repository.changeAvatar(body, new Callback<APIResponse<User>>() {
             @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+            public void onResponse(Call<APIResponse<User>> call, Response<APIResponse<User>> response) {
                 APIResponse resp = response.body();
                 if (resp.isSuccessful()) {
                     view.onAvatarSuccess();
@@ -89,7 +90,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
+            public void onFailure(Call<APIResponse<User>> call, Throwable t) {
                 view.onAvatarFailed(null);
             }
         });

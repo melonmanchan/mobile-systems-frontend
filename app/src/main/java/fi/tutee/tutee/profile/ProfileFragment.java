@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -32,7 +33,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
     private static int CHANGE_AVATAR = 1;
     private boolean avatarChanged = false;
-    private Uri avatarUri;
+    private String avatarUri;
 
     private ImageView avatar;
     private TextView firstname;
@@ -89,7 +90,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
                 }
 
                 if (avatarChanged) {
-                    presenter.changeAvatar(Uri.parse(avatarSrc.toString()));
+                    presenter.changeAvatar(avatarUri);
                 }
             }
         });
@@ -99,11 +100,16 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         changeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                getIntent.setType("image/*");
 
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), CHANGE_AVATAR);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                pickIntent.setType("image/*");
+
+                Intent chooserIntent = Intent.createChooser(getIntent, "Select Avatar");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+                startActivityForResult(chooserIntent, CHANGE_AVATAR);
             }
         });
 
@@ -123,6 +129,17 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
             avatarChanged = true;
             Uri uri = data.getData();
             Picasso.with(getContext()).load(uri.toString()).into(avatar);
+
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            android.database.Cursor cursor = getActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
+            if (cursor == null)
+                return;
+
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            avatarUri = cursor.getString(columnIndex);
+            cursor.close();
         }
     }
 
@@ -140,7 +157,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
     }
 
     @Override
-    public void onAvatarSuccess() {}
+    public void onAvatarSuccess() {
+        String errorMessage = "Changing avatar succeeded!";
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+        avatarChanged = false;
+    }
 
     @Override
     public void onUpdateFailure() {

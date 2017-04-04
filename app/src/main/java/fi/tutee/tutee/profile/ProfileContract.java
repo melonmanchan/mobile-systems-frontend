@@ -17,7 +17,7 @@ public class ProfileContract {
 
     interface Presenter extends BasePresenter {
         void updateUser(String firstName, String lastName);
-        void changeAvatar(Uri avatarUri);
+        void changeAvatar(String avatarUri);
     }
 
     interface View extends BaseView<Presenter> {
