@@ -1,26 +1,29 @@
 package fi.tutee.tutee.data.source.remote;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
-/**
- * Created by mat on 07/03/2017.
- */
-
 public interface TuteeService {
+
+    @GET("subjects/")
+    Call<APIResponse<ArrayList<Subject>>> getSubjects();
 
     @POST("auth/login")
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);

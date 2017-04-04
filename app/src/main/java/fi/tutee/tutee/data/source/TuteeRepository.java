@@ -6,12 +6,15 @@ import com.facebook.stetho.common.StringUtil;
 import com.google.android.gms.nearby.messages.internal.Update;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
@@ -204,6 +207,15 @@ public class TuteeRepository implements TuteeDataSource {
                 cb.onFailure(call, t);
             }
         });
+    }
+
+    @Override
+    public void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb) {
+        if (this.local.hasCachedSubjects()) {
+            this.local.getSubjects(cb);
+        } else {
+            // TODO
+        }
     }
 
     @Override

@@ -11,6 +11,10 @@ public class APIResponse <T> {
     @Expose
     private List<APIError> errors = new ArrayList<>();
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @SerializedName("status")
     @Expose
     private int status;
@@ -27,6 +31,10 @@ public class APIResponse <T> {
         }
 
         return errs;
+    }
+
+    public void setResponse(T response) {
+        this.response = response;
     }
 
     public T getResponse() {

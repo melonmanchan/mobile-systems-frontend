@@ -6,17 +6,22 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.MultipartBody;
+import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by mat on 06/03/2017.
@@ -24,6 +29,8 @@ import retrofit2.Callback;
 
 public class TuteeLocalDataSource implements TuteeDataSource{
     private static TuteeLocalDataSource instance;
+
+    private ArrayList<Subject> cachedSubjects;
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
@@ -92,6 +99,21 @@ public class TuteeLocalDataSource implements TuteeDataSource{
             persistedAuthResponse.setUser(req.getUser());
             persistUserLogin(persistedAuthResponse);
         }
+    }
+
+    @Override
+    public void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb) {
+        if (this.hasCachedSubjects()) {
+            APIResponse<ArrayList<Subject>> apiResponse = new APIResponse<ArrayList<Subject>>();
+            apiResponse.setResponse(cachedSubjects);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<Subject>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    public boolean hasCachedSubjects() {
+        return (this.cachedSubjects != null && this.cachedSubjects.size() > 0);
     }
 
     public AuthResponse fetchPersistedUserLogin() {
