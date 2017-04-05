@@ -9,10 +9,6 @@ import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
 import fi.tutee.tutee.utils.ActivityUtils;
 
-/**
- * Created by lehtone1 on 09/03/17.
- */
-
 public class RegisterExtraActivity extends AppCompatActivity {
 
     @Override
@@ -43,5 +39,4 @@ public class RegisterExtraActivity extends AppCompatActivity {
                 registerExtraFragment
         );
     }
-
 }
