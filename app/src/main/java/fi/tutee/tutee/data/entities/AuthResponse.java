@@ -55,4 +55,8 @@ public class AuthResponse {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public boolean isValid() {
+        return true;
+    }
 }

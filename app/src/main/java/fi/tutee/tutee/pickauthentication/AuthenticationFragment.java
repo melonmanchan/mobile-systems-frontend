@@ -130,7 +130,7 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
         if (presenter != null) {
             AuthResponse response = presenter.getAutoLoginInfo();
 
-            if (response != null) {
+            if (response != null && response.isValid()) {
                 User savedUser = response.getUser();
 
                 Intent intent;

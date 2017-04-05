@@ -179,8 +179,12 @@ public class TuteeRepository implements TuteeDataSource {
         AuthResponse authResponse = local.fetchPersistedUserLogin();
 
         if (authResponse != null) {
-            this.loggedInUser = authResponse.getUser();
-            remote.setToken(authResponse.getToken());
+            if (authResponse.isValid()) {
+                this.loggedInUser = authResponse.getUser();
+                remote.setToken(authResponse.getToken());
+            } else {
+                local.logOut();
+            }
         }
 
         return authResponse;
