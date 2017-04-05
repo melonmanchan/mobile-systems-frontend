@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 
@@ -50,6 +51,18 @@ public class User {
     @SerializedName("user_type")
     @Expose
     private UserType userType;
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    @SerializedName("subjects")
+    @Expose
+    private ArrayList<Subject> subjects;
 
     public User(@NonNull int id, String description) {
         this.id = id;
