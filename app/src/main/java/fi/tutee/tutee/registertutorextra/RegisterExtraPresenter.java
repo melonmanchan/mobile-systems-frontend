@@ -3,9 +3,7 @@ package fi.tutee.tutee.registertutorextra;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
-import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
-import fi.tutee.tutee.data.entities.Skill;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;

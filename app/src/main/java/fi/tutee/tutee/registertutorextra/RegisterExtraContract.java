@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
-import fi.tutee.tutee.data.entities.Skill;
 import fi.tutee.tutee.data.entities.Subject;
 
 /**
