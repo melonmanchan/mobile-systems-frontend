@@ -2,6 +2,7 @@ package fi.tutee.tutee.registertutorextra;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -37,6 +38,7 @@ import java.util.Locale;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.SubjectExtraListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.home.HomeActivity;
 
 public class RegisterExtraFragment extends Fragment implements RegisterExtraContract.View {
     private Spinner registerCountrySpin;
@@ -74,8 +76,6 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
             presenter.getSubjects();
 
-        //    setPreferredAddress();
-
             registerCountrySpin.post(new Runnable() {
                 @Override
                 public void run() {
@@ -97,17 +97,19 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String text = registerTutorExtraDescription.getText().toString();
+                    String description = registerTutorExtraDescription.getText().toString();
 
                     if (selectedSubjects.size() == 0) {
                         Snackbar.make(getView(), "Please select at least one subject", Snackbar.LENGTH_LONG).show();
                         return;
                     }
 
-                    if (TextUtils.isEmpty(text)) {
+                    if (TextUtils.isEmpty(description)) {
                         Snackbar.make(getView(), "Please write a description", Snackbar.LENGTH_LONG).show();
                         return;
                     }
+
+                    presenter.registerTutorExtra(description, selectedSubjects);
                 }
             });
 
@@ -234,7 +236,8 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
     @Override
     public void onRegisterSuccess() {
-        Snackbar.make(getView(), "Extra register succeeded!", Snackbar.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override

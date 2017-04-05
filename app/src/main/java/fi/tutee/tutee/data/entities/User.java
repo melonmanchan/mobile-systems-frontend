@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -133,7 +134,15 @@ public class User {
     }
 
     public boolean needsToFillProfile() {
-        if (this.userType.equals(UserType.TUTOR) && TextUtils.isEmpty(this.description)) {
+        if (!this.userType.equals(UserType.TUTOR)) {
+            return false;
+        }
+
+        if (TextUtils.isEmpty(this.description)) {
+            return true;
+        }
+
+        if (this.subjects == null || this.subjects.size() == 0) {
             return true;
         }
 

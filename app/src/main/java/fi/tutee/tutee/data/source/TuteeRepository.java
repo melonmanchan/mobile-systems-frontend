@@ -137,10 +137,16 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void registerTutorExtra(RegisterTutorExtraRequest req, final Callback<APIResponse> cb) {
+    public void registerTutorExtra(final RegisterTutorExtraRequest req, final Callback<APIResponse> cb) {
         remote.registerTutorExtra(req, new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    loggedInUser.setSubjects(req.getSubjects());
+                }
+
                 cb.onResponse(call, response);
             }
 

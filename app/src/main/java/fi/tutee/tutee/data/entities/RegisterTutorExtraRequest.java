@@ -23,4 +23,8 @@ public class RegisterTutorExtraRequest  {
         this.description = description;
         this.subjects = subjects;
     }
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
 }
