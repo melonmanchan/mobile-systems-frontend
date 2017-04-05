@@ -37,12 +37,15 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
     }
 
     @Override
-    public void registerTutorExtra(String country, String city, String description, ArrayList<Skill> skills) {
-        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(country, city, description, skills);
-        repository.registerTutorExtra(req, new Callback<APIResponse<AuthResponse>>() {
+    public void registerTutorExtra(String description, ArrayList<Subject> subjects) {
+        RegisterTutorExtraRequest req = new RegisterTutorExtraRequest(description, subjects);
+
+        repository.registerTutorExtra(req, new Callback<APIResponse>() {
             @Override
-            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
                     view.onRegisterSuccess();
                 } else {
                     view.onRegisterFail();
@@ -50,7 +53,7 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
+            public void onFailure(Call<APIResponse> call, Throwable t) {
                 view.onRegisterFail();
             }
         });

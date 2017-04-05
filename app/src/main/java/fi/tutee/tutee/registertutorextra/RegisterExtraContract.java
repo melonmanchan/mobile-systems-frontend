@@ -21,7 +21,7 @@ public interface RegisterExtraContract {
     }
 
     interface Presenter extends BasePresenter {
-        void registerTutorExtra(String country, String city, String description, ArrayList<Skill> skills);
+        void registerTutorExtra(String description, ArrayList<Subject> subjects);
         void getSubjects();
     }
 }
