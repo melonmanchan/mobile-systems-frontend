@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 
@@ -50,6 +52,18 @@ public class User {
     @SerializedName("user_type")
     @Expose
     private UserType userType;
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    @SerializedName("subjects")
+    @Expose
+    private ArrayList<Subject> subjects;
 
     public User(@NonNull int id, String description) {
         this.id = id;
@@ -120,7 +134,15 @@ public class User {
     }
 
     public boolean needsToFillProfile() {
-        if (this.userType.equals(UserType.TUTOR) && TextUtils.isEmpty(this.description)) {
+        if (!this.userType.equals(UserType.TUTOR)) {
+            return false;
+        }
+
+        if (TextUtils.isEmpty(this.description)) {
+            return true;
+        }
+
+        if (this.subjects == null || this.subjects.size() == 0) {
             return true;
         }
 

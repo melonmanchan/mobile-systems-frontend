@@ -137,23 +137,21 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void registerTutorExtra(RegisterTutorExtraRequest req, final Callback<APIResponse<AuthResponse>> cb) {
-
-        remote.registerTutorExtra(req, new Callback<APIResponse<AuthResponse>>() {
+    public void registerTutorExtra(final RegisterTutorExtraRequest req, final Callback<APIResponse> cb) {
+        remote.registerTutorExtra(req, new Callback<APIResponse>() {
             @Override
-            public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {
-                APIResponse<AuthResponse> resp = response.body();
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
 
-                if (resp != null) {
-                    AuthResponse authResponse = resp.getResponse();
-                    loggedInUser = authResponse.getUser();
+                if (resp.isSuccessful()) {
+                    loggedInUser.setSubjects(req.getSubjects());
                 }
 
                 cb.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<APIResponse<AuthResponse>> call, Throwable t) {
+            public void onFailure(Call<APIResponse> call, Throwable t) {
                 cb.onFailure(call, t);
             }
         });
@@ -181,8 +179,12 @@ public class TuteeRepository implements TuteeDataSource {
         AuthResponse authResponse = local.fetchPersistedUserLogin();
 
         if (authResponse != null) {
-            this.loggedInUser = authResponse.getUser();
-            remote.setToken(authResponse.getToken());
+            if (authResponse.isValid()) {
+                this.loggedInUser = authResponse.getUser();
+                remote.setToken(authResponse.getToken());
+            } else {
+                local.logOut();
+            }
         }
 
         return authResponse;

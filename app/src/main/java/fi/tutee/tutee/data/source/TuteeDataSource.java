@@ -30,7 +30,7 @@ public interface TuteeDataSource {
 
     void register(RegisterRequest req, Callback<APIResponse<AuthResponse>> cb);
 
-    void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse<AuthResponse>> cb);
+    void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse> cb);
 
     void registerUserDevice(DeviceRegisterRequest req);
 

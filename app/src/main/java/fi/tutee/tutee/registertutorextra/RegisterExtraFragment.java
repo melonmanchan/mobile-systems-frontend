@@ -2,6 +2,7 @@ package fi.tutee.tutee.registertutorextra;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +38,12 @@ import java.util.Locale;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.SubjectExtraListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.home.HomeActivity;
 
 public class RegisterExtraFragment extends Fragment implements RegisterExtraContract.View {
     private Spinner registerCountrySpin;
     private Spinner registerCitySpin;
+
     private EditText registerTutorExtraDescription;
     private Button registerTutorExtraBtn;
 
@@ -47,6 +51,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
     private ListView subjectsList;
     private ArrayList<Subject> subjects;
+    private ArrayList<Subject> selectedSubjects = new ArrayList<Subject>();
 
     public RegisterExtraFragment() {}
 
@@ -71,8 +76,6 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
             presenter.getSubjects();
 
-            //setPreferredAddress();
-
             registerCountrySpin.post(new Runnable() {
                 @Override
                 public void run() {
@@ -88,6 +91,25 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                         }
                     });
 
+                }
+            });
+
+            registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String description = registerTutorExtraDescription.getText().toString();
+
+                    if (selectedSubjects.size() == 0) {
+                        Snackbar.make(getView(), "Please select at least one subject", Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(description)) {
+                        Snackbar.make(getView(), "Please write a description", Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    presenter.registerTutorExtra(description, selectedSubjects);
                 }
             });
 
@@ -214,7 +236,8 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
     @Override
     public void onRegisterSuccess() {
-        Snackbar.make(getView(), "Extra register succeeded!", Snackbar.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -223,19 +246,30 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     }
 
     @Override
-    public void setSubjects(ArrayList<Subject> subjects) {
+    public void setSubjects(final ArrayList<Subject> subjects) {
         this.subjects = subjects;
 
         SubjectExtraListAdapter adapter = new SubjectExtraListAdapter(getContext(), R.layout.partial_extra_subject_list_item, subjects);
+
         adapter.setListener(new SubjectExtraListAdapter.OnSubjectExtraSelectedListener() {
             @Override
             public void onSelected(Subject subject) {
-                Snackbar.make(getView(), "Selected " + subject.getType(), Snackbar.LENGTH_LONG).show();
+                selectedSubjects.add(subject);
             }
 
             @Override
             public void onDeselected(Subject subject) {
-                Snackbar.make(getView(), "Deselected " + subject.getType(), Snackbar.LENGTH_LONG).show();
+                ArrayList<Subject> newSubjects = new ArrayList<Subject>();
+                Integer subjectId = subject.getId();
+
+                for (Subject s: selectedSubjects) {
+                    if (!s.getId().equals(subjectId)) {
+                        newSubjects.add(s);
+                    }
+                }
+
+                selectedSubjects.clear();
+                selectedSubjects.addAll(newSubjects);
             }
         });
 

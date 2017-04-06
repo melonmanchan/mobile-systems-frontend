@@ -64,7 +64,7 @@ public class UserTypeSelectionFragment extends Fragment implements UserTypeSelec
     }
 
     private void moveToAuthentication(Boolean isTutor) {
-        Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
         intent.putExtra(IS_TUTOR, isTutor);
         startActivity(intent);
     }

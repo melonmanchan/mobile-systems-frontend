@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
-import fi.tutee.tutee.data.entities.Skill;
 import fi.tutee.tutee.data.entities.Subject;
 
 /**
@@ -21,7 +20,7 @@ public interface RegisterExtraContract {
     }
 
     interface Presenter extends BasePresenter {
-        void registerTutorExtra(String country, String city, String description, ArrayList<Skill> skills);
+        void registerTutorExtra(String description, ArrayList<Subject> subjects);
         void getSubjects();
     }
 }
