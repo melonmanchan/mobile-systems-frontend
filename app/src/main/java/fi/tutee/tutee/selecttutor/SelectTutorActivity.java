@@ -9,6 +9,7 @@ import fi.tutee.tutee.TuteeApplication;
 import fi.tutee.tutee.home.HomeContract;
 import fi.tutee.tutee.home.HomeFragment;
 import fi.tutee.tutee.home.HomePresenter;
+import fi.tutee.tutee.home.HomeSearchFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
 /**
@@ -29,11 +30,12 @@ public class SelectTutorActivity extends AppCompatActivity {
                 .findFragmentById(R.id.contentFrame);
 
         if (selectTutorFragment == null) {
-            selectTutorFragment = SelectTutorFragment.newInstance();
+            selectTutorFragment = SelectTutorFragment.newInstance(getIntent().getStringExtra(HomeSearchFragment.SUBJECT));
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     selectTutorFragment, R.id.contentFrame);
         }
+
 
         new SelectTutorPresenter(
                 app.repository,

@@ -26,7 +26,7 @@ public class SelectTutorPresenter implements SelectTutorContract.Presenter {
 
 
     @Override
-    public void getTutors() {
+    public void getTutors(String subject) {
         this.repository.getTutors(new Callback<APIResponse<ArrayList<User>>>() {
             @Override
             public void onResponse(Call<APIResponse<ArrayList<User>>> call, Response<APIResponse<ArrayList<User>>> response) {

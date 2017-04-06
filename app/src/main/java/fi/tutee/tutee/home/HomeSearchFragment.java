@@ -1,5 +1,6 @@
 package fi.tutee.tutee.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,13 @@ import java.util.ArrayList;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.SubjectsSearchListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.selecttutor.SelectTutorActivity;
 
 public class HomeSearchFragment extends HomeBaseFragment {
     private ArrayList<Subject> subjects;
 
     private ListView list;
+    public final static String SUBJECT = "fi.tutee.tutee.SUBJECT";
 
     public HomeSearchFragment() {
         // Required empty public constructor
@@ -47,7 +50,10 @@ public class HomeSearchFragment extends HomeBaseFragment {
         adapter.setListener(new SubjectsSearchListAdapter.OnSubjectSelectedListener() {
             @Override
             public void onSelected(Subject subject) {
-                // TODO
+                Intent intent = new Intent(getContext(), SelectTutorActivity.class);
+                intent.putExtra(SUBJECT, subject.getType());
+                startActivity(intent);
+
             }
         });
 

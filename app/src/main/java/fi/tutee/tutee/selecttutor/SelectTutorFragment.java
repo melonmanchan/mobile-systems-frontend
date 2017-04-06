@@ -15,19 +15,23 @@ import fi.tutee.tutee.adapters.TutorListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.home.HomeBaseFragment;
+import fi.tutee.tutee.home.HomeSearchFragment;
 
 public class SelectTutorFragment extends Fragment implements SelectTutorContract.View {
     private ArrayList<User> tutors;
     private ListView list;
     private SelectTutorContract.Presenter presenter;
+    private String subject;
+
 
     public SelectTutorFragment() {
         // Required empty public constructor
 
     }
 
-    public static SelectTutorFragment newInstance() {
+    public static SelectTutorFragment newInstance(String subject) {
         Bundle arguments = new Bundle();
+        arguments.putString(HomeSearchFragment.SUBJECT, subject);
         SelectTutorFragment fragment = new SelectTutorFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -42,6 +46,9 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        this.subject = getArguments().getString(HomeSearchFragment.SUBJECT);
+
 
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
