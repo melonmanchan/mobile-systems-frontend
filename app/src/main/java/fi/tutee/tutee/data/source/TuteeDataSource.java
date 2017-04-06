@@ -37,4 +37,6 @@ public interface TuteeDataSource {
     void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb);
 
     void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb);
+
+    void getTutors(Callback<APIResponse<ArrayList<User>>> cb);
 }

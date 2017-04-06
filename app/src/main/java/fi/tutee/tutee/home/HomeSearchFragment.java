@@ -46,7 +46,7 @@ public class HomeSearchFragment extends HomeBaseFragment {
 
         adapter.setListener(new SubjectsSearchListAdapter.OnSubjectSelectedListener() {
             @Override
-            public void onSelected(Subject user) {
+            public void onSelected(Subject subject) {
                 // TODO
             }
         });
