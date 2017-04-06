@@ -67,10 +67,9 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         list.setAdapter(adapter);
     }
 
-    @Override
-    public void setPresenter(SelectTutorPresenter presenter) {this.presenter = presenter;}
 
 
+
     @Override
-    public void setPresenter(SelectTutorContract.Presenter presenter)  { this.presenter = presenter; }
+    public void setPresenter(SelectTutorContract.Presenter presenter)  {this.presenter = presenter;}
 }

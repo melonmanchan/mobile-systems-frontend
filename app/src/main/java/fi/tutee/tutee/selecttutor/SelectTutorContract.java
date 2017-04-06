@@ -15,6 +15,5 @@ public interface SelectTutorContract {
 
     interface View extends BaseView<Presenter> {
         void setTutors(ArrayList<User> tutors);
-        void setPresenter(SelectTutorPresenter presenter);
     }
 }
