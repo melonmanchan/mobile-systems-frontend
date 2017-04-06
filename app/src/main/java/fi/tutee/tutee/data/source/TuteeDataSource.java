@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
+import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -38,5 +39,5 @@ public interface TuteeDataSource {
 
     void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb);
 
-    void getTutors(Callback<APIResponse<ArrayList<User>>> cb);
+    void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb);
 }

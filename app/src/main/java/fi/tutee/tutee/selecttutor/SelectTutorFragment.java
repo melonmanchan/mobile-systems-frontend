@@ -15,13 +15,15 @@ import fi.tutee.tutee.adapters.TutorListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.home.HomeBaseFragment;
+import fi.tutee.tutee.home.HomeMessagesFragment;
 import fi.tutee.tutee.home.HomeSearchFragment;
 
 public class SelectTutorFragment extends Fragment implements SelectTutorContract.View {
     private ArrayList<User> tutors;
     private ListView list;
     private SelectTutorContract.Presenter presenter;
-    private String subject;
+
+    private Subject subject;
 
 
     public SelectTutorFragment() {
@@ -29,9 +31,10 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
 
     }
 
-    public static SelectTutorFragment newInstance(String subject) {
+    public static SelectTutorFragment newInstance(String subject, int id) {
         Bundle arguments = new Bundle();
-        arguments.putString(HomeSearchFragment.SUBJECT, subject);
+        arguments.putString(HomeSearchFragment.SUBJECT_TYPE, subject);
+        arguments.putInt(HomeSearchFragment.SUBJECT_ID, id);
         SelectTutorFragment fragment = new SelectTutorFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -47,13 +50,15 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        this.subject = getArguments().getString(HomeSearchFragment.SUBJECT);
+        this.subject = new Subject();
+        this.subject.setId(getArguments().getInt(HomeSearchFragment.SUBJECT_ID));
+        this.subject.setType(getArguments().getString(HomeSearchFragment.SUBJECT_TYPE));
 
 
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
 
-        this.presenter.getTutors();
+        this.presenter.getTutorsBySubject(subject);
 
         // Inflate the layout for this fragment
         return root;

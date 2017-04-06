@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
+import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -169,6 +170,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb) {
         Call<APIResponse<ArrayList<Subject>>> call = service.getSubjects();
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb) {
+        Call<APIResponse<ArrayList<User>>> call = service.getTutorsBySubject(req);
         call.enqueue(cb);
     }
 }

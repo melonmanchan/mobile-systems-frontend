@@ -18,7 +18,8 @@ public class HomeSearchFragment extends HomeBaseFragment {
     private ArrayList<Subject> subjects;
 
     private ListView list;
-    public final static String SUBJECT = "fi.tutee.tutee.SUBJECT";
+    public final static String SUBJECT_TYPE = "fi.tutee.tutee.SUBJECT_TYPE";
+    public final static String SUBJECT_ID = "fi.tutee.tutee.SUBJECT_ID";
 
     public HomeSearchFragment() {
         // Required empty public constructor
@@ -42,7 +43,7 @@ public class HomeSearchFragment extends HomeBaseFragment {
         return root;
     }
 
-    public void setSubjects(ArrayList<Subject> subjects) {
+    public void setSubjects(final ArrayList<Subject> subjects) {
         this.subjects = subjects;
 
         SubjectsSearchListAdapter adapter = new SubjectsSearchListAdapter(getContext(), R.layout.search_list_item, subjects);
@@ -51,7 +52,8 @@ public class HomeSearchFragment extends HomeBaseFragment {
             @Override
             public void onSelected(Subject subject) {
                 Intent intent = new Intent(getContext(), SelectTutorActivity.class);
-                intent.putExtra(SUBJECT, subject.getType());
+                intent.putExtra(SUBJECT_TYPE, subject.getType());
+                intent.putExtra(SUBJECT_ID, subject.getId());
                 startActivity(intent);
 
             }

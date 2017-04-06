@@ -112,6 +112,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         }
     }
 
+    @Override
+    public void getTutorsBySubject(Subject subject, Callback<APIResponse<ArrayList<User>>> cb) {
+        //TODO
+    }
+
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {
         this.cachedSubjects = cachedSubjects;
     }

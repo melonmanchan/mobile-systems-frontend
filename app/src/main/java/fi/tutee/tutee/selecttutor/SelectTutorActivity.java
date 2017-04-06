@@ -30,7 +30,9 @@ public class SelectTutorActivity extends AppCompatActivity {
                 .findFragmentById(R.id.contentFrame);
 
         if (selectTutorFragment == null) {
-            selectTutorFragment = SelectTutorFragment.newInstance(getIntent().getStringExtra(HomeSearchFragment.SUBJECT));
+            selectTutorFragment = SelectTutorFragment.newInstance(
+                    getIntent().getStringExtra(HomeSearchFragment.SUBJECT_TYPE),
+                    getIntent().getIntExtra(HomeSearchFragment.SUBJECT_ID, 0));
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     selectTutorFragment, R.id.contentFrame);

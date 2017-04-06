@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
+import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -24,6 +25,9 @@ public interface TuteeService {
 
     @GET("subject/")
     Call<APIResponse<ArrayList<Subject>>> getSubjects();
+
+    @GET("user/get_tutor_by_subject")
+    Call<APIResponse<ArrayList<User>>> getTutorsBySubject(@Body GetTutorsBySubjectRequest req);
 
     @POST("auth/login")
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);
