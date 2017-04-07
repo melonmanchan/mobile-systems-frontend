@@ -14,8 +14,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import fi.tutee.tutee.R;
-
 public class User {
 
     @NonNull
@@ -53,6 +51,10 @@ public class User {
     @Expose
     private UserType userType;
 
+    @SerializedName("subjects")
+    @Expose
+    private ArrayList<Subject> subjects;
+
     public ArrayList<Subject> getSubjects() {
         return subjects;
     }
@@ -60,10 +62,6 @@ public class User {
     public void setSubjects(ArrayList<Subject> subjects) {
         this.subjects = subjects;
     }
-
-    @SerializedName("subjects")
-    @Expose
-    private ArrayList<Subject> subjects;
 
     public User(@NonNull int id, String description) {
         this.id = id;
