@@ -37,6 +37,7 @@ import java.util.Locale;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.SubjectExtraListAdapter;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.home.HomeActivity;
 
@@ -241,8 +242,14 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     }
 
     @Override
-    public void onRegisterFail() {
-        Snackbar.make(getView(), "Extra register failed!", Snackbar.LENGTH_LONG).show();
+    public void onRegisterFail(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

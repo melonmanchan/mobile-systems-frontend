@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
+import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.Subject;
 
 /**
@@ -14,7 +16,7 @@ public interface RegisterExtraContract {
 
     interface View extends BaseView<Presenter> {
         void onRegisterSuccess();
-        void onRegisterFail();
+        void onRegisterFail(ArrayList<APIError> errors);
 
         void setSubjects(ArrayList<Subject> subjects);
     }

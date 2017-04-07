@@ -46,13 +46,13 @@ public class RegisterExtraPresenter implements RegisterExtraContract.Presenter {
                 if (resp.isSuccessful()) {
                     view.onRegisterSuccess();
                 } else {
-                    view.onRegisterFail();
+                    view.onRegisterFail(resp.getErrors());
                 }
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                view.onRegisterFail();
+                view.onRegisterFail(null);
             }
         });
     }

@@ -39,7 +39,7 @@ public interface TuteeService {
     Call<APIResponse<AuthResponse>> register(@Body RegisterRequest req);
 
     @POST("user/register_tutor_extra")
-    Call registerTutorExtra(@Body RegisterTutorExtraRequest req);
+    Call<APIResponse> registerTutorExtra(@Body RegisterTutorExtraRequest req);
 
     @PUT("user/update_profile")
     Call<APIResponse<User>> updateUser(@Body UpdateUserRequest req);

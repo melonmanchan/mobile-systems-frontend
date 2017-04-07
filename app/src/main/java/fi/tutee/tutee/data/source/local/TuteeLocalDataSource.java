@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
+import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -113,8 +114,8 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
-    public void getTutorsBySubject(Subject subject, Callback<APIResponse<ArrayList<User>>> cb) {
-        //TODO
+    public void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb) {
+
     }
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {
