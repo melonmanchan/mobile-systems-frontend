@@ -6,6 +6,8 @@ import com.facebook.stetho.common.StringUtil;
 import com.google.android.gms.nearby.messages.internal.Update;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -100,6 +102,12 @@ public class TuteeRepository implements TuteeDataSource {
                 if (resp != null && resp.isSuccessful()) {
                     UpdateUserRequest updateUserRequest = new UpdateUserRequest(resp.getResponse());
                     local.updateUser(updateUserRequest, new EmptyCallback<APIResponse<User>>());
+
+                    try {
+                        loggedInUser.setAvatar(new URL(updateUserRequest.getUser().getAvatar().toString()));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 cb.onResponse(call, response);

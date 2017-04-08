@@ -82,6 +82,10 @@ public class User {
         return id;
     }
 
+    public void setAvatar(URL avatar) {
+        this.avatar = avatar;
+    }
+
     @NonNull
     public String getLastName() {
         return lastName;
