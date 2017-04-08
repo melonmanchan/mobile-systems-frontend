@@ -2,8 +2,6 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
-import com.facebook.stetho.common.StringUtil;
-import com.google.android.gms.nearby.messages.internal.Update;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.net.MalformedURLException;
