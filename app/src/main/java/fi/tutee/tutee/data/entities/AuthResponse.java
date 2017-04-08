@@ -14,7 +14,7 @@ public class AuthResponse {
 
     @SerializedName("expires_at")
     @Expose
-    private long expiresAt;
+    private int expiresAt;
 
     @SerializedName("token")
     @Expose
@@ -36,7 +36,7 @@ public class AuthResponse {
         return expiresAt;
     }
 
-    public void setExpiresAt(long expiresAt) {
+    public void setExpiresAt(int expiresAt) {
         this.expiresAt = expiresAt;
     }
 
@@ -59,7 +59,7 @@ public class AuthResponse {
     public boolean isValid() {
         long currentTime = System.currentTimeMillis() / 1000L;
 
-        boolean isExpired =  (currentTime > this.expiresAt - (1000 * 60 * 60));
+        boolean isExpired =  (currentTime > this.expiresAt);
 
         return  !isExpired;
     }

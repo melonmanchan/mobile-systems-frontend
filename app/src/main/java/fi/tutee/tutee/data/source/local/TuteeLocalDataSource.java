@@ -3,10 +3,13 @@ package fi.tutee.tutee.data.source.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
@@ -30,6 +33,8 @@ import retrofit2.Response;
 
 public class TuteeLocalDataSource implements TuteeDataSource{
     private static TuteeLocalDataSource instance;
+    private SharedPreferences pref;
+    private Gson gson;
 
     private ArrayList<Subject> cachedSubjects;
 
@@ -39,6 +44,9 @@ public class TuteeLocalDataSource implements TuteeDataSource{
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
+
+        gson = new Gson();
+        pref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static TuteeLocalDataSource getInstance(Context context) {
@@ -80,16 +88,17 @@ public class TuteeLocalDataSource implements TuteeDataSource{
 
     @Override
     public void logOut() {
-        SharedPreferences mySPrefs =PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = mySPrefs.edit();
+        SharedPreferences.Editor editor = pref.edit();
         editor.remove(PERSIST_LOGIN_DATA);
-        editor.apply();
+        editor.commit();
     }
 
     public void persistUserLogin(AuthResponse authResponse) {
-        Gson gson = new Gson();
         String json = gson.toJson(authResponse);
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PERSIST_LOGIN_DATA, json).apply();
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(PERSIST_LOGIN_DATA, json);
+        editor.commit();
     }
 
     @Override
@@ -127,13 +136,18 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     public AuthResponse fetchPersistedUserLogin() {
-        Gson gson = new Gson();
-        String json = PreferenceManager.getDefaultSharedPreferences(context).getString(PERSIST_LOGIN_DATA, null);
+        String json = pref.getString(PERSIST_LOGIN_DATA, null);
 
         if (json == null) {
             return null;
         }
 
-        return gson.fromJson(json, AuthResponse.class);
+
+        try {
+            return gson.fromJson(json, AuthResponse.class);
+        } catch(JsonSyntaxException ex) {
+            this.logOut();
+            return null;
+        }
     }
 }
