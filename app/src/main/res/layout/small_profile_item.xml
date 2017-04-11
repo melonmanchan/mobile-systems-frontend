@@ -25,14 +25,12 @@
 
         <TextView
             android:textStyle="bold"
-            android:text="Firstname Lastname"
-            android:id="@+id/small_prfile_name"
+            android:id="@+id/small_profile_name"
             android:layout_width="wrap_content"
-            android:layout_height="35dp" />
+            android:layout_height="20dp" />
 
         <TextView
-            android:text="Skills"
-            android:id="@+id/small_profile_skills"
+            android:id="@+id/small_profile_description"
             android:scrollHorizontally="true"
             android:ellipsize="end"
             android:maxLines="4"
@@ -40,6 +38,7 @@
             android:layout_height="35dp" />
     </LinearLayout>
 
+    <!--
     <LinearLayout
         android:layout_weight="0.1"
         android:orientation="vertical"
@@ -64,4 +63,5 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp" />
     </LinearLayout>
+    -->
 </LinearLayout>

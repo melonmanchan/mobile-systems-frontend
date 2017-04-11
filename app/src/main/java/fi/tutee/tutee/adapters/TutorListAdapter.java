@@ -7,10 +7,7 @@ package fi.tutee.tutee.adapters;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +15,10 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import fi.tutee.tutee.R;
-import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
-
 
 public class TutorListAdapter extends ArrayAdapter<User> {
     private ArrayList<User> tutors;
@@ -43,9 +32,6 @@ public class TutorListAdapter extends ArrayAdapter<User> {
     public void setListener(OnTutorSelectedListener listener) {
         this.listener = listener;
     }
-
-    //alternate white and lightgrey background
-    private int[] colors = new int[] { 0x30ffffff, 0x30eaeaea };
 
     public TutorListAdapter(@NonNull Context context, @LayoutRes int resource, ArrayList<User> tutors) {
         super(context, resource, tutors);
@@ -69,35 +55,19 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.small_profile_item, null);
-
-
         }
 
         CircleImageView profilePicture = (CircleImageView) convertView.findViewById(R.id.small_profile_picture);
-        TextView name = (TextView) convertView.findViewById(R.id.small_prfile_name);
-        TextView skills = (TextView) convertView.findViewById(R.id.small_profile_skills);
-        TextView classesAmount = (TextView) convertView.findViewById(R.id.small_profile_classes_done_number);
+        TextView name = (TextView) convertView.findViewById(R.id.small_profile_name);
+        TextView description = (TextView) convertView.findViewById(R.id.small_profile_description);
 
         Picasso.with(context).load(user.getAvatar().toString()).into(profilePicture);
 
         name.setText(user.getFirstName() + " " + user.getLastName());
-        skills.setText("Inset skills here");
-        classesAmount.setText("amount");
-
-
-
-        final User tutor = tutors.get(position);
-
-        int colorPos = position % colors.length;
-
-        convertView.setBackgroundColor(colorPos);
-
-
-
+        description.setText(user.getDescription());
 
         return convertView;
     }
-
 }
 
 
