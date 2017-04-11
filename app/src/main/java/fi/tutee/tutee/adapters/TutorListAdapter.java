@@ -8,6 +8,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 
 public class TutorListAdapter extends ArrayAdapter<User> {
@@ -51,6 +53,7 @@ public class TutorListAdapter extends ArrayAdapter<User> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         User user = getItem(position);
+        ArrayList<Subject> subjects = user.getSubjects();
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,6 +63,9 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         CircleImageView profilePicture = (CircleImageView) convertView.findViewById(R.id.small_profile_picture);
         TextView name = (TextView) convertView.findViewById(R.id.small_profile_name);
         TextView description = (TextView) convertView.findViewById(R.id.small_profile_description);
+        LinearLayout subjectsWrapper = (LinearLayout)  convertView.findViewById(R.id.small_profile_subjects_wrapper);
+
+        initializeSubjectsWrapper(subjectsWrapper, subjects);
 
         Picasso.with(context).load(user.getAvatar().toString()).into(profilePicture);
 
@@ -67,6 +73,16 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         description.setText(user.getDescription());
 
         return convertView;
+    }
+
+    private void initializeSubjectsWrapper(LinearLayout wrapper, ArrayList<Subject> subjects) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        for (Subject s: subjects) {
+            TextView subjectTextView = (TextView) inflater.inflate(R.layout.partial_rounded_textview, null);
+            subjectTextView.setText(s.getType());
+            wrapper.addView(subjectTextView);
+        }
     }
 }
 

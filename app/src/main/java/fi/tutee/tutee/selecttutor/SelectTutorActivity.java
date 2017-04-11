@@ -25,7 +25,7 @@ public class SelectTutorActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText(getIntent().getStringExtra(HomeSearchFragment.SUBJECT_TYPE));
+        title.setText(getIntent().getStringExtra(HomeSearchFragment.SUBJECT_TYPE) + " tutors");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
