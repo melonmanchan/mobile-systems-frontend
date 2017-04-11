@@ -1,6 +1,7 @@
 package fi.tutee.tutee.selecttutor;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.TutorListAdapter;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.home.HomeSearchFragment;
@@ -21,12 +23,8 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
     private ListView list;
     private SelectTutorContract.Presenter presenter;
 
-    private Subject subject;
-
-
     public SelectTutorFragment() {
         // Required empty public constructor
-
     }
 
     public static SelectTutorFragment newInstance(String subject, int id) {
@@ -47,16 +45,10 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        this.subject = new Subject();
-        this.subject.setId(getArguments().getInt(HomeSearchFragment.SUBJECT_ID));
-        this.subject.setType(getArguments().getString(HomeSearchFragment.SUBJECT_TYPE));
-
-
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
 
-        //this.presenter.getTutorsBySubject(subject);
+        this.presenter.getTutorsBySubjectID(getArguments().getInt(HomeSearchFragment.SUBJECT_ID));
 
         // Inflate the layout for this fragment
         return root;
@@ -77,7 +69,16 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         list.setAdapter(adapter);
     }
 
+    @Override
+    public void getTutorsFailed(ArrayList<APIError> errors) {
+        String errorMessage = "Fetching tutors failed!";
 
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
 
 
     @Override
