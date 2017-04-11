@@ -14,9 +14,13 @@ public interface RegisterContract {
     interface View extends BaseView<Presenter> {
         void onRegisterSuccess();
         void onRegisterFail(ArrayList<APIError> errors);
+
+        void onAvatarSuccess();
+        void onAvatarFailed(ArrayList<APIError> errors);
     }
 
     interface Presenter extends BasePresenter {
         void register(String firstname, String lastname, String email, String password, String usertype);
+        void setAvatar(String avatarUri);
     }
 }

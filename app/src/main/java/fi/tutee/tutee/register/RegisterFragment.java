@@ -1,52 +1,17 @@
 package fi.tutee.tutee.register;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.data.BitmapTeleporter;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
@@ -57,8 +22,6 @@ import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
-import static android.app.Activity.RESULT_OK;
-
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     private AvatarPickerFragment avatarPickerFragment;
     private EditText registerEmail;
@@ -66,7 +29,9 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private EditText registerLastname;
     private TextInputEditText registerPassword;
     private Button registerBtn;
-    private int RESULT_LOAD_IMAGE = 1;
+
+    private boolean setAvatar = false;
+    private String profileAvatarUri;
 
     private boolean isTutor;
 
@@ -104,10 +69,17 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(),
                     avatarPickerFragment, R.id.register_avatar_picker);
 
+            avatarPickerFragment.setListener(new AvatarPickerFragment.OnAvatarChangedListener() {
+                @Override
+                public void avatarChanged(String avatarUri) {
+                    profileAvatarUri = avatarUri;
+                    setAvatar = true;
+                }
+            });
+
             this.avatarPickerFragment = avatarPickerFragment;
         }
 
-        //registerImgView.setDrawingCacheEnabled(true);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +107,11 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     @Override
     public void onRegisterSuccess() {
+        if (this.setAvatar) {
+            presenter.setAvatar(profileAvatarUri);
+            return;
+        }
+
         if (this.isTutor) {
             Intent intent = new Intent(getContext(), RegisterExtraActivity.class);
             startActivity(intent);
@@ -146,6 +123,25 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     @Override
     public void onRegisterFail(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
+        registerBtn.setEnabled(true);
+
+        if (errors != null && errors.size() > 0) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAvatarSuccess() {
+        this.setAvatar = false;
+        this.onRegisterSuccess();
+    }
+
+    @Override
+    public void onAvatarFailed(ArrayList<APIError> errors) {
         String errorMessage = "Something went wrong!";
 
         registerBtn.setEnabled(true);
