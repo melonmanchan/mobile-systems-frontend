@@ -14,8 +14,6 @@ import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.TutorListAdapter;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
-import fi.tutee.tutee.home.HomeBaseFragment;
-import fi.tutee.tutee.home.HomeMessagesFragment;
 import fi.tutee.tutee.home.HomeSearchFragment;
 
 public class SelectTutorFragment extends Fragment implements SelectTutorContract.View {
@@ -58,7 +56,7 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
 
-        this.presenter.getTutorsBySubject(subject);
+        //this.presenter.getTutorsBySubject(subject);
 
         // Inflate the layout for this fragment
         return root;

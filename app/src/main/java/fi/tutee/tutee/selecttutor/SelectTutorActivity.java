@@ -1,14 +1,12 @@
 package fi.tutee.tutee.selecttutor;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.widget.TextView;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
-import fi.tutee.tutee.home.HomeContract;
-import fi.tutee.tutee.home.HomeFragment;
-import fi.tutee.tutee.home.HomePresenter;
 import fi.tutee.tutee.home.HomeSearchFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
@@ -23,6 +21,11 @@ public class SelectTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_tutor);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
+
+        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+        title.setText(getIntent().getStringExtra(HomeSearchFragment.SUBJECT_TYPE));
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
@@ -37,7 +40,6 @@ public class SelectTutorActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     selectTutorFragment, R.id.contentFrame);
         }
-
 
         new SelectTutorPresenter(
                 app.repository,

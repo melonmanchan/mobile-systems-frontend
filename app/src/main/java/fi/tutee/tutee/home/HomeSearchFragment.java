@@ -51,11 +51,10 @@ public class HomeSearchFragment extends HomeBaseFragment {
         adapter.setListener(new SubjectsSearchListAdapter.OnSubjectSelectedListener() {
             @Override
             public void onSelected(Subject subject) {
-                Intent intent = new Intent(getContext(), SelectTutorActivity.class);
+                Intent intent = new Intent(getActivity(), SelectTutorActivity.class);
                 intent.putExtra(SUBJECT_TYPE, subject.getType());
                 intent.putExtra(SUBJECT_ID, subject.getId());
                 startActivity(intent);
-
             }
         });
 
