@@ -20,14 +20,15 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface TuteeService {
 
     @GET("subject/")
     Call<APIResponse<ArrayList<Subject>>> getSubjects();
 
-    @GET("user/get_tutor_by_subject")
-    Call<APIResponse<ArrayList<User>>> getTutorsBySubject(@Body GetTutorsBySubjectRequest req);
+    @GET("subject/{id}/tutors")
+    Call<APIResponse<ArrayList<User>>> getTutorsBySubject(@Path("id") int subjectID);
 
     @POST("auth/login")
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);

@@ -174,8 +174,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb) {
-        Call<APIResponse<ArrayList<User>>> call = service.getTutorsBySubject(req);
+    public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
+        Call<APIResponse<ArrayList<User>>> call = service.getTutorsBySubject(subjectID);
         call.enqueue(cb);
     }
 }

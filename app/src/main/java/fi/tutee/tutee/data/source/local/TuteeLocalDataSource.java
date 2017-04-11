@@ -123,8 +123,8 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
-    public void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb) {
-
+    public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
+        cb.onFailure(null, new Exception("Not yet implemented!"));
     }
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {

@@ -24,30 +24,13 @@ public class SelectTutorPresenter implements SelectTutorContract.Presenter {
         view.setPresenter(this);
     }
 
-
     @Override
-    public void getTutorsBySubject(Subject subject) {
-        GetTutorsBySubjectRequest req = new GetTutorsBySubjectRequest(subject);
-        this.repository.getTutorsBySubject(req, new Callback<APIResponse<ArrayList<User>>>() {
-            @Override
-            public void onResponse(Call<APIResponse<ArrayList<User>>> call, Response<APIResponse<ArrayList<User>>> response) {
-                APIResponse<ArrayList<User>> resp = response.body();
+    public void start() {
 
-                if (resp.isSuccessful()) {
-                    ArrayList<User> tutors = resp.getResponse();
-                    view.setTutors(tutors);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<APIResponse<ArrayList<User>>> call, Throwable t) {
-                // TODO
-            }
-        });
     }
 
     @Override
-    public void start() {
+    public void getTutorsBySubjectID(int subjectID) {
 
     }
 }

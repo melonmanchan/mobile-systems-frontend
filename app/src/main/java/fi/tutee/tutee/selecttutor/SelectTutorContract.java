@@ -10,7 +10,7 @@ import fi.tutee.tutee.data.entities.User;
 public interface SelectTutorContract {
     interface Presenter extends BasePresenter{
 
-        void getTutorsBySubject(Subject subject);
+        void getTutorsBySubjectID(int subjectID);
     }
 
     interface View extends BaseView<Presenter> {

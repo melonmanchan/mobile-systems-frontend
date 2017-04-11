@@ -39,5 +39,5 @@ public interface TuteeDataSource {
 
     void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb);
 
-    void getTutorsBySubject(GetTutorsBySubjectRequest req, Callback<APIResponse<ArrayList<User>>> cb);
+    void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb);
 }
