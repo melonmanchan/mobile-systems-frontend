@@ -29,21 +29,13 @@ public class RegisterRequest {
     @Expose
     private String userType;
 
-    @SerializedName("profilePicture")
-    @Expose
-    private byte[] profilePicture;
 
-
-
-    public RegisterRequest(String firstName, String lastName, String email, String password, String userType, Bitmap profilePicture) {
+    public RegisterRequest(String firstName, String lastName, String email, String password, String userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userType = userType;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        profilePicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        this.profilePicture = stream.toByteArray();
     }
 
     public String getEmail() {
@@ -85,13 +77,4 @@ public class RegisterRequest {
     public void setUserType(String userType) {
         this.userType = userType;
     }
-
-    public byte[] getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProilePicture(byte[] profilePicture) {
-        this.profilePicture= profilePicture;
-    }
-
 }

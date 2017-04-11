@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.components.AvatarPickerFragment;
 import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.home.HomeActivity;
 import fi.tutee.tutee.registertutorextra.RegisterExtraActivity;
@@ -59,8 +60,7 @@ import fi.tutee.tutee.utils.ActivityUtils;
 import static android.app.Activity.RESULT_OK;
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
-    private ImageView registerImgView;
-    private Button registerLoadPictureBtn;
+    private AvatarPickerFragment avatarPickerFragment;
     private EditText registerEmail;
     private EditText registerFirstname;
     private EditText registerLastname;
@@ -90,14 +90,22 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
         this.isTutor = getArguments().getBoolean(UserTypeSelectionFragment.IS_TUTOR, false);
 
-        registerImgView = (ImageView) root.findViewById(R.id.registerImgView);
-        registerLoadPictureBtn = (Button) root.findViewById(R.id.registerLoadPictureButton);
         registerEmail = (EditText) root.findViewById(R.id.registerEmail);
         registerFirstname = (EditText) root.findViewById(R.id.registerFirstname);
         registerLastname = (EditText) root.findViewById(R.id.registerLastname);
         registerPassword = (TextInputEditText) root.findViewById(R.id.registerPassword);
         registerBtn = (Button) root.findViewById(R.id.registerButton);
 
+        AvatarPickerFragment avatarPickerFragment = (AvatarPickerFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.register_avatar_picker);
+
+        if (avatarPickerFragment == null) {
+            avatarPickerFragment = AvatarPickerFragment.newInstance(null);
+            ActivityUtils.addFragmentToActivity(getActivity().getSupportFragmentManager(),
+                    avatarPickerFragment, R.id.register_avatar_picker);
+
+            this.avatarPickerFragment = avatarPickerFragment;
+        }
 
         //registerImgView.setDrawingCacheEnabled(true);
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,48 +115,17 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 String password = registerPassword.getText().toString();
                 String firstName = registerFirstname.getText().toString();
                 String lastName = registerLastname.getText().toString();
-                //Bitmap profilePicture = registerImgView.getDrawingCache();
-                Bitmap profilePicture = ((BitmapDrawable) registerImgView.getDrawable()).getBitmap();
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
                         && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
                     registerBtn.setEnabled(false);
                     ActivityUtils.hideKeyboard(getActivity());
-                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE", profilePicture );
+                    presenter.register(firstName, lastName, email, password, isTutor ? "TUTOR" : "TUTEE");
                 }
             }
         });
 
-        registerLoadPictureBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
-            }
-        });
-
         return root;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data.getData() != null ){
-            Uri uri = data.getData();
-
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
-                registerImgView.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override

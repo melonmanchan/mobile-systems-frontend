@@ -36,8 +36,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void register(String firstName, String lastName, String email, String password, String userType, Bitmap profilePicture) {
-        RegisterRequest req = new RegisterRequest(firstName, lastName, email, password, userType, profilePicture);
+    public void register(String firstName, String lastName, String email, String password, String userType) {
+        RegisterRequest req = new RegisterRequest(firstName, lastName, email, password, userType);
+
         repository.register(req, new Callback<APIResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<AuthResponse>> call, Response<APIResponse<AuthResponse>> response) {

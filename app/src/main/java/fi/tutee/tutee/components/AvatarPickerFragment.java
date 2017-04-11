@@ -46,7 +46,11 @@ public class AvatarPickerFragment extends Fragment {
     public static final AvatarPickerFragment newInstance(URI startAvatarURL) {
         AvatarPickerFragment f = new AvatarPickerFragment();
         Bundle b = new Bundle(1);
-        b.putString(DEFAULT_AVATAR, startAvatarURL.toString());
+
+        if (startAvatarURL != null) {
+            b.putString(DEFAULT_AVATAR, startAvatarURL.toString());
+        }
+
         f.setArguments(b);
         return f;
     }
@@ -61,7 +65,9 @@ public class AvatarPickerFragment extends Fragment {
 
         String startAvatar = getArguments().getString(DEFAULT_AVATAR);
 
-        Picasso.with(getActivity()).load(startAvatar).into(avatarImg);
+        if (startAvatar != null) {
+            Picasso.with(getActivity()).load(startAvatar).into(avatarImg);
+        }
 
         changeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override

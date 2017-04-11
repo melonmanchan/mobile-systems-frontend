@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:src="@drawable/profile_picture"
         android:id="@+id/avatar_image"
         android:layout_width="fill_parent"
         android:layout_height="150dp"/>
