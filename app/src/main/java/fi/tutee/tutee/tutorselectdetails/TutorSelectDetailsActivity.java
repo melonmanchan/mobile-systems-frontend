@@ -13,6 +13,7 @@ public class TutorSelectDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tutor_select_details);
+        getSupportActionBar().hide();
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
