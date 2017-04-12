@@ -1,5 +1,6 @@
 package fi.tutee.tutee.selecttutor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,16 @@ import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.home.HomeSearchFragment;
+import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsActivity;
+import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment;
 
 public class SelectTutorFragment extends Fragment implements SelectTutorContract.View {
     private ArrayList<User> tutors;
     private ListView list;
     //private TextView emptyView;
     private SelectTutorContract.Presenter presenter;
+
+    public static String SELECTED_TUTOR_ID =  "SELECTED_TUTOR_ID";
 
     public SelectTutorFragment() {
         // Required empty public constructor
@@ -65,7 +70,11 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //adapter.getItem(position);
+                User user = adapter.getItem(position);
+
+                Intent intent = new Intent(getActivity(), TutorSelectDetailsActivity.class);
+                intent.putExtra(SELECTED_TUTOR_ID, user.getId());
+                startActivity(intent);
             }
         });
 

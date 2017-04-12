@@ -9,6 +9,7 @@ import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by mat on 06/03/2017.
@@ -40,6 +41,8 @@ public class TuteeApplication extends Application {
         repository.fetchPersistedUserInfo();
 
         initStetho(this);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().build());
     }
 
     private void initStetho(final Context context) {

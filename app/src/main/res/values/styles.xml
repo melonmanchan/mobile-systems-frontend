@@ -9,6 +9,14 @@
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="color">@color/colorPrimary</item>
+
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textAppearanceButton">@style/TuteeButton</item>
+    </style>
+
+    <style name="TuteeButton" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">#fff</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
