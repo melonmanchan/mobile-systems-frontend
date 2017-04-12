@@ -91,6 +91,16 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     }
 
     @Override
+    public void getUser(int userID, Callback<APIResponse<User>> cb) {
+        APIResponse<User> apiResponse = new APIResponse<User>();
+        User user = this.cachedUsers.get(userID);
+        apiResponse.setResponse(user);
+        apiResponse.setStatus(200);
+        Response<APIResponse<User>> resp = retrofit2.Response.success(apiResponse);
+        cb.onResponse(null, resp);
+    }
+
+    @Override
     public void logOut() {
         SharedPreferences.Editor editor = pref.edit();
         editor.remove(PERSIST_LOGIN_DATA);
@@ -140,10 +150,6 @@ public class TuteeLocalDataSource implements TuteeDataSource{
             int id = u.getId();
             cachedUsers.put(id, u);
         }
-    }
-
-    public boolean hasCachedUsers() {
-        return (this.cachedUsers != null && this.cachedUsers.size() > 0);
     }
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {

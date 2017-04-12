@@ -162,6 +162,11 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getUser(int userID, Callback<APIResponse<User>> cb) {
+        cb.onFailure(null, new UnsupportedOperationException("Not implemented!"));
+    }
+
+    @Override
     public void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb) {
         Call<APIResponse<User>> call = service.updateUser(req);
         call.enqueue(cb);

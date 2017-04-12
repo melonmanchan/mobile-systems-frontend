@@ -182,6 +182,11 @@ public class TuteeRepository implements TuteeDataSource {
 
     }
 
+    @Override
+    public void getUser(int userID, Callback<APIResponse<User>> cb) {
+        local.getUser(userID, cb);
+    }
+
     public AuthResponse fetchPersistedUserInfo() {
         AuthResponse authResponse = local.fetchPersistedUserLogin();
 
