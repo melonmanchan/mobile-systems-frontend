@@ -22,7 +22,7 @@ import fi.tutee.tutee.home.HomeSearchFragment;
 public class SelectTutorFragment extends Fragment implements SelectTutorContract.View {
     private ArrayList<User> tutors;
     private ListView list;
-    private TextView emptyView;
+    //private TextView emptyView;
     private SelectTutorContract.Presenter presenter;
 
     public SelectTutorFragment() {
@@ -49,7 +49,7 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
-        emptyView = (TextView)  root.findViewById(R.id.tutorsListEmpty);
+        //emptyView = (TextView)  root.findViewById(R.id.tutorsListEmpty);
 
         this.presenter.getTutorsBySubjectID(getArguments().getInt(HomeSearchFragment.SUBJECT_ID));
 
@@ -70,7 +70,7 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         });
 
         list.setAdapter(adapter);
-        list.setEmptyView(emptyView);
+        //list.setEmptyView(emptyView);
     }
 
     @Override

@@ -53,6 +53,12 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
         this.listener = listener;
     }
 
+
+    @Override
+    public User getItem(final int position) {
+        return users.get(position);
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

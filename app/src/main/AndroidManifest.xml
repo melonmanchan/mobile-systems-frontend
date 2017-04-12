@@ -46,6 +46,11 @@
             android:name=".profile.ProfileActivity"
             android:label="Profile"></activity>
 
+        <activity 
+            android:name=".messaging.MessagingActivity"
+            android:label="Messaging"
+            ></activity>
+
         <service
             android:name=".services.TuteeFirebaseInstanceIdService"
             android:exported="false">
