@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -37,6 +39,8 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     private Gson gson;
 
     private ArrayList<Subject> cachedSubjects;
+
+    private SparseArray<User> cachedUsers;
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
@@ -125,6 +129,21 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     @Override
     public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
         cb.onFailure(null, new Exception("Not yet implemented!"));
+    }
+
+    public void setCachedUsers(ArrayList<User> users) {
+        if (cachedUsers == null) {
+            cachedUsers = new SparseArray<User>();
+        }
+
+        for (User u: users) {
+            int id = u.getId();
+            cachedUsers.put(id, u);
+        }
+    }
+
+    public boolean hasCachedUsers() {
+        return (this.cachedUsers != null && this.cachedUsers.size() > 0);
     }
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {

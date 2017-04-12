@@ -246,8 +246,24 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
-        this.remote.getTutorsBySubject(subjectID, cb);
+    public void getTutorsBySubject(int subjectID, final Callback<APIResponse<ArrayList<User>>> cb) {
+        this.remote.getTutorsBySubject(subjectID, new Callback<APIResponse<ArrayList<User>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<User>>> call, Response<APIResponse<ArrayList<User>>> response) {
+                APIResponse<ArrayList<User>> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.setCachedUsers(resp.getResponse());
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<User>>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
     }
 
     @Override
