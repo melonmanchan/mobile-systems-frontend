@@ -3,11 +3,9 @@
     package="fi.tutee.tutee">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".TuteeApplication"
@@ -19,46 +17,45 @@
         <activity
             android:name=".pickauthentication.AuthenticationActivity"
             android:theme="@style/AppTheme">
+
+        </activity>
+        <activity android:name=".usertypeselection.UserTypeSelectionActivity" />
+        <activity android:name=".selecttutor.SelectTutorActivity" />
+        <activity
+            android:name=".register.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".registertutorextra.RegisterExtraActivity"
+            android:label="RegisterTutorExtraActivity" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:label="Home" />
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:label="Profile" />
+
+        <service
+            android:name=".services.TuteeFirebaseInstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".services.TuteeFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".splash.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
-
-        <activity android:name=".selecttutor.SelectTutorActivity"></activity>
-
-        <activity
-            android:name=".register.RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
-
-        <activity
-            android:name=".registertutorextra.RegisterExtraActivity"
-            android:label="RegisterTutorExtraActivity"></activity>
-
-        <activity
-            android:name=".home.HomeActivity"
-            android:label="Home"></activity>
-
-        <activity
-            android:name=".profile.ProfileActivity"
-            android:label="Profile"></activity>
-
-        <service
-            android:name=".services.TuteeFirebaseInstanceIdService"
-            android:exported="false">
-           <intent-filter>
-               <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-           </intent-filter>
-        </service>
-
-        <service
-            android:name=".services.TuteeFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
     </application>
+
 </manifest>
