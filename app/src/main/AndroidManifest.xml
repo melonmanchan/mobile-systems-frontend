@@ -16,6 +16,7 @@
         android:label="Tutee"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".pickauthentication.AuthenticationActivity"
             android:theme="@style/AppTheme">
@@ -25,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".tutorselectdetails.TutorSelectDetailsActivity"></activity>
 
         <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
 
