@@ -30,6 +30,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingRight="30dp"
         android:paddingLeft="30dp"
@@ -68,6 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/tutor_select_details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
     </LinearLayout>
-
 </LinearLayout>

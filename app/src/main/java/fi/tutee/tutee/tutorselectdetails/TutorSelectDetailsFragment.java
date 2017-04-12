@@ -25,6 +25,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
 
     private ImageView userImage;
     private TextView userName;
+    private TextView userDescription;
 
     public static String TUTOR_ID = "TUTOR_ID";
 
@@ -48,6 +49,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
 
         userImage = (ImageView) root.findViewById(R.id.tutor_select_details_avatar);
         userName = (TextView) root.findViewById(R.id.tutor_select_details_name);
+        userDescription = (TextView) root.findViewById(R.id.tutor_select_details_description);
 
         this.presenter.getTutorByID(getArguments().getInt(TUTOR_ID));
 
@@ -60,7 +62,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         this.user = user;
 
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
-
         userName.setText(user.getFirstName() + " " + user.getLastName());
+        userDescription.setText(user.getDescription());
     }
 }
