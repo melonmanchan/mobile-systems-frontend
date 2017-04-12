@@ -25,7 +25,7 @@
         <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
 
         <activity android:name=".selecttutor.SelectTutorActivity"></activity>
-        
+
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register" />
