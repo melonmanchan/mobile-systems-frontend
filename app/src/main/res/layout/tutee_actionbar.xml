@@ -5,7 +5,6 @@ tools:ignore="MissingPrefix"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="vertical">
-
 <TextView
     fontPath="fonts/cherry-and-kisses.ttf"
     android:layout_width="wrap_content"
