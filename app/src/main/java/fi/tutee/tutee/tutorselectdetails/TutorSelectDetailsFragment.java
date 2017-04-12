@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import fi.tutee.tutee.R;
@@ -22,6 +24,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private User user;
 
     private ImageView userImage;
+    private TextView userName;
 
     public static String TUTOR_ID = "TUTOR_ID";
 
@@ -44,6 +47,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         View root = inflater.inflate(R.layout.content_tutor_select_details, container, false);
 
         userImage = (ImageView) root.findViewById(R.id.tutor_select_details_avatar);
+        userName = (TextView) root.findViewById(R.id.tutor_select_details_name);
 
         this.presenter.getTutorByID(getArguments().getInt(TUTOR_ID));
 
@@ -56,5 +60,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         this.user = user;
 
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
+
+        userName.setText(user.getFirstName() + " " + user.getLastName());
     }
 }
