@@ -10,17 +10,22 @@
     <application
         android:name=".TuteeApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher_app"
         android:label="Tutee"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".pickauthentication.AuthenticationActivity"
             android:theme="@style/AppTheme">
-
         </activity>
-        <activity android:name=".usertypeselection.UserTypeSelectionActivity" />
-        <activity android:name=".selecttutor.SelectTutorActivity" />
+
+        <activity android:name=".tutorselectdetails.TutorSelectDetailsActivity"></activity>
+
+        <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
+
+        <activity android:name=".selecttutor.SelectTutorActivity"></activity>
+        
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register" />
