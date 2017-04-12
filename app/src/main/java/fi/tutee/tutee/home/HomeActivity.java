@@ -1,6 +1,8 @@
 package fi.tutee.tutee.home;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,12 +10,17 @@ import android.view.MenuItem;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
 import fi.tutee.tutee.utils.ActivityUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by mat on 12/03/2017.
  */
 
 public class HomeActivity extends AppCompatActivity {
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -26,6 +33,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.tutee_actionbar);
         getSupportActionBar().setElevation(0);
 
         TuteeApplication app = (TuteeApplication)  getApplication();

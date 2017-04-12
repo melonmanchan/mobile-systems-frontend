@@ -42,9 +42,6 @@ public class SplashFragment extends Fragment implements SplashContract.View  {
     @Override
     public void setPresenter(SplashContract.Presenter presenter)  {this.presenter = presenter;}
 
-    public void checkAutoLogin(Context context) {
-    }
-
     @Override
     public void goToNextActivity() {
         AuthResponse response = presenter.getAutoLoginInfo();

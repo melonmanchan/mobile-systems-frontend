@@ -34,7 +34,7 @@
             android:label="RegisterTutorExtraActivity" />
         <activity
             android:name=".home.HomeActivity"
-            android:label="Home" />
+            android:label="Tutee" />
         <activity
             android:name=".profile.ProfileActivity"
             android:label="Profile" />
