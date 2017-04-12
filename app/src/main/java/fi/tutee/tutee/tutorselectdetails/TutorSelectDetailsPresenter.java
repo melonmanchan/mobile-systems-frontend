@@ -1,6 +1,11 @@
 package fi.tutee.tutee.tutorselectdetails;
 
+import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TutorSelectDetailsPresenter implements TutorSelectDetailsContract.Presenter {
     private final TuteeRepository repository;
@@ -21,6 +26,20 @@ public class TutorSelectDetailsPresenter implements TutorSelectDetailsContract.P
 
     @Override
     public void getTutorByID(int tutorID) {
+        repository.getUser(tutorID, new Callback<APIResponse<User>>() {
+            @Override
+            public void onResponse(Call<APIResponse<User>> call, Response<APIResponse<User>> response) {
+                APIResponse<User> resp = response.body();
 
+                if (resp.isSuccessful()) {
+                    view.setTutor(resp.getResponse());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<User>> call, Throwable t) {
+                // TODO
+            }
+        });
     }
 }

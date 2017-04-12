@@ -79,7 +79,6 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         });
 
         list.setAdapter(adapter);
-        //list.setEmptyView(emptyView);
     }
 
     @Override

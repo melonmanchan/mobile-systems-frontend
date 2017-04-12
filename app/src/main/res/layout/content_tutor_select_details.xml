@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
     
     <ImageView
+        android:id="@+id/tutor_select_details_avatar"
         android:background="@drawable/gradient_black_fadeout"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
