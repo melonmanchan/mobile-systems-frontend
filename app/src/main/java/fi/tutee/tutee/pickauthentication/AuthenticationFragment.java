@@ -122,27 +122,4 @@ public class AuthenticationFragment  extends Fragment implements AuthenticationC
 
         Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (presenter != null) {
-            AuthResponse response = presenter.getAutoLoginInfo();
-
-            if (response != null && response.isValid()) {
-                User savedUser = response.getUser();
-
-                Intent intent;
-
-                if (savedUser.needsToFillProfile()) {
-                    intent = new Intent(context, RegisterExtraActivity.class);
-                } else {
-                    intent = new Intent(context, HomeActivity.class);
-                }
-
-                startActivity(intent);
-            }
-        }
-    }
 }
