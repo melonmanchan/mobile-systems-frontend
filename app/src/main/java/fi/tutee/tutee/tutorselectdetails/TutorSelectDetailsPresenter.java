@@ -1,6 +1,10 @@
 package fi.tutee.tutee.tutorselectdetails;
 
+import java.util.ArrayList;
+
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
@@ -39,6 +43,29 @@ public class TutorSelectDetailsPresenter implements TutorSelectDetailsContract.P
             @Override
             public void onFailure(Call<APIResponse<User>> call, Throwable t) {
                 // TODO
+            }
+        });
+    }
+
+    @Override
+    public void pairWithTutor(int tutorID) {
+        CreateTutorshipRequest req = new CreateTutorshipRequest(tutorID);
+
+        repository.createTutorship(req, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    view.pairTutorSucceeded();
+                } else {
+                    view.pairTutorFailed(resp.getErrors());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                view.pairTutorFailed(null);
             }
         });
     }

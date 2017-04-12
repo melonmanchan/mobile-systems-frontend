@@ -2,17 +2,22 @@ package fi.tutee.tutee.tutorselectdetails;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.User;
 
 /**
@@ -23,6 +28,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private TutorSelectDetailsContract.Presenter presenter;
     private User user;
 
+    private Button chooseTutor;
     private ImageView userImage;
     private TextView userName;
     private TextView userDescription;
@@ -50,6 +56,14 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         userImage = (ImageView) root.findViewById(R.id.tutor_select_details_avatar);
         userName = (TextView) root.findViewById(R.id.tutor_select_details_name);
         userDescription = (TextView) root.findViewById(R.id.tutor_select_details_description);
+        chooseTutor = (Button)  root.findViewById(R.id.tutor_select_details_choose_tutor);
+
+        chooseTutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.pairWithTutor(user.getId());
+            }
+        });
 
         this.presenter.getTutorByID(getArguments().getInt(TUTOR_ID));
 
@@ -64,5 +78,23 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
         userName.setText(user.getFirstName() + " " + user.getLastName());
         userDescription.setText(user.getDescription());
+    }
+
+    @Override
+    public void pairTutorSucceeded() {
+        Snackbar.make(getView(), "Pairing with tutor succeeded!", Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void pairTutorFailed(ArrayList<APIError> errors) {
+        chooseTutor.setEnabled(true);
+
+        String errorMessage = "Fetching tutors failed!";
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 }

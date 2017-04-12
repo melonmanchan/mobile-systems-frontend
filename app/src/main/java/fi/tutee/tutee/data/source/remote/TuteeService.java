@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -48,4 +49,7 @@ public interface TuteeService {
     @Multipart
     @POST("user/change_avatar")
     Call<APIResponse<User>> changeAvatar(@Part MultipartBody.Part file);
+
+    @POST("tutorship/")
+    Call<APIResponse> createTutorship(@Body CreateTutorshipRequest req);
 }

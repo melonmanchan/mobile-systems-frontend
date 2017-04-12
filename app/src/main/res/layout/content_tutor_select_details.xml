@@ -70,9 +70,15 @@
                 android:layout_height="fill_parent" />
         </LinearLayout>
         <TextView
+            android:minHeight="200dp"
             android:id="@+id/tutor_select_details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
+        <Button
+            android:id="@+id/tutor_select_details_choose_tutor"
+            android:text="Choose tutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>
