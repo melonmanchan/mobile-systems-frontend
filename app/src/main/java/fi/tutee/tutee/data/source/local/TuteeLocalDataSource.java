@@ -19,6 +19,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
@@ -32,6 +33,8 @@ public class TuteeLocalDataSource implements TuteeDataSource{
     private Gson gson;
 
     private HashSet<Integer> tutorIDs = new HashSet<Integer>();
+    private HashSet<Integer> tuteeIDs = new HashSet<Integer>();
+
     private ArrayList<Subject> cachedSubjects;
 
     private SparseArray<User> cachedUsers;
@@ -140,6 +143,66 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         cb.onFailure(null, new Exception("Cannot perform action locally"));
     }
 
+    @Override
+    public void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb) {
+        if (this.hasCachedTutorships()) {
+            TutorshipsResponse tutorshipsResponse = new TutorshipsResponse();
+
+            tutorshipsResponse.setTutees(getCachedTutees());
+            tutorshipsResponse.setTutors(getCachedTutors());
+
+            APIResponse<TutorshipsResponse> apiResponse = new APIResponse<TutorshipsResponse>();
+            apiResponse.setResponse(tutorshipsResponse);
+            apiResponse.setStatus(200);
+            Response<APIResponse<TutorshipsResponse>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    public ArrayList<User> getCachedTutees() {
+        ArrayList<User> users = new ArrayList<>();
+
+        for (Integer i: tuteeIDs) {
+            users.add(cachedUsers.get(i));
+        }
+
+        return  users;
+    }
+
+    public ArrayList<User> getCachedTutors() {
+        ArrayList<User> users = new ArrayList<>();
+
+        for (Integer i: tutorIDs) {
+            users.add(cachedUsers.get(i));
+        }
+
+        return  users;
+    }
+
+    public void setCachedTutors(ArrayList<User> tutors) {
+        if (tutorIDs == null) {
+            tutorIDs = new HashSet<>();
+        }
+
+        for (User u: tutors) {
+            tutorIDs.add(u.getId());
+        }
+
+        setCachedUsers(tutors);
+    }
+
+    public void setCachedTutees(ArrayList<User> tutees) {
+        if (tuteeIDs == null) {
+            tuteeIDs = new HashSet<>();
+        }
+
+        for (User u: tutees) {
+            tuteeIDs.add(u.getId());
+        }
+
+        setCachedUsers(tutees);
+    }
+
     public void setCachedUsers(ArrayList<User> users) {
         if (cachedUsers == null) {
             cachedUsers = new SparseArray<User>();
@@ -159,6 +222,10 @@ public class TuteeLocalDataSource implements TuteeDataSource{
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {
         this.cachedSubjects = cachedSubjects;
+    }
+
+    public boolean hasCachedTutorships() {
+        return (this.tuteeIDs != null && this.tutorIDs != null && this.cachedUsers != null);
     }
 
     public boolean hasCachedSubjects() {

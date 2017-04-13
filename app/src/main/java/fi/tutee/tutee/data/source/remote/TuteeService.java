@@ -11,6 +11,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import okhttp3.MultipartBody;
@@ -52,4 +53,7 @@ public interface TuteeService {
 
     @POST("tutorship/")
     Call<APIResponse> createTutorship(@Body CreateTutorshipRequest req);
+
+    @GET("tutorship/")
+    Call<APIResponse<TutorshipsResponse>> getTutorships();
 }

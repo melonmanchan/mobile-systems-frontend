@@ -17,6 +17,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
@@ -291,6 +292,34 @@ public class TuteeRepository implements TuteeDataSource {
                 cb.onFailure(call, t);
             }
         });
+    }
+
+    @Override
+    public void getTutorships(final Callback<APIResponse<TutorshipsResponse>> cb) {
+        if (this.local.hasCachedTutorships()){
+            this.local.getTutorships(cb);
+        } else {
+            this.remote.getTutorships(new Callback<APIResponse<TutorshipsResponse>>() {
+                @Override
+                public void onResponse(Call<APIResponse<TutorshipsResponse>> call, Response<APIResponse<TutorshipsResponse>> response) {
+                    APIResponse<TutorshipsResponse> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        TutorshipsResponse tutorshipsResponse = resp.getResponse();
+
+                        local.setCachedTutors(tutorshipsResponse.getTutors());
+                        local.setCachedTutees(tutorshipsResponse.getTutees());
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<TutorshipsResponse>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+        }
     }
 
     @Override

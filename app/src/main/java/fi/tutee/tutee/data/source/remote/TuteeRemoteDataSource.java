@@ -16,6 +16,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
@@ -188,6 +189,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb) {
         Call<APIResponse> call = service.createTutorship(req);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb) {
+        Call<APIResponse<TutorshipsResponse>> call = service.getTutorships();
         call.enqueue(cb);
     }
 }
