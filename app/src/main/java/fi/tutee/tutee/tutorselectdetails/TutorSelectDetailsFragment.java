@@ -61,6 +61,9 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         chooseTutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chooseTutor.setEnabled(false);
+                chooseTutor.setAlpha(0.5f);
+
                 presenter.pairWithTutor(user.getId());
             }
         });
@@ -88,6 +91,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     @Override
     public void pairTutorFailed(ArrayList<APIError> errors) {
         chooseTutor.setEnabled(true);
+        chooseTutor.setAlpha(1.0f);
 
         String errorMessage = "Fetching tutors failed!";
 

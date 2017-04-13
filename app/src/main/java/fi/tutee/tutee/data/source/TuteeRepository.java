@@ -234,7 +234,7 @@ public class TuteeRepository implements TuteeDataSource {
                 public void onResponse(Call<APIResponse<ArrayList<Subject>>> call, Response<APIResponse<ArrayList<Subject>>> response) {
                     APIResponse<ArrayList<Subject>> resp = response.body();
 
-                    if (resp.isSuccessful()) {
+                    if (resp != null && resp.isSuccessful()) {
                         ArrayList<Subject> subjects = resp.getResponse();
                         local.setCachedSubjects(subjects);
                     }

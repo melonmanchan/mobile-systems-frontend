@@ -50,7 +50,7 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onResponse(Call<APIResponse<ArrayList<Subject>>> call, Response<APIResponse<ArrayList<Subject>>> response) {
                 APIResponse<ArrayList<Subject>> resp = response.body();
 
-                if (resp.isSuccessful()) {
+                if (resp != null && resp.isSuccessful()) {
                     ArrayList<Subject> subjects = resp.getResponse();
                     view.setSubjects(subjects);
                 }
