@@ -16,10 +16,18 @@ public class TutorshipsResponse {
     ArrayList<User> tutees = new ArrayList<>();
 
     public ArrayList<User> getTutors() {
+        if (tutors == null) {
+            return new ArrayList<User>();
+        }
+
         return tutors;
     }
 
     public ArrayList<User> getTutees() {
+        if (tutees == null) {
+            return new ArrayList<User>();
+        }
+
         return tutees;
     }
 

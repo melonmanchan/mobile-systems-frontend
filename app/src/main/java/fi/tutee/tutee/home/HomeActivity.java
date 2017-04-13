@@ -52,6 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         new HomePresenter(
                 app.repository,
                 homeFragment
-        );
+        ).getTutorships();
     }
 }

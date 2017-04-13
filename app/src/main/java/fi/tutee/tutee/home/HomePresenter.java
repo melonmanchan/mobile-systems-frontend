@@ -1,9 +1,11 @@
 package fi.tutee.tutee.home;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
@@ -34,13 +36,37 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getMessageUsers() {
+    public void getTutorships() {
+        this.repository.getTutorships(new Callback<APIResponse<TutorshipsResponse>>() {
+            @Override
+            public void onResponse(Call<APIResponse<TutorshipsResponse>> call, Response<APIResponse<TutorshipsResponse>> response) {
+                APIResponse<TutorshipsResponse> resp =response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    TutorshipsResponse tutorshipsResponse = resp.getResponse();
+
+                    ArrayList<User> allUsers = new ArrayList<User>();
+
+                    allUsers.addAll(tutorshipsResponse.getTutees());
+                    allUsers.addAll(tutorshipsResponse.getTutors());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<TutorshipsResponse>> call, Throwable t) {
+                // TODO
+            }
+        });
+    }
+
+    @Override
+    public void getMessages() {
         User user = this.repository.getLoggedInUser();
 
         ArrayList<User> users = new ArrayList<>();
         users.add(user);
 
-        this.view.setMessageUsers(users);
+        //this.view.setMessageUsers(users);
     }
 
     @Override

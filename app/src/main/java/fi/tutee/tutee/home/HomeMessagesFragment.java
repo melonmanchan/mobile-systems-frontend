@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.android.gms.vision.text.Text;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,10 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
         this.messageUsersList = (ListView) root.findViewById(R.id.messages_user_list);
 
-        this.presenter.getMessageUsers();
+        TextView emptyView = (TextView) root.findViewById(R.id.messages_user_list_empty);
+        messageUsersList.setEmptyView(emptyView);
+
+        this.presenter.getMessages();
 
         return root;
     }
