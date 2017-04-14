@@ -1,10 +1,13 @@
 package fi.tutee.tutee.messaging;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +16,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.wearable.MessageEvent;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,15 +38,7 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.home.HomeMessagesFragment;
 
-
-/**
- * Created by lehtone1 on 12/04/17.
- */
-
 public class MessagingFragment extends Fragment implements MessagingContract.View {
-
-
-
     private MessagingContract.Presenter presenter;
     private RecyclerView mRecyclerView;
     private MessageListAdapter mAdapter;
@@ -48,8 +46,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private EditText writeMessage;
     private Button sendMessage;
     private int otherUserId;
-
-
 
     public static MessagingFragment newInstance(int userId) {
         Bundle arguments = new Bundle();
@@ -82,7 +78,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onMessageEvent(GeneralMessage message) {
         addMessage(message);
-        //event.
     }
 
     @Override
@@ -104,6 +99,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         sendMessage = (Button) root.findViewById(R.id.send_message_button);
 
         otherUserId = getArguments().getInt(HomeMessagesFragment.USER_ID);
+
         getUser();
         getMessages();
 
@@ -141,16 +137,24 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         presenter.getUserByID(otherUserId);
     }
 
-
     @Override
     public void setUser(User user) {
         getActivity().setTitle(user.getFirstName());
+        AppCompatActivity parent = (AppCompatActivity) getActivity();
+
+        parent.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        parent.getSupportActionBar().setCustomView(R.layout.actionbar_message);
+
+        TextView title = (TextView) parent.getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+        ImageView avatar = (ImageView)  parent.getSupportActionBar().getCustomView().findViewById(R.id.action_bar_avatar);
+
+        title.setText(user.getFirstName() + " " + user.getLastName());
+        Picasso.with(getContext()).load(user.getAvatar().toString()).into(avatar);
     }
 
     public void setPresenter(MessagingContract.Presenter presenter) {
         this.presenter = presenter;
     }
-
 
     @Override
     public void setMessages(ArrayList<GeneralMessage> messages) {

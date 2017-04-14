@@ -20,14 +20,11 @@ public interface MessagingContract {
         void getMessagesFailed(ArrayList<APIError> errors);
 
         void setUser(User user);
-
     }
 
     interface Presenter extends BasePresenter {
         void getMessagesFrom(int userId);
 
-
         void getUserByID(int userId);
-
     }
 }

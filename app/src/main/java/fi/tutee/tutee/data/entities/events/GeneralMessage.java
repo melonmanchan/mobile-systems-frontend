@@ -27,7 +27,6 @@ public class GeneralMessage {
     @Expose
     private Time sentAt;
 
-
     public int getId() {
         return id;
     }
