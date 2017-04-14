@@ -21,7 +21,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,10 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
     private EditText registerTutorExtraDescription;
     private Button registerTutorExtraBtn;
+
+    private SeekBar priceSlider;
+    private TextView priceDisplay;
+    private int price = 0;
 
     private RegisterExtraContract.Presenter presenter;
 
@@ -74,6 +80,8 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             registerTutorExtraDescription = (EditText) root.findViewById(R.id.registerTutorExtraDescription);
             registerTutorExtraBtn = (Button) root.findViewById(R.id.registerTutorExtraButton);
             subjectsList = (ListView)  root.findViewById(R.id.register_extra_subjects);
+            priceSlider = (SeekBar) root.findViewById(R.id.price_slider);
+            priceDisplay = (TextView) root.findViewById(R.id.price_display);
 
             presenter.getSubjects();
 
@@ -95,10 +103,30 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                 }
             });
 
+            priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    price = progress;
+                    priceDisplay.setText(String.valueOf(progress) + "€");
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
             registerTutorExtraBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String description = registerTutorExtraDescription.getText().toString();
+
+
 
                     if (selectedSubjects.size() == 0) {
                         Snackbar.make(getView(), "Please select at least one subject", Snackbar.LENGTH_LONG).show();
@@ -110,7 +138,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                         return;
                     }
 
-                    presenter.registerTutorExtra(description, selectedSubjects);
+                    presenter.registerTutorExtra(description, selectedSubjects, price);
                 }
             });
 

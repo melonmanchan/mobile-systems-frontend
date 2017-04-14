@@ -30,6 +30,28 @@
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hourly price: "/>
+        <TextView
+            android:id="@+id/price_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0€"/>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/price_slider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="150"
+        android:paddingTop="20dp"/>
+
     <EditText
         android:id = "@+id/registerTutorExtraDescription"
         android:hint="Description"

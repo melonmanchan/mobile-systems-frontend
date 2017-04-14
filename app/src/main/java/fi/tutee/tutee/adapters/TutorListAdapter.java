@@ -27,6 +27,9 @@ public class TutorListAdapter extends ArrayAdapter<User> {
     private OnTutorSelectedListener listener;
     private Context context;
 
+    //alternate white and lightgrey background
+    private int[] colors = new int[] { 0x30ffffff, 0x30eaeaea };
+
     public interface OnTutorSelectedListener {
         void onSelected(User tutor);
     }
@@ -64,6 +67,9 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         TextView name = (TextView) convertView.findViewById(R.id.small_profile_name);
         TextView description = (TextView) convertView.findViewById(R.id.small_profile_description);
         LinearLayout subjectsWrapper = (LinearLayout)  convertView.findViewById(R.id.small_profile_subjects_wrapper);
+
+        int colorPos = position % colors.length;
+        subjectsWrapper.setBackgroundColor(colors[colorPos]);
 
         initializeSubjectsWrapper(subjectsWrapper, subjects);
 

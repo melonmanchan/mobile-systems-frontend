@@ -11,6 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:id="@+id/partial_extra_subject_list_name"
+        android:paddingTop="5dp"
         android:layout_width="fill_parent"
         android:layout_height="50dp" />
 
