@@ -19,6 +19,17 @@
         <item name="android:textColor">#fff</item>
     </style>
 
+    <style name="ButtonOnBackground">
+        <item name="android:textColor">#fff</item>
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="inputOnBackground">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textColorHint">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
     </style>
 

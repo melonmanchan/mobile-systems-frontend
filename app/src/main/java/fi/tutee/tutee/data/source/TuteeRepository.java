@@ -10,12 +10,14 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
@@ -182,6 +184,11 @@ public class TuteeRepository implements TuteeDataSource {
 
     }
 
+    @Override
+    public void getUser(int userID, Callback<APIResponse<User>> cb) {
+        local.getUser(userID, cb);
+    }
+
     public AuthResponse fetchPersistedUserInfo() {
         AuthResponse authResponse = local.fetchPersistedUserLogin();
 
@@ -228,7 +235,7 @@ public class TuteeRepository implements TuteeDataSource {
                 public void onResponse(Call<APIResponse<ArrayList<Subject>>> call, Response<APIResponse<ArrayList<Subject>>> response) {
                     APIResponse<ArrayList<Subject>> resp = response.body();
 
-                    if (resp.isSuccessful()) {
+                    if (resp != null && resp.isSuccessful()) {
                         ArrayList<Subject> subjects = resp.getResponse();
                         local.setCachedSubjects(subjects);
                     }
@@ -246,8 +253,78 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
-        this.remote.getTutorsBySubject(subjectID, cb);
+    public void getTutorsBySubject(int subjectID, final Callback<APIResponse<ArrayList<User>>> cb) {
+        this.remote.getTutorsBySubject(subjectID, new Callback<APIResponse<ArrayList<User>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<User>>> call, Response<APIResponse<ArrayList<User>>> response) {
+                APIResponse<ArrayList<User>> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.setCachedUsers(resp.getResponse());
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<User>>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
+    }
+
+    @Override
+    public void createTutorship(final CreateTutorshipRequest req, final Callback<APIResponse> cb) {
+        this.remote.createTutorship(req, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.markUserAsTutor(req.getID());
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
+    }
+
+    @Override
+    public void getTutorships(final Callback<APIResponse<TutorshipsResponse>> cb) {
+        if (this.local.hasCachedTutorships()){
+            this.local.getTutorships(cb);
+        } else {
+            this.remote.getTutorships(new Callback<APIResponse<TutorshipsResponse>>() {
+                @Override
+                public void onResponse(Call<APIResponse<TutorshipsResponse>> call, Response<APIResponse<TutorshipsResponse>> response) {
+                    APIResponse<TutorshipsResponse> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        TutorshipsResponse tutorshipsResponse = resp.getResponse();
+
+                        local.setCachedTutors(tutorshipsResponse.getTutors());
+                        local.setCachedTutees(tutorshipsResponse.getTutees());
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<TutorshipsResponse>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean isUserTutor(User user) {
+        return local.isUserTutor(user);
     }
 
     @Override

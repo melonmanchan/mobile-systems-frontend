@@ -27,12 +27,7 @@ public class AuthenticationPresenter implements AuthenticationContract.Presenter
     @Override
     public void start() {
 
-    }
 
-    @Override
-    public AuthResponse getAutoLoginInfo() {
-        AuthResponse authResponse = repository.fetchPersistedUserInfo();
-        return authResponse;
     }
 
     @Override

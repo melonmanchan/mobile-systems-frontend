@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a..."
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#fff"/>
 
     <LinearLayout
         android:layout_gravity="center"
@@ -32,12 +33,14 @@
             android:id="@+id/userTypeSelectionTutor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Tutor"/>
+            android:text="Tutor"
+            android:theme="@style/ButtonOnBackground"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="or a"
+            android:textColor="#fff"
             android:textSize="24sp" />
 
         <Button
@@ -45,7 +48,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Student"
-            android:layout_toEndOf="@+id/userTypeSelectionTutor"/>
+            android:layout_toEndOf="@+id/userTypeSelectionTutor"
+            android:theme="@style/ButtonOnBackground"/>
 
     </LinearLayout>
 </LinearLayout>

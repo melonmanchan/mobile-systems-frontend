@@ -12,7 +12,9 @@ public interface HomeContract {
     interface Presenter extends BasePresenter{
         void logOut();
 
-        void getMessageUsers();
+
+        void getTutorships();
+        void getMessages();
         void getSubjects();
     }
 

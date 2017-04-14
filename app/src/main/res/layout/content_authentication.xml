@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,7 +13,10 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:theme="@style/inputOnBackground"
+            android:textColorHint="#fff"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/etPasswordLayout"
@@ -27,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:theme="@style/inputOnBackground"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -34,7 +38,8 @@
             android:id = "@+id/loginButton"
             android:layout_width = "fill_parent"
             android:layout_height = "wrap_content"
-            android:text = "Log In"/>
+            android:text = "Log In"
+            android:theme="@style/ButtonOnBackground"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,7 +57,8 @@
             android:id="@+id/registerNewAccountButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Register new account"/>
+            android:text="Register new account"
+            android:theme="@style/ButtonOnBackground"/>
     </LinearLayout>
 
 </RelativeLayout>

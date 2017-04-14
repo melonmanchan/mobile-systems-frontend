@@ -9,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.wearable.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.MessageListAdapter;
 
@@ -35,11 +41,28 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (presenter != null) {
             presenter.start();
         }
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onMeassgeEvent(MessageEvent event) {
+        event.
     }
 
     @Override

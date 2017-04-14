@@ -9,12 +9,14 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeDataSource;
@@ -162,6 +164,11 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getUser(int userID, Callback<APIResponse<User>> cb) {
+        cb.onFailure(null, new UnsupportedOperationException("Not implemented!"));
+    }
+
+    @Override
     public void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb) {
         Call<APIResponse<User>> call = service.updateUser(req);
         call.enqueue(cb);
@@ -177,5 +184,22 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
         Call<APIResponse<ArrayList<User>>> call = service.getTutorsBySubject(subjectID);
         call.enqueue(cb);
+    }
+
+    @Override
+    public void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.createTutorship(req);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb) {
+        Call<APIResponse<TutorshipsResponse>> call = service.getTutorships();
+        call.enqueue(cb);
+    }
+
+    @Override
+    public boolean isUserTutor(User user) {
+        return false;
     }
 }

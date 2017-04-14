@@ -54,7 +54,8 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.content_select_tutor, container, false);
         list = (ListView) root.findViewById(R.id.tutorListView);
-        //emptyView = (TextView)  root.findViewById(R.id.tutorsListEmpty);
+        TextView emptyView = (TextView)  root.findViewById(R.id.tutorsListEmpty);
+        list.setEmptyView(emptyView);
 
         this.presenter.getTutorsBySubjectID(getArguments().getInt(HomeSearchFragment.SUBJECT_ID));
 
@@ -79,7 +80,6 @@ public class SelectTutorFragment extends Fragment implements SelectTutorContract
         });
 
         list.setAdapter(adapter);
-        //list.setEmptyView(emptyView);
     }
 
     @Override
