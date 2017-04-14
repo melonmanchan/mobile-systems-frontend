@@ -23,6 +23,7 @@ import retrofit2.Callback;
  */
 
 public interface TuteeDataSource {
+    // API-related methods
     void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
 
     void googleLogin(String token);
@@ -48,4 +49,7 @@ public interface TuteeDataSource {
     void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb);
 
     void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb);
+
+    // Other misc. helpers
+    boolean isUserTutor(User user);
 }

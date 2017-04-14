@@ -159,6 +159,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
         }
     }
 
+    @Override
+    public boolean isUserTutor(User user) {
+        return tutorIDs.contains(user.getId());
+    }
+
     public ArrayList<User> getCachedTutees() {
         ArrayList<User> users = new ArrayList<>();
 

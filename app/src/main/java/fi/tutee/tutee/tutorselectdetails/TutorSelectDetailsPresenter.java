@@ -69,4 +69,9 @@ public class TutorSelectDetailsPresenter implements TutorSelectDetailsContract.P
             }
         });
     }
+
+    @Override
+    public boolean alreadyPairedWith(User user) {
+        return repository.isUserTutor(user);
+    }
 }

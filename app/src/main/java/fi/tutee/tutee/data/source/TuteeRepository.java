@@ -323,6 +323,11 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
+    public boolean isUserTutor(User user) {
+        return local.isUserTutor(user);
+    }
+
+    @Override
     public void logOut() {
         this.remote.logOut();
         this.local.logOut();

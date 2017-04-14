@@ -1,6 +1,5 @@
 package fi.tutee.tutee.tutorselectdetails;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -77,6 +75,10 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     @Override
     public void setTutor(User user) {
         this.user = user;
+
+        if (presenter.alreadyPairedWith(user)) {
+            chooseTutor.setVisibility(View.GONE);
+        }
 
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
         userName.setText(user.getFirstName() + " " + user.getLastName());

@@ -19,5 +19,7 @@ interface TutorSelectDetailsContract {
     interface Presenter extends BasePresenter {
         void getTutorByID(int tutorID);
         void pairWithTutor(int tutorID);
+
+        boolean alreadyPairedWith(User user);
     }
 }

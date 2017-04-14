@@ -197,4 +197,9 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         Call<APIResponse<TutorshipsResponse>> call = service.getTutorships();
         call.enqueue(cb);
     }
+
+    @Override
+    public boolean isUserTutor(User user) {
+        return false;
+    }
 }
