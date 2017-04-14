@@ -19,9 +19,14 @@ public class RegisterTutorExtraRequest  {
     @Expose
     private ArrayList<Subject> subjects;
 
-    public RegisterTutorExtraRequest(String description, ArrayList<Subject> subjects) {
+    @SerializedName("price")
+    @Expose
+    private int price;
+
+    public RegisterTutorExtraRequest(String description, ArrayList<Subject> subjects, int price) {
         this.description = description;
         this.subjects = subjects;
+        this.price = price;
     }
 
     public ArrayList<Subject> getSubjects() {

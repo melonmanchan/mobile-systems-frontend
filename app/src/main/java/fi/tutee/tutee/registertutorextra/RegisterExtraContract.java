@@ -22,7 +22,7 @@ public interface RegisterExtraContract {
     }
 
     interface Presenter extends BasePresenter {
-        void registerTutorExtra(String description, ArrayList<Subject> subjects);
+        void registerTutorExtra(String description, ArrayList<Subject> subjects, int price);
         void getSubjects();
     }
 }
