@@ -22,9 +22,10 @@
     <style name="ButtonOnBackground">
         <item name="android:textColor">#fff</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/buttonOnBackgroundTextSize</item>
     </style>
 
-    <style name="inputOnBackground">
+    <style name="InputOnBackground">
         <item name="android:textColor">#fff</item>
         <item name="android:textColorHint">#fff</item>
         <item name="colorControlNormal">#fff</item>

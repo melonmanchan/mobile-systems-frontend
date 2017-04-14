@@ -15,11 +15,11 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
+        getSupportActionBar().hide();
+        //getSupportActionBar().setCustomView(R.layout.actionbar_icon_only);
 
-        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Welcome");
+        // TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+        // title.setText("Welcome");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
