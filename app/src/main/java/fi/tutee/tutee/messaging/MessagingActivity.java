@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
+import fi.tutee.tutee.home.HomeMessagesFragment;
 import fi.tutee.tutee.utils.ActivityUtils;
 
 /**
@@ -32,7 +33,9 @@ public class MessagingActivity extends AppCompatActivity {
                 .findFragmentById(R.id.contentFrame);
 
         if (messagingFragment == null) {
-            messagingFragment = messagingFragment.newInstance();
+            messagingFragment = messagingFragment.newInstance(
+                    getIntent().getIntExtra(HomeMessagesFragment.USER_ID, -1)
+            );
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     messagingFragment, R.id.contentFrame);

@@ -6,14 +6,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
 /**
  * Created by lehtone1 on 12/04/17.
  */
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
-    private String[] mDataset;
+    private ArrayList<GeneralMessage> messages;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -28,8 +31,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MessageListAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public MessageListAdapter(ArrayList<GeneralMessage> messages) {
+        this.messages = messages;
     }
 
     // Create new views (invoked by the layout manager)
@@ -49,14 +52,19 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset[position]);
+        holder.mTextView.setText(messages.get(position).getContent());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return messages.size();
+    }
+
+    public void addItem(GeneralMessage message) {
+        messages.add(message);
+        notifyItemInserted(messages.size());
     }
 }
 

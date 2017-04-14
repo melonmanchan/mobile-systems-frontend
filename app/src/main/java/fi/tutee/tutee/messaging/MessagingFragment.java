@@ -1,5 +1,6 @@
 package fi.tutee.tutee.messaging;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.wearable.MessageEvent;
 
@@ -15,8 +19,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.MessageListAdapter;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
+import fi.tutee.tutee.home.HomeMessagesFragment;
 
 
 /**
@@ -29,13 +40,17 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
     private MessagingContract.Presenter presenter;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MessageListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    private EditText writeMessage;
+    private Button sendMessage;
+    private int otherUserId;
 
 
-    public static MessagingFragment newInstance() {
+    public static MessagingFragment newInstance(int userId) {
         Bundle arguments = new Bundle();
         MessagingFragment fragment = new MessagingFragment();
+        arguments.putInt(HomeMessagesFragment.USER_ID, userId);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -61,24 +76,39 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onMeassgeEvent(MessageEvent event) {
-        event.
+    public void onMessageEvent(GeneralMessage message) {
+        addMessage(message);
+        //event.
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.content_messaging, container, false);
+        final View root = inflater.inflate(R.layout.content_messaging, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.messaging_view);
         mLayoutManager = new LinearLayoutManager(root.getContext());
-        String[] messages = {"hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalössfdsdffsfshgrgdfgfhgfhsfdsfdsfdsgfdsgdsgsdgdsgfdsgfdsgfdsgfsdgfsdgfsgfdsgfsdgfsdgfdsgfdsgfsgfsgfs fdfdsfgdsgfdsgfdsgfdsgfsgfsgfsgfdsgfsgfdgfsgfdsgfdsgfsgfsgsgfsgfsgfsgfdsgfsgfsgfgfdgfsgfdsgfgfs fdsgfdsgfsgfdsfgdsgfdsfgdsfgdsgfdsgfdgfdgfgfsfdsgfdsgdsgdfsgfdsgfsgfsgfsfsdgfdsgsfgsdfdsgdsgfgfsd", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö" };
-        mAdapter = new MessageListAdapter(messages);
+        ArrayList<GeneralMessage> a = new ArrayList<>();
+        mAdapter = new MessageListAdapter(a);
 
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
+
+        writeMessage = (EditText) root.findViewById(R.id.write_message);
+        sendMessage = (Button) root.findViewById(R.id.send_message_button);
+
+        otherUserId = getArguments().getInt(HomeMessagesFragment.USER_ID);
+
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: addMessage();
+                writeMessage.setText("");
+            }
+        });
+
 
 
 
@@ -86,11 +116,26 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         return root;
     }
 
+    public void scrollToBottom() {
+        mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
+    }
 
+    public void addMessage(GeneralMessage message) {
+        mAdapter.addItem(message);
+        scrollToBottom();
+    }
+
+    public void getMessages() {
+
+    }
 
     public void setPresenter(MessagingContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
 
+    @Override
+    public void setMessages(ArrayList<GeneralMessage> messages) {
+
+    }
 }

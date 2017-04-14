@@ -25,4 +25,9 @@ public MessagingPresenter(TuteeRepository repository,
 public void start() {
 
         }
+
+        @Override
+        public void getMessageBetween(int thisUserId, int otherUserId) {
+                
         }
+}
