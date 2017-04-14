@@ -39,7 +39,7 @@ public class HomeMessagesFragment extends HomeBaseFragment {
         messageUsersList.setEmptyView(emptyView);
 
         this.presenter.getMessages();
-
+        this.presenter.getTutorships();
         return root;
     }
 
