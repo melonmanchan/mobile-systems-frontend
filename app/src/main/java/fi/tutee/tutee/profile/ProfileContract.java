@@ -16,7 +16,7 @@ import fi.tutee.tutee.data.entities.User;
 public class ProfileContract {
 
     interface Presenter extends BasePresenter {
-        void updateUser(String firstName, String lastName);
+        void updateUser(String firstName, String lastName, int price);
         void changeAvatar(String avatarUri);
     }
 

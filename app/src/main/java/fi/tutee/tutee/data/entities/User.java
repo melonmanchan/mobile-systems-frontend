@@ -56,6 +56,10 @@ public class User {
     @Expose
     private ArrayList<Subject> subjects;
 
+    @SerializedName("price")
+    @Expose
+    private int price;
+
     public ArrayList<Subject> getSubjects() {
         return subjects;
     }
@@ -180,4 +184,11 @@ public class User {
 
         return url;
     }
+
+    public int getPrice() { return price; }
+
+    public void setPrice(int price) { this.price = price; }
+
+    public boolean isTutor() { return this.userType.equals(UserType.TUTOR); }
+
 }

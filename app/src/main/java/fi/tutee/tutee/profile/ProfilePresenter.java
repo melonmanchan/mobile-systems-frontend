@@ -44,11 +44,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         view.setUser(user);
     }
 
-    public void updateUser(String firstName, String lastName) {
+    public void updateUser(String firstName, String lastName, int price) {
         User user = repository.getLoggedInUser();
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setPrice(price);
 
         UpdateUserRequest req = new UpdateUserRequest(user);
 

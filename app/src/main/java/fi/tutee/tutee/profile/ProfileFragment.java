@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Line;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
@@ -93,18 +95,24 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         priceSlider = (SeekBar) root.findViewById(R.id.price_slider);
         priceDisplay = (TextView) root.findViewById(R.id.price_display);
 
-        priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                priceDisplay.setText(String.valueOf(progress) + "€");
-            }
+        if (!user.isTutor()) {
+            priceSlider.setVisibility(View.GONE);
+            (root.findViewById(R.id.slider_text_container)).setVisibility(View.GONE);
+        } else {
+            priceSlider.setProgress(user.getPrice());
+            priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    priceDisplay.setText(String.valueOf(progress) + "€");
+                }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            });
+        }
 
         edit = (Button) root.findViewById(R.id.save_profile);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -114,9 +122,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
                 String firstName = firstname.getText().toString();
                 String lastName = lastname.getText().toString();
+                int price = priceSlider.getProgress();
 
                 if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
-                    presenter.updateUser(firstName, lastName);
+                    presenter.updateUser(firstName, lastName, price);
                 }
 
                 if (avatarChanged) {
