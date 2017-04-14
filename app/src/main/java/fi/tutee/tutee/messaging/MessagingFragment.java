@@ -24,7 +24,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private MessagingContract.Presenter presenter;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
 
     public static MessagingFragment newInstance() {
@@ -52,10 +52,10 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         String[] messages = {"hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalössfdsdffsfshgrgdfgfhgfhsfdsfdsfdsgfdsgdsgsdgdsgfdsgfdsgfdsgfsdgfsdgfsgfdsgfsdgfsdgfdsgfdsgfsgfsgfs fdfdsfgdsgfdsgfdsgfdsgfsgfsgfsgfdsgfsgfdgfsgfdsgfdsgfsgfsgsgfsgfsgfsgfdsgfsgfsgfgfdgfsgfdsgfgfs fdsgfdsgfsgfdsfgdsgfdsfgdsfgdsgfdsgfdgfdgfgfsfdsgfdsgdsgdfsgfdsgfsgfsgfsfsdgfdsgsfgsdfdsgdsgfgfsd", "jsajriw", "öasjdöas", "sjö", "hei", "heihei", "asasd", "adaspdjalös", "jsajriw", "öasjdöas", "sjö" };
         mAdapter = new MessageListAdapter(messages);
 
+        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
-
 
 
 

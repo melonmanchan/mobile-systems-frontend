@@ -17,31 +17,44 @@
 
         <activity
             android:name=".pickauthentication.AuthenticationActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" >
         </activity>
 
-        <activity android:name=".tutorselectdetails.TutorSelectDetailsActivity"></activity>
+        <activity
+            android:name=".tutorselectdetails.TutorSelectDetailsActivity"
+            android:screenOrientation="portrait"
+            ></activity>
 
-        <activity android:name=".usertypeselection.UserTypeSelectionActivity"></activity>
+        <activity
+            android:name=".usertypeselection.UserTypeSelectionActivity"
+            android:screenOrientation="portrait" ></activity>
 
-        <activity android:name=".selecttutor.SelectTutorActivity"></activity>
+        <activity
+            android:name=".selecttutor.SelectTutorActivity"
+            android:screenOrientation="portrait" ></activity>
         
         <activity
             android:name=".register.RegisterActivity"
-            android:label="@string/title_activity_register" />
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".registertutorextra.RegisterExtraActivity"
-            android:label="RegisterTutorExtraActivity" />
+            android:label="RegisterTutorExtraActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.HomeActivity"
-            android:label="Home" />
+            android:label="Home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".profile.ProfileActivity"
-            android:label="Profile" />
+            android:label="Profile"
+            android:screenOrientation="portrait" />
 
         <activity 
             android:name=".messaging.MessagingActivity"
             android:label="Messaging"
+            android:screenOrientation="portrait"
             ></activity>
 
         <service
@@ -59,7 +72,8 @@
 
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
