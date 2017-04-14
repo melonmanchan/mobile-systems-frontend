@@ -28,5 +28,6 @@
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="#1848adff"
         app:headerColumnBackground="#ffffffff"
+        app:eventColor="#5dba6b"
         android:layout_below="@+id/days"/>
 </RelativeLayout>

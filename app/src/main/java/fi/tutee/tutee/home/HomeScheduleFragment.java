@@ -22,10 +22,11 @@ import java.util.Locale;
 
 import fi.tutee.tutee.R;
 
-public class HomeScheduleFragment extends HomeBaseFragment{
+public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
     public WeekView mWeekView;
     public TabLayout days;
     private Calendar day;
+    private ArrayList<WeekViewEvent> mNewEvents;
 
     public HomeScheduleFragment() {
         // Required empty public constructor
@@ -45,6 +46,10 @@ public class HomeScheduleFragment extends HomeBaseFragment{
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);
         day = Calendar.getInstance();
+        mNewEvents = new ArrayList<WeekViewEvent>();
+
+        mWeekView.setMonthChangeListener(this);
+        mWeekView.setEmptyViewClickListener(this);
 
         days.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -79,7 +84,6 @@ public class HomeScheduleFragment extends HomeBaseFragment{
 
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
-        mWeekView.setMonthChangeListener(mMonthChangeListener);
 
         // Set long press listener for events.
         //mWeekView.setEventLongPressListener(mEventLongPressListener)
@@ -94,24 +98,6 @@ public class HomeScheduleFragment extends HomeBaseFragment{
         showMoreDates();
         return root;
     }
-
-    MonthLoader.MonthChangeListener mMonthChangeListener = new MonthLoader.MonthChangeListener() {
-        @Override
-        public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-            // Populate the week view with some events.
-            List<WeekViewEvent> events = getEvents(newYear, newMonth);
-            return events;
-        }
-    };
-
-    private List<WeekViewEvent> getEvents(int newYear, int newMonth) {
-
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        return events;
-    }
-
-
 
     private void showMoreDates() {
 
@@ -148,5 +134,61 @@ public class HomeScheduleFragment extends HomeBaseFragment{
 
 
 
+    private ArrayList<WeekViewEvent> getNewEvents(int year, int month) {
 
+        // Get the starting point and ending point of the given month. We need this to find the
+        // events of the given month.
+        Calendar startOfMonth = Calendar.getInstance();
+        startOfMonth.set(Calendar.YEAR, year);
+        startOfMonth.set(Calendar.MONTH, month - 1);
+        startOfMonth.set(Calendar.DAY_OF_MONTH, 1);
+        startOfMonth.set(Calendar.HOUR_OF_DAY, 0);
+        startOfMonth.set(Calendar.MINUTE, 0);
+        startOfMonth.set(Calendar.SECOND, 0);
+        startOfMonth.set(Calendar.MILLISECOND, 0);
+        Calendar endOfMonth = (Calendar) startOfMonth.clone();
+        endOfMonth.set(Calendar.DAY_OF_MONTH, endOfMonth.getMaximum(Calendar.DAY_OF_MONTH));
+        endOfMonth.set(Calendar.HOUR_OF_DAY, 23);
+        endOfMonth.set(Calendar.MINUTE, 59);
+        endOfMonth.set(Calendar.SECOND, 59);
+
+        // Find the events that were added by tapping on empty view and that occurs in the given
+        // time frame.
+        ArrayList<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        for (WeekViewEvent event : mNewEvents) {
+            if (event.getEndTime().getTimeInMillis() > startOfMonth.getTimeInMillis() &&
+                    event.getStartTime().getTimeInMillis() < endOfMonth.getTimeInMillis()) {
+                events.add(event);
+            }
+        }
+        return events;
+    }
+
+
+
+
+    @Override
+    public void onEmptyViewClicked(Calendar time) {
+        // Set the new event with duration one hour.
+        time.set(Calendar.MINUTE, 0);
+
+        Calendar endTime = (Calendar) time.clone();
+        endTime.add(Calendar.HOUR, 1);
+
+        // Create a new event.
+        WeekViewEvent event = new WeekViewEvent(20, "Free time", time, endTime);
+        //event.setColor(100);
+        mNewEvents.add(event);
+
+        // Refresh the week view. onMonthChange will be called again.
+        mWeekView.notifyDatasetChanged();
+    }
+
+    @Override
+    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        ArrayList<WeekViewEvent> newEvents = getNewEvents(newYear, newMonth);
+        events.addAll(newEvents);
+        return events;
+    }
 }

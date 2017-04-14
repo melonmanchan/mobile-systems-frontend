@@ -14,6 +14,7 @@
         <attr name="minHourHeight" format="dimension"/>
         <attr name="maxHourHeight" format="dimension"/>
         <attr name="textSize" format="dimension"/>
+        <attr name="eventColor" format="color"/>
         <attr name="eventTextSize" format="dimension"/>
         <attr name="headerColumnPadding" format="dimension"/>
         <attr name="headerRowPadding" format="dimension"/>

@@ -96,7 +96,7 @@ public class WeekView extends View {
     private Calendar mFirstVisibleDay;
     private Calendar mLastVisibleDay;
     private boolean mShowFirstDayOfWeekFirst = false;
-    private int mDefaultEventColor;
+    private int mDefaultEventColor = Color.parseColor("#9fc6e7");
     private int mMinimumFlingVelocity = 0;
     private int mScaledTouchSlop = 0;
     // Attributes and their default values.
@@ -315,6 +315,7 @@ public class WeekView extends View {
             mHourSeparatorHeight = a.getDimensionPixelSize(R.styleable.WeekView_hourSeparatorHeight, mHourSeparatorHeight);
             mTodayHeaderTextColor = a.getColor(R.styleable.WeekView_todayHeaderTextColor, mTodayHeaderTextColor);
             mEventTextSize = a.getDimensionPixelSize(R.styleable.WeekView_eventTextSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mEventTextSize, context.getResources().getDisplayMetrics()));
+            mDefaultEventColor = a.getColor(R.styleable.WeekView_eventColor, mDefaultEventColor);
             mEventTextColor = a.getColor(R.styleable.WeekView_eventTextColor, mEventTextColor);
             mEventPadding = a.getDimensionPixelSize(R.styleable.WeekView_eventPadding, mEventPadding);
             mHeaderColumnBackgroundColor = a.getColor(R.styleable.WeekView_headerColumnBackground, mHeaderColumnBackgroundColor);
@@ -405,7 +406,8 @@ public class WeekView extends View {
 
         // Prepare event background color.
         mEventBackgroundPaint = new Paint();
-        mEventBackgroundPaint.setColor(Color.rgb(174, 208, 238));
+        //mEventBackgroundPaint.setColor(Color.parseColor("#"));
+        //mEventBackgroundPaint.setColor(Color.rgb(, 0, 0));
 
         // Prepare header column background color.
         mHeaderColumnBackgroundPaint = new Paint();
@@ -416,9 +418,6 @@ public class WeekView extends View {
         mEventTextPaint.setStyle(Paint.Style.FILL);
         mEventTextPaint.setColor(mEventTextColor);
         mEventTextPaint.setTextSize(mEventTextSize);
-
-        // Set default event color.
-        mDefaultEventColor = Color.parseColor("#9fc6e7");
 
         mScaleDetector = new ScaleGestureDetector(mContext, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
@@ -890,6 +889,9 @@ public class WeekView extends View {
             textLayout.draw(canvas);
             canvas.restore();
         }
+    }
+
+    public interface MonthChangeListener {
     }
 
 
