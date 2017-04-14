@@ -238,6 +238,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
     @Override
     public void onRegisterSuccess() {
         Intent intent = new Intent(getContext(), HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
