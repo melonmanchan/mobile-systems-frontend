@@ -11,11 +11,11 @@ public class GeneralMessage {
     @Expose
     private int id;
 
-    @SerializedName("sender_id")
+    @SerializedName("sender")
     @Expose
     private int senderId;
 
-    @SerializedName("receiver_id")
+    @SerializedName("receiver")
     @Expose
     private int receiverId;
 
