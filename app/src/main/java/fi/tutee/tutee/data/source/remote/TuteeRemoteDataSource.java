@@ -11,7 +11,6 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
-import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -19,6 +18,7 @@ import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
 import okhttp3.Interceptor;
@@ -183,6 +183,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
         Call<APIResponse<ArrayList<User>>> call = service.getTutorsBySubject(subjectID);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getMessagesFrom(int userId, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getMessagesFrom(userId);
         call.enqueue(cb);
     }
 

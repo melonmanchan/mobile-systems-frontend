@@ -3,8 +3,6 @@ package fi.tutee.tutee.selecttutor;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
-import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
-import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
@@ -31,6 +29,7 @@ public class SelectTutorPresenter implements SelectTutorContract.Presenter {
 
     @Override
     public void getTutorsBySubjectID(int subjectID) {
+
         this.repository.getTutorsBySubject(subjectID, new Callback<APIResponse<ArrayList<User>>>() {
             @Override
             public void onResponse(Call<APIResponse<ArrayList<User>>> call, Response<APIResponse<ArrayList<User>>> response) {

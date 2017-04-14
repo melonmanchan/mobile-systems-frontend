@@ -12,7 +12,6 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
-import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -20,6 +19,7 @@ import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
@@ -268,6 +268,30 @@ public class TuteeRepository implements TuteeDataSource {
 
             @Override
             public void onFailure(Call<APIResponse<ArrayList<User>>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
+    }
+
+
+    @Override
+    public void getMessagesFrom(int userId, final Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+
+
+        this.remote.getMessagesFrom(userId, new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
+                APIResponse<ArrayList<GeneralMessage>> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    //local.setCachedUsers(resp.getResponse());
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<GeneralMessage>>> call, Throwable t) {
                 cb.onFailure(call, t);
             }
         });

@@ -66,6 +66,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         messages.add(message);
         notifyItemInserted(messages.size());
     }
+
+    public void setMessages(ArrayList<GeneralMessage> messages) {
+        this.messages = messages;
+        notifyDataSetChanged();
+    }
 }
 
 

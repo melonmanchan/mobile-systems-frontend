@@ -24,8 +24,7 @@ public class MessagingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
-        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Insert user name");
+        setTitle("Insert username");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
@@ -45,5 +44,11 @@ public class MessagingActivity extends AppCompatActivity {
                 app.repository,
                 messagingFragment
         );
+    }
+
+    public void setTitle(String string) {
+        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+        title.setText(string);
+
     }
 }

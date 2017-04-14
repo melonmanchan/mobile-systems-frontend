@@ -6,7 +6,6 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
-import fi.tutee.tutee.data.entities.GetTutorsBySubjectRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
@@ -14,6 +13,7 @@ import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,6 +31,9 @@ public interface TuteeService {
 
     @GET("subject/{id}/tutors")
     Call<APIResponse<ArrayList<User>>> getTutorsBySubject(@Path("id") int subjectID);
+
+    @GET("message/{id}")
+    Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId);
 
     @POST("auth/login")
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);

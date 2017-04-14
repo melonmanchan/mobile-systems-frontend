@@ -3,6 +3,7 @@ package fi.tutee.tutee.messaging;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ import java.util.List;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.MessageListAdapter;
+import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.home.HomeMessagesFragment;
 
@@ -45,6 +48,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private EditText writeMessage;
     private Button sendMessage;
     private int otherUserId;
+
 
 
     public static MessagingFragment newInstance(int userId) {
@@ -100,18 +104,15 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         sendMessage = (Button) root.findViewById(R.id.send_message_button);
 
         otherUserId = getArguments().getInt(HomeMessagesFragment.USER_ID);
+        getUser();
+        getMessages();
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: addMessage();
-                writeMessage.setText("");
+                addTempMessage(writeMessage.getText().toString());
             }
         });
-
-
-
-
 
         return root;
     }
@@ -120,13 +121,30 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
     }
 
+    public void addTempMessage(String message) {
+        GeneralMessage generalMessage = new GeneralMessage();
+        generalMessage.setContent(message);
+        addMessage(generalMessage);
+        writeMessage.setText("");
+    }
+
     public void addMessage(GeneralMessage message) {
         mAdapter.addItem(message);
         scrollToBottom();
     }
 
     public void getMessages() {
+        presenter.getMessagesFrom(otherUserId);
+    }
 
+    public void getUser() {
+        presenter.getUserByID(otherUserId);
+    }
+
+
+    @Override
+    public void setUser(User user) {
+        getActivity().setTitle(user.getFirstName());
     }
 
     public void setPresenter(MessagingContract.Presenter presenter) {
@@ -136,6 +154,18 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
     @Override
     public void setMessages(ArrayList<GeneralMessage> messages) {
-
+        mAdapter.setMessages(messages);
     }
+
+    @Override
+    public void getMessagesFailed(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
 }

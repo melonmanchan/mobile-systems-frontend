@@ -22,12 +22,13 @@ import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.MultipartBody;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TuteeLocalDataSource implements TuteeDataSource{
+public class TuteeLocalDataSource implements TuteeDataSource {
     private static TuteeLocalDataSource instance;
     private SharedPreferences pref;
     private Gson gson;
@@ -135,6 +136,11 @@ public class TuteeLocalDataSource implements TuteeDataSource{
 
     @Override
     public void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb) {
+        cb.onFailure(null, new Exception("Not yet implemented!"));
+    }
+
+    @Override
+    public void getMessagesFrom(int userId, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
         cb.onFailure(null, new Exception("Not yet implemented!"));
     }
 
