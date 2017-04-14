@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,9 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
     private boolean avatarChanged = false;
     private String avatarUri;
+
+    private SeekBar priceSlider;
+    private TextView priceDisplay;
 
     private TextView firstname;
     private TextView lastname;
@@ -85,6 +89,22 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
         email = (EditText) root.findViewById(R.id.profile_email);
         email.setText(user.getEmail());
+
+        priceSlider = (SeekBar) root.findViewById(R.id.price_slider);
+        priceDisplay = (TextView) root.findViewById(R.id.price_display);
+
+        priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                priceDisplay.setText(String.valueOf(progress) + "€");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
 
         edit = (Button) root.findViewById(R.id.save_profile);
         edit.setOnClickListener(new View.OnClickListener() {

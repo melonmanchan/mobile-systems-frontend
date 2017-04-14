@@ -127,7 +127,6 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                     String description = registerTutorExtraDescription.getText().toString();
 
 
-
                     if (selectedSubjects.size() == 0) {
                         Snackbar.make(getView(), "Please select at least one subject", Snackbar.LENGTH_LONG).show();
                         return;
