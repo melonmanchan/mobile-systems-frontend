@@ -66,7 +66,4 @@ public class GeneralMessage {
     public void setSentAt(Time sentAt) {
         this.sentAt = sentAt;
     }
-
-
-
 }

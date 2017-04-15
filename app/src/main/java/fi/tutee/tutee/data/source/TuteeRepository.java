@@ -349,7 +349,7 @@ public class TuteeRepository implements TuteeDataSource {
 
     @Override
     public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
-
+        remote.createMessage(req, cb);
     }
 
     @Override
