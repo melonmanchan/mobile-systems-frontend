@@ -1,5 +1,8 @@
 package fi.tutee.tutee.home;
 
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
+
 import java.util.ArrayList;
 
 import fi.tutee.tutee.BasePresenter;
@@ -17,11 +20,14 @@ public interface HomeContract {
         void getMessages();
         void getSubjects();
         void getLatestMessages();
+        void setFreeTime(WeekViewEvent event);
+        void removeFreeTime(WeekView event);
     }
 
     interface View extends BaseView<Presenter> {
         void setMessageUsers(ArrayList<User> users);
         void setSubjects(ArrayList<Subject> subjects);
         void setLatestMessages(ArrayList<GeneralMessage> latestMessages);
+
     }
 }

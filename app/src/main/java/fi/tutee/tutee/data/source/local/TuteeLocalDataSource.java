@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -194,6 +195,16 @@ public class TuteeLocalDataSource implements TuteeDataSource {
             Response<APIResponse<ArrayList<GeneralMessage>>> resp = retrofit2.Response.success(apiResponse);
             cb.onResponse(null, resp);
         }
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot set free time locally"));
+    }
+
+    @Override
+    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot remove free time locally"));
     }
 
     @Override

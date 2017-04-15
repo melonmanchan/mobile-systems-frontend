@@ -1,7 +1,11 @@
 package com.alamkanak.weekview;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.alamkanak.weekview.WeekViewUtil.*;
@@ -11,7 +15,21 @@ import static com.alamkanak.weekview.WeekViewUtil.*;
  * Website: http://april-shower.com
  */
 public class WeekViewEvent {
+
+
+
+    @SerializedName("student_id")
+    @Expose
     private int studentID;
+
+    @SerializedName("start_time")
+    @Expose
+    private Date startTime;
+
+    @SerializedName("end_time")
+    @Expose
+    private Date endTime;
+
     private Calendar mStartTime;
     private Calendar mEndTime;
     private String mName;
@@ -56,6 +74,9 @@ public class WeekViewEvent {
         this.mEndTime.set(Calendar.HOUR_OF_DAY, endHour);
         this.mEndTime.set(Calendar.MINUTE, endMinute);
 
+        this.startTime = mStartTime.getTime();
+        this.endTime = mEndTime.getTime();
+
         this.mName = name;
     }
 
@@ -73,7 +94,9 @@ public class WeekViewEvent {
         this.mName = name;
         this.mLocation = location;
         this.mStartTime = startTime;
+        this.startTime = startTime.getTime();
         this.mEndTime = endTime;
+        this.endTime = mEndTime.getTime();
         this.mAllDay = allDay;
     }
 
@@ -107,6 +130,7 @@ public class WeekViewEvent {
 
     public void setStartTime(Calendar startTime) {
         this.mStartTime = startTime;
+        this.startTime = startTime.getTime();
     }
 
     public Calendar getEndTime() {
@@ -115,6 +139,7 @@ public class WeekViewEvent {
 
     public void setEndTime(Calendar endTime) {
         this.mEndTime = endTime;
+        this.endTime = endTime.getTime();
     }
 
     public String getName() {

@@ -1,5 +1,8 @@
 package fi.tutee.tutee.home;
 
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -110,5 +113,15 @@ public class HomePresenter implements HomeContract.Presenter {
                 // TODO
             }
         });
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event) {
+
+    }
+
+    @Override
+    public void removeFreeTime(WeekView event) {
+
     }
 }

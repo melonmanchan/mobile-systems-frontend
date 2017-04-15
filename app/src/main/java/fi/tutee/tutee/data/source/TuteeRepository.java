@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.net.MalformedURLException;
@@ -382,6 +383,16 @@ public class TuteeRepository implements TuteeDataSource {
             });
             // TODO
         }
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        remote.setFreeTime(event, cb);
+    }
+
+    @Override
+    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        remote.removeFreeTime(event, cb);
     }
 
 

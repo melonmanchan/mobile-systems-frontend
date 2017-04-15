@@ -1,5 +1,7 @@
 package fi.tutee.tutee.data.source;
 
+import com.alamkanak.weekview.WeekViewEvent;
+
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -57,6 +59,10 @@ public interface TuteeDataSource {
     void createMessage(CreateMessageRequest req, Callback<APIResponse> cb);
 
     void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
+
+    void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb);
+
+    void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb);
 
 
     // Other misc. helpers
