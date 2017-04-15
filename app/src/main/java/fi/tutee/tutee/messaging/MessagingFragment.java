@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import fi.tutee.tutee.R;
@@ -102,8 +103,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
         otherUserId = getArguments().getInt(HomeMessagesFragment.USER_ID);
 
-
-
         getUser();
         getMessages();
 
@@ -169,8 +168,13 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mAdapter = new MessageListAdapter(a, this.user, user);
         mRecyclerView.setAdapter(mAdapter);
 
-        //GeneralMessage msg = new GeneralMessage(1, user.getId(), this.user.getId(), "Received message", )
-        //addMessage();
+        GeneralMessage msg = new GeneralMessage();
+        msg.setId(1);
+        msg.setContent("received message");
+        msg.setReceiverId(this.user.getId());
+        msg.setSenderId(user.getId());
+        msg.setSentAt(new Date());
+        addMessage(msg);
     }
 
     @Override

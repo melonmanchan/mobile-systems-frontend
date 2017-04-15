@@ -54,7 +54,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public int getItemViewType(int position) {
         GeneralMessage message = this.messages.get(position);
         int thisUserId = thisUser.getId();
-        int otherUserId = otherUser.getId();
 
         if (message.getSenderId() == thisUserId) {
             return SENT_BY_THIS_USER;
@@ -71,11 +70,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         LinearLayout layout;
         if (viewType == SENT_BY_THIS_USER) {
              layout = (LinearLayout) LayoutInflater.from(parent.getContext())
-                     .inflate(R.layout.message_list_item, parent, false);
+                     .inflate(R.layout.message_sent_by_this_user, parent, false);
         } else {
             // create a new view
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message_list_item, parent, false);
+                    .inflate(R.layout.message_sent_by_other_user, parent, false);
         }
         ViewHolder vh = new ViewHolder(layout);
         return vh;
