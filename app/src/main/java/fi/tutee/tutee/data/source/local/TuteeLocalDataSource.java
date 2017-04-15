@@ -104,6 +104,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         SharedPreferences.Editor editor = pref.edit();
         editor.remove(PERSIST_LOGIN_DATA);
         editor.commit();
+
+        cachedSubjects = new ArrayList<Subject>();
+        cachedUsers = new SparseArray<User>();
+        tutorIDs = new HashSet<Integer>();
+        tuteeIDs = new HashSet<Integer>();
     }
 
     public void persistUserLogin(AuthResponse authResponse) {
