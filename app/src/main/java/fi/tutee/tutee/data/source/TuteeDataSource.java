@@ -38,6 +38,8 @@ public interface TuteeDataSource {
 
     void registerUserDevice(DeviceRegisterRequest req);
 
+    void removeUserDevice(DeviceRegisterRequest req);
+
     void getUser(int userID, Callback<APIResponse<User>> cb);
 
     void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb);

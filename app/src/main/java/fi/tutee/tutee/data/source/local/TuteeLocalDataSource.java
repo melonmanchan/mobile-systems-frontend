@@ -90,6 +90,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void removeUserDevice(DeviceRegisterRequest req) {
+        // No-op
+    }
+
+    @Override
     public void getUser(int userID, Callback<APIResponse<User>> cb) {
         APIResponse<User> apiResponse = new APIResponse<User>();
         User user = this.cachedUsers.get(userID);

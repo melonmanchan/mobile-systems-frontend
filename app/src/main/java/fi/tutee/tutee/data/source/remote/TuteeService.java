@@ -39,6 +39,9 @@ public interface TuteeService {
     @POST("user/register_device")
     Call<APIResponse> registerUserDevice(@Body DeviceRegisterRequest req);
 
+    @PUT("user/remove_device")
+    Call<APIResponse> removeUserDevice(@Body DeviceRegisterRequest req);
+
     @POST("auth/register")
     Call<APIResponse<AuthResponse>> register(@Body RegisterRequest req);
 
