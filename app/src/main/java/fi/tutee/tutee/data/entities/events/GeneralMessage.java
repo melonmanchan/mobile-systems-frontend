@@ -28,6 +28,14 @@ public class GeneralMessage {
     @Expose
     private Date sentAt;
 
+    public GeneralMessage(int id, int senderId, int receiverId, String content, Time sentAt) {
+        this.id = id;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.content = content;
+        this.sentAt = sentAt;
+    }
+
     public int getId() {
         return id;
     }

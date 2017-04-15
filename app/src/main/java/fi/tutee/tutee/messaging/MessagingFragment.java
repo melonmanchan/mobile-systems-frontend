@@ -168,6 +168,9 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         ArrayList<GeneralMessage> a = new ArrayList<>();
         mAdapter = new MessageListAdapter(a, this.user, user);
         mRecyclerView.setAdapter(mAdapter);
+
+        //GeneralMessage msg = new GeneralMessage(1, user.getId(), this.user.getId(), "Received message", )
+        //addMessage();
     }
 
     @Override
