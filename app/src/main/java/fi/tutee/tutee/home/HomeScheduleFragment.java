@@ -177,7 +177,6 @@ public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoade
 
         // Create a new event.
         WeekViewEvent event = new WeekViewEvent(20, null, time, endTime);
-        // event.get
         //event.setColor(100);
         if (!mNewEvents.contains(event)) {
             mNewEvents.add(event);

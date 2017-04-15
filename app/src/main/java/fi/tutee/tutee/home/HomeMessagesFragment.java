@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.UserChatListAdapter;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.messaging.MessagingActivity;
 
 public class HomeMessagesFragment extends HomeBaseFragment {
@@ -54,5 +55,11 @@ public class HomeMessagesFragment extends HomeBaseFragment {
             }
         });
         messageUsersList.setAdapter(adapter);
+        this.presenter.getLatestMessages();
+    }
+
+    public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
+        UserChatListAdapter adapter = (UserChatListAdapter) messageUsersList.getAdapter();
+        adapter.setLatestMessages(latestMessages);
     }
 }

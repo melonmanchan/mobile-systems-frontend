@@ -186,6 +186,11 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
+    public void removeUserDevice(DeviceRegisterRequest req) {
+        remote.removeUserDevice(req);
+    }
+
+    @Override
     public void getUser(int userID, Callback<APIResponse<User>> cb) {
         local.getUser(userID, cb);
     }
@@ -353,12 +358,50 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
+    public void getLatestMessages(final Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        if (this.local.hasCachedLatestMessages()) {
+            this.local.getLatestMessages(cb);
+        } else {
+            this.remote.getLatestMessages(new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
+                    APIResponse<ArrayList<GeneralMessage>> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        ArrayList<GeneralMessage> messages = resp.getResponse();
+                        local.setCachedLatestMessages(messages);
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<ArrayList<GeneralMessage>>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+            // TODO
+        }
+    }
+
+
+    @Override
     public boolean isUserTutor(User user) {
         return local.isUserTutor(user);
     }
 
     @Override
     public void logOut() {
+        String token = this.deviceToken;
+
+        if (token == null) {
+            token = FirebaseInstanceId.getInstance().getToken();
+        }
+
+        DeviceRegisterRequest req = new DeviceRegisterRequest();
+        req.setToken(token);
+        remote.removeUserDevice(req);
+
         this.remote.logOut();
         this.local.logOut();
     }

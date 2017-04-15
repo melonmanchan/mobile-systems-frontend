@@ -165,6 +165,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void removeUserDevice(DeviceRegisterRequest req) {
+        Call call = service.removeUserDevice(req);
+        call.enqueue(new EmptyCallback());
+    }
+
+    @Override
     public void getUser(int userID, Callback<APIResponse<User>> cb) {
         cb.onFailure(null, new UnsupportedOperationException("Not implemented!"));
     }
@@ -208,6 +214,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
         Call<APIResponse> call = service.createMessage(req);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getLatestMessages();
         call.enqueue(cb);
     }
 

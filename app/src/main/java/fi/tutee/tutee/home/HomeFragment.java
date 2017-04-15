@@ -19,6 +19,7 @@ import java.util.List;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
 
 /**
@@ -120,6 +121,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void setSubjects(ArrayList<Subject> subjects) {
         this.searchFragment.setSubjects(subjects);
+    }
+
+    @Override
+    public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
+        this.messagesFragment.setLatestMessages(latestMessages);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

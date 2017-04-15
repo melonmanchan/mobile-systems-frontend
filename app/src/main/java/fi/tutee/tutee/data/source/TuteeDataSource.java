@@ -38,6 +38,8 @@ public interface TuteeDataSource {
 
     void registerUserDevice(DeviceRegisterRequest req);
 
+    void removeUserDevice(DeviceRegisterRequest req);
+
     void getUser(int userID, Callback<APIResponse<User>> cb);
 
     void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb);
@@ -53,6 +55,9 @@ public interface TuteeDataSource {
     void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb);
 
     void createMessage(CreateMessageRequest req, Callback<APIResponse> cb);
+
+    void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
+
 
     // Other misc. helpers
     boolean isUserTutor(User user);
