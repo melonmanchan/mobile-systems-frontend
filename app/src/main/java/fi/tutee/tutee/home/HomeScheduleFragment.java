@@ -176,13 +176,15 @@ public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoade
         endTime.add(Calendar.HOUR, 1);
 
         // Create a new event.
-        WeekViewEvent event = new WeekViewEvent(20, "Free time", time, endTime);
+        WeekViewEvent event = new WeekViewEvent(20, null, time, endTime);
+        event.get
         //event.setColor(100);
-        if(!mNewEvents.contains(event)) {
+        if (!mNewEvents.contains(event)) {
             mNewEvents.add(event);
             mWeekView.notifyDatasetChanged();
-        }else{
-
+        } else {
+            mNewEvents.remove(event);
+            mWeekView.notifyDatasetChanged();
         }
 
 
