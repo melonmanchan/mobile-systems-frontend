@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Time;
+import java.util.Date;
 
 public class GeneralMessage {
 
@@ -25,7 +26,7 @@ public class GeneralMessage {
 
     @SerializedName("sent_at")
     @Expose
-    private Time sentAt;
+    private Date sentAt;
 
     public int getId() {
         return id;
@@ -59,11 +60,11 @@ public class GeneralMessage {
         this.content = content;
     }
 
-    public Time getSentAt() {
+    public Date getSentAt() {
         return sentAt;
     }
 
-    public void setSentAt(Time sentAt) {
+    public void setSentAt(Date sentAt) {
         this.sentAt = sentAt;
     }
 }
