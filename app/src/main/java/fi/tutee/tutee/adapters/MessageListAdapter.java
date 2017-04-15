@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -22,6 +23,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private User otherUser;
     private static int SENT_BY_THIS_USER = 0;
     private static int SENT_BY_OTHER_USER = 1;
+
+    private HashSet<Integer> messageIDs = new HashSet<>();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -41,6 +44,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         this.thisUser = thisUser;
         this.otherUser = otherUser;
         this.messages = messages;
+
+        for (GeneralMessage m: messages) {
+            messageIDs.add(m.getId());
+        }
     }
 
     @Override
@@ -89,12 +96,22 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     public void addItem(GeneralMessage message) {
+        if (messageIDs.contains(message.getId())) {
+            return;
+        }
+
         messages.add(message);
         notifyItemInserted(messages.size());
     }
 
     public void setMessages(ArrayList<GeneralMessage> messages) {
+        this.messageIDs = new HashSet<Integer>();
         this.messages = messages;
+
+        for (GeneralMessage message: messages) {
+            messageIDs.add(message.getId());
+        }
+
         notifyDataSetChanged();
     }
 }
