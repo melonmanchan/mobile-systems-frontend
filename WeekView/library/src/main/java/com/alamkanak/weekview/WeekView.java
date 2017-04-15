@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
@@ -466,6 +467,8 @@ public class WeekView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        drawPleaseText(canvas);
+
         // Draw the header row.
         drawHeaderRowAndEvents(canvas);
 
@@ -473,6 +476,15 @@ public class WeekView extends View {
         drawTimeColumnAndAxes(canvas);
     }
 
+    private void drawPleaseText(Canvas canvas) {
+        if (mCurrentOrigin.y < 0) return;
+        Paint paint = new Paint();
+        paint.setColor(Color.GRAY);
+        paint.setTextSize(30);
+        canvas.drawText("Touch the events to mark free tutoring times!", 100, 150,  paint);
+    }
+
+    //
     private void calculateHeaderHeight(){
         //Make sure the header is the right size (depends on AllDay events)
         boolean containsAllDayEvent = false;

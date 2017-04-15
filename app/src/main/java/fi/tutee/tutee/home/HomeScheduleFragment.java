@@ -178,10 +178,17 @@ public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoade
         // Create a new event.
         WeekViewEvent event = new WeekViewEvent(20, "Free time", time, endTime);
         //event.setColor(100);
-        mNewEvents.add(event);
+        if(!mNewEvents.contains(event)) {
+            mNewEvents.add(event);
+            mWeekView.notifyDatasetChanged();
+        }else{
+
+        }
+
+
 
         // Refresh the week view. onMonthChange will be called again.
-        mWeekView.notifyDatasetChanged();
+
     }
 
     @Override

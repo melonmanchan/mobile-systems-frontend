@@ -23,6 +23,7 @@ public class WeekViewEvent {
 
     }
 
+
     /**
      * Initializes the event for week view.
      * @param id The id of the event.
@@ -163,7 +164,8 @@ public class WeekViewEvent {
 
         WeekViewEvent that = (WeekViewEvent) o;
 
-        return mId == that.mId;
+
+        return this.getStartTime().equals(that.getStartTime()) && this.getEndTime().equals(that.getEndTime());
 
     }
 
