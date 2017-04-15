@@ -10,7 +10,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_weight="0.1"
         android:layout_gravity="center"
-        android:padding="16dp"
+        android:padding="10dp"
         android:id="@+id/partial_message_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
