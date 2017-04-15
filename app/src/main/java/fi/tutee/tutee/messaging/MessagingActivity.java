@@ -38,7 +38,7 @@ public class MessagingActivity extends AppCompatActivity {
         new MessagingPresenter(
                 app.repository,
                 messagingFragment
-        );
+        ).start();
     }
 
     public void setTitle(String string) {

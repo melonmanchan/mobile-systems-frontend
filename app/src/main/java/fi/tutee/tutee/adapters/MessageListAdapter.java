@@ -20,6 +20,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private ArrayList<GeneralMessage> messages;
     private User thisUser;
     private User otherUser;
+    private static int SENT_BY_THIS_USER = 0;
+    private static int SENT_BY_OTHER_USER = 1;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -41,14 +43,33 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         this.messages = messages;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        GeneralMessage message = this.messages.get(position);
+        int thisUserId = thisUser.getId();
+        int otherUserId = otherUser.getId();
+
+        if (message.getSenderId() == thisUserId) {
+            return SENT_BY_THIS_USER;
+        } else {
+            return SENT_BY_OTHER_USER;
+        }
+
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public MessageListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
-        // create a new view
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.message_list_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+        LinearLayout layout;
+        if (viewType == SENT_BY_THIS_USER) {
+             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
+                     .inflate(R.layout.message_list_item, parent, false);
+        } else {
+            // create a new view
+            layout = (LinearLayout) LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.message_list_item, parent, false);
+        }
         ViewHolder vh = new ViewHolder(layout);
         return vh;
     }
