@@ -100,6 +100,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
             (root.findViewById(R.id.slider_text_container)).setVisibility(View.GONE);
         } else {
             priceSlider.setProgress(user.getPrice());
+            priceDisplay.setText(user.getPrice() + "€");
             priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

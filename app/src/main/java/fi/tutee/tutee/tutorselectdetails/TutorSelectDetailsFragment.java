@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private ImageView userImage;
     private TextView userName;
     private TextView userDescription;
+    private TextView tutorPrice;
 
     public static String TUTOR_ID = "TUTOR_ID";
 
@@ -55,6 +57,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         userName = (TextView) root.findViewById(R.id.tutor_select_details_name);
         userDescription = (TextView) root.findViewById(R.id.tutor_select_details_description);
         chooseTutor = (Button)  root.findViewById(R.id.tutor_select_details_choose_tutor);
+        tutorPrice = (TextView) root.findViewById(R.id.tutor_price);
 
         chooseTutor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
         userName.setText(user.getFirstName() + " " + user.getLastName());
         userDescription.setText(user.getDescription());
+        tutorPrice.setText(user.getPrice() + "€");
     }
 
     @Override
