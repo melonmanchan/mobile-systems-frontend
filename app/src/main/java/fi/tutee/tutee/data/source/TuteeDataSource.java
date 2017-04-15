@@ -54,6 +54,9 @@ public interface TuteeDataSource {
 
     void createMessage(CreateMessageRequest req, Callback<APIResponse> cb);
 
+    void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
+
+
     // Other misc. helpers
     boolean isUserTutor(User user);
 }

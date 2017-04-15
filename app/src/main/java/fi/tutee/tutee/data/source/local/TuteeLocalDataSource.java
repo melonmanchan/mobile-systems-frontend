@@ -39,6 +39,10 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     private ArrayList<Subject> cachedSubjects;
 
+
+    private ArrayList<GeneralMessage> cachedLatestMessages;
+
+
     private SparseArray<User> cachedUsers;
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
@@ -177,6 +181,17 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        if (this.hasCachedSubjects()) {
+            APIResponse<ArrayList<GeneralMessage>> apiResponse = new APIResponse<ArrayList<GeneralMessage>>();
+            apiResponse.setResponse(cachedLatestMessages);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<GeneralMessage>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return tutorIDs.contains(user.getId());
     }
@@ -236,6 +251,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         }
     }
 
+    public void setCachedLatestMessages(ArrayList<GeneralMessage> cachedLatestMessages) {
+        this.cachedLatestMessages = cachedLatestMessages;
+    }
+
+
     public void markUserAsTutor(int tutorID) {
         if (!tutorIDs.contains(tutorID)) {
             tutorIDs.add(tutorID);
@@ -252,6 +272,10 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     public boolean hasCachedSubjects() {
         return (this.cachedSubjects != null && this.cachedSubjects.size() > 0);
+    }
+
+    public boolean hasCachedLatestMessages() {
+        return (this.cachedLatestMessages != null && this.cachedLatestMessages.size() > 0);
     }
 
     public AuthResponse fetchPersistedUserLogin() {

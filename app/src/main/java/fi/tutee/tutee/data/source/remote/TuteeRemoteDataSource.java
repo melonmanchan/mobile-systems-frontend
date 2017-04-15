@@ -212,6 +212,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getLatestMessages();
+        call.enqueue(cb);
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return false;
     }
