@@ -20,6 +20,9 @@ public interface MessagingContract {
         void getMessagesFailed(ArrayList<APIError> errors);
 
         void setUser(User user);
+        void setOtherUser(User user);
+
+
     }
 
     interface Presenter extends BasePresenter {
