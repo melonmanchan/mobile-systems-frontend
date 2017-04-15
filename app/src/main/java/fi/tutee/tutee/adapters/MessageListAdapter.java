@@ -100,6 +100,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             return;
         }
 
+        int receiverId = message.getReceiverId();
+        int senderId = message.getSenderId();
+
+        int thisUserId = thisUser.getId();
+        int otherUserId = otherUser.getId();
+
+        if (receiverId != thisUserId && senderId != thisUserId) {
+            return;
+        }
+
+        if (receiverId != otherUserId && senderId != otherUserId) {
+            return;
+        }
+
         messages.add(message);
         notifyItemInserted(messages.size());
     }
@@ -108,12 +122,24 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         this.messageIDs = new HashSet<Integer>();
         this.messages = messages;
 
+        int thisUserId = thisUser.getId();
+        int otherUserId = otherUser.getId();
+
         for (GeneralMessage message: messages) {
+            int receiverId = message.getReceiverId();
+            int senderId = message.getSenderId();
+
+            if (receiverId != thisUserId && senderId != thisUserId) {
+                return;
+            }
+
+            if (receiverId != otherUserId && senderId != otherUserId) {
+                return;
+            }
+
             messageIDs.add(message.getId());
         }
 
         notifyDataSetChanged();
     }
 }
-
-
