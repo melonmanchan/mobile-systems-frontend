@@ -186,6 +186,11 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
+    public void removeUserDevice(DeviceRegisterRequest req) {
+        remote.removeUserDevice(req);
+    }
+
+    @Override
     public void getUser(int userID, Callback<APIResponse<User>> cb) {
         local.getUser(userID, cb);
     }
@@ -387,6 +392,16 @@ public class TuteeRepository implements TuteeDataSource {
 
     @Override
     public void logOut() {
+        String token = this.deviceToken;
+
+        if (token == null) {
+            token = FirebaseInstanceId.getInstance().getToken();
+        }
+
+        DeviceRegisterRequest req = new DeviceRegisterRequest();
+        req.setToken(token);
+        remote.removeUserDevice(req);
+
         this.remote.logOut();
         this.local.logOut();
     }

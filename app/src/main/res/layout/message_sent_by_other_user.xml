@@ -7,18 +7,27 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="10dp">
+        android:padding="3dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/message_text"
-            android:layout_gravity="center_vertical"
-            android:scrollHorizontally="true"
-            android:ellipsize="end"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/list_text_size"
-            />
+            android:background="@drawable/message_from_other_user">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/message_text"
+                android:layout_gravity="center_vertical"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
+                android:padding="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentLeft="true"
+                android:textSize="@dimen/list_text_size"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

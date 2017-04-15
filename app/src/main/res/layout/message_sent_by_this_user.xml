@@ -9,18 +9,26 @@
         android:layout_height="fill_parent"
         android:padding="3dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/message_text"
-            android:layout_gravity="center_vertical"
-            android:scrollHorizontally="true"
-            android:ellipsize="end"
-            android:background="@drawable/rounded_textview"
-            android:layout_alignParentRight="true"
-            android:padding="10dp"
-            android:textSize="@dimen/list_text_size"
-            />
+            android:background="@drawable/message_from_this_user"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/message_text"
+                android:layout_gravity="center_vertical"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
+                android:layout_marginRight="16dp"
+                android:padding="10dp"
+                android:textSize="@dimen/list_text_size"
+                android:textColor="#fff"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
