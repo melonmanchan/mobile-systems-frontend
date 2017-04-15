@@ -3,6 +3,7 @@ package fi.tutee.tutee.messaging;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.TuteeRepository;
@@ -69,6 +70,29 @@ public class MessagingPresenter implements MessagingContract.Presenter {
             @Override
             public void onFailure(Call<APIResponse<User>> call, Throwable t) {
                 // TODO
+            }
+        });
+    }
+
+    @Override
+    public void createMessage(int receiverID, String content) {
+        final CreateMessageRequest req = new CreateMessageRequest(receiverID, content);
+
+        repository.createMessage(req, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    view.createMessageSucceeded(req);
+                } else {
+                    view.createMessageFailed(req, resp.getErrors());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                view.createMessageFailed(req, null);
             }
         });
     }

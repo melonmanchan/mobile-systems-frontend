@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -32,9 +33,6 @@ public interface TuteeService {
     @GET("subject/{id}/tutors")
     Call<APIResponse<ArrayList<User>>> getTutorsBySubject(@Path("id") int subjectID);
 
-    @GET("message/{id}")
-    Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId);
-
     @POST("auth/login")
     Call<APIResponse<AuthResponse>> basicLogin(@Body LoginRequest req);
 
@@ -59,4 +57,10 @@ public interface TuteeService {
 
     @GET("tutorship/")
     Call<APIResponse<TutorshipsResponse>> getTutorships();
+
+    @GET("message/{id}")
+    Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId);
+
+    @POST("message/")
+    Call<APIResponse> createMessage(@Body CreateMessageRequest req);
 }

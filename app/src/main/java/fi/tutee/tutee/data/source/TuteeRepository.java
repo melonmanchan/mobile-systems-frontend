@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -344,6 +345,11 @@ public class TuteeRepository implements TuteeDataSource {
                 }
             });
         }
+    }
+
+    @Override
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
@@ -20,11 +21,17 @@ public interface MessagingContract {
         void getMessagesFailed(ArrayList<APIError> errors);
 
         void setUser(User user);
+
+        void createMessageSucceeded(CreateMessageRequest req);
+
+        void createMessageFailed(CreateMessageRequest req ,ArrayList<APIError> errors);
     }
 
     interface Presenter extends BasePresenter {
         void getMessagesFrom(int userId);
 
         void getUserByID(int userId);
+
+        void createMessage(int receiverID, String content);
     }
 }

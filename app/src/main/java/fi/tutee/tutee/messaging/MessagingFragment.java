@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.MessageListAdapter;
 import fi.tutee.tutee.data.entities.APIError;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.home.HomeMessagesFragment;
@@ -106,11 +108,20 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTempMessage(writeMessage.getText().toString());
+                String message = writeMessage.getText().toString();
+
+                if (!TextUtils.isEmpty(message)) {
+                    createMessage(otherUserId, message);
+                    addTempMessage(writeMessage.getText().toString());
+                }
             }
         });
 
         return root;
+    }
+
+    private void createMessage(int receiver, String content) {
+        presenter.createMessage(receiver, content);
     }
 
     public void scrollToBottom() {
@@ -150,6 +161,22 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
         title.setText(user.getFirstName() + " " + user.getLastName());
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(avatar);
+    }
+
+    @Override
+    public void createMessageSucceeded(CreateMessageRequest req) {
+        // TODO?
+    }
+
+    @Override
+    public void createMessageFailed(CreateMessageRequest req, ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
+        if (errors != null) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     public void setPresenter(MessagingContract.Presenter presenter) {

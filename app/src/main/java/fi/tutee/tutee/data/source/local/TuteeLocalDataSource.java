@@ -13,6 +13,7 @@ import java.util.HashSet;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -163,6 +164,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
             Response<APIResponse<TutorshipsResponse>> resp = retrofit2.Response.success(apiResponse);
             cb.onResponse(null, resp);
         }
+    }
+
+    @Override
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot create message locally"));
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -50,6 +51,8 @@ public interface TuteeDataSource {
     void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb);
 
     void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb);
+
+    void createMessage(CreateMessageRequest req, Callback<APIResponse> cb);
 
     // Other misc. helpers
     boolean isUserTutor(User user);

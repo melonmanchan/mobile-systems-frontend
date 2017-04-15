@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.entities.LoginRequest;
@@ -201,6 +202,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     @Override
     public void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb) {
         Call<APIResponse<TutorshipsResponse>> call = service.getTutorships();
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.createMessage(req);
         call.enqueue(cb);
     }
 
