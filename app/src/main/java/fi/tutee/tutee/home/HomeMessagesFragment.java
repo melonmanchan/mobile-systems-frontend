@@ -34,12 +34,12 @@ public class HomeMessagesFragment extends HomeBaseFragment {
         View root = inflater.inflate(R.layout.content_home_messages, container, false);
 
         this.messageUsersList = (ListView) root.findViewById(R.id.messages_user_list);
-
         TextView emptyView = (TextView) root.findViewById(R.id.messages_user_list_empty);
         messageUsersList.setEmptyView(emptyView);
 
         this.presenter.getMessages();
         this.presenter.getTutorships();
+
         return root;
     }
 

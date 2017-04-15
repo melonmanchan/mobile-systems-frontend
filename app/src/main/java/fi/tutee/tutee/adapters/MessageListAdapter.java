@@ -27,6 +27,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mTextView;
+
         public ViewHolder(LinearLayout layout) {
             super(layout);
             mTextView = (TextView) layout.findViewById(R.id.message_text);
@@ -58,7 +59,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(messages.get(position).getContent());
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
