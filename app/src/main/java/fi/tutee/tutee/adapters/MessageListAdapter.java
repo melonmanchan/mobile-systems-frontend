@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
 /**
@@ -17,6 +18,8 @@ import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
     private ArrayList<GeneralMessage> messages;
+    private User thisUser;
+    private User otherUser;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -32,7 +35,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MessageListAdapter(ArrayList<GeneralMessage> messages) {
+    public MessageListAdapter(ArrayList<GeneralMessage> messages, User thisUser, User otherUser) {
+        this.thisUser = thisUser;
+        this.otherUser = otherUser;
         this.messages = messages;
     }
 

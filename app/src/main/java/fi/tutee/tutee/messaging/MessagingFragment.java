@@ -48,6 +48,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private EditText writeMessage;
     private Button sendMessage;
     private int otherUserId;
+    private User user;
 
     public static MessagingFragment newInstance(int userId) {
         Bundle arguments = new Bundle();
@@ -89,18 +90,19 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         final View root = inflater.inflate(R.layout.content_messaging, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.messaging_view);
         mLayoutManager = new LinearLayoutManager(root.getContext());
-        ArrayList<GeneralMessage> a = new ArrayList<>();
-        mAdapter = new MessageListAdapter(a);
+
 
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
+
 
         writeMessage = (EditText) root.findViewById(R.id.write_message);
         sendMessage = (Button) root.findViewById(R.id.send_message_button);
 
         otherUserId = getArguments().getInt(HomeMessagesFragment.USER_ID);
+
+
 
         getUser();
         getMessages();
@@ -146,10 +148,11 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
     public void getUser() {
         presenter.getUserByID(otherUserId);
+
     }
 
     @Override
-    public void setUser(User user) {
+    public void setOtherUser(User user) {
         getActivity().setTitle(user.getFirstName());
         AppCompatActivity parent = (AppCompatActivity) getActivity();
 
@@ -161,6 +164,15 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
         title.setText(user.getFirstName() + " " + user.getLastName());
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(avatar);
+
+        ArrayList<GeneralMessage> a = new ArrayList<>();
+        mAdapter = new MessageListAdapter(a, this.user, user);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

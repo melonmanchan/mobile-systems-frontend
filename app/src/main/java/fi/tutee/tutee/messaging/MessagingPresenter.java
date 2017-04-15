@@ -21,16 +21,19 @@ public class MessagingPresenter implements MessagingContract.Presenter {
 
     private final MessagingContract.View view;
 
+    private User user;
+
     public MessagingPresenter(TuteeRepository repository, MessagingContract.View view) {
         this.repository = repository;
         this.view = view;
+        this.user = repository.getLoggedInUser();
 
         view.setPresenter(this);
     }
 
     @Override
     public void start() {
-
+        view.setUser(user);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class MessagingPresenter implements MessagingContract.Presenter {
                 APIResponse<User> resp = response.body();
 
                 if (resp.isSuccessful()) {
-                    view.setUser(resp.getResponse());
+                    view.setOtherUser(resp.getResponse());
                 }
             }
 
