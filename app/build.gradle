@@ -5,12 +5,27 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "fi.tutee.tutee"
+        multiDexEnabled true
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    /*
+    productFlavors {
+        dev {
+            // Enable pre-dexing to produce an APK that can be tested on
+            // Android 5.0+ without the time-consuming DEX build processes.
+            minSdkVersion 21
+        }
+        prod {
+            // The actual minSdkVersion for the production version.
+            minSdkVersion 14
+        }
+    }*/
+
     buildTypes {
         release {
             minifyEnabled false
@@ -27,6 +42,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    compile 'com.android.support:multidex:1.0.1'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'

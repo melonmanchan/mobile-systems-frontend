@@ -1,21 +1,17 @@
 package fi.tutee.tutee;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 
-import fi.tutee.tutee.data.entities.AuthResponse;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import fi.tutee.tutee.data.source.local.TuteeLocalDataSource;
 import fi.tutee.tutee.data.source.remote.TuteeRemoteDataSource;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-/**
- * Created by mat on 06/03/2017.
- */
-
-public class TuteeApplication extends Application {
+public class TuteeApplication extends MultiDexApplication {
 
     public static TuteeApplication instance = null;
 
@@ -27,6 +23,12 @@ public class TuteeApplication extends Application {
         }
 
         return instance;
+    }
+
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 
     @Override
