@@ -19,6 +19,9 @@ import org.w3c.dom.Text;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -59,12 +62,12 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
         this.context = context;
         this.users = new ArrayList<User>();
         this.users.addAll(users);
+        this.latestMessages = new ArrayList<>();
     }
 
     public void setListener(OnUserSelectedListener listener) {
         this.listener = listener;
     }
-
 
     @Override
     public User getItem(final int position) {
@@ -72,7 +75,16 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
     }
 
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
-        this.latestMessages = latestMessages;
+        //this.latestMessages = latestMessages;
+        this.latestMessages.clear();
+        /*Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
+
+            @Override
+            public int compare(GeneralMessage msg1, GeneralMessage msg2) {
+                return msg1.getSentAt().compareTo(msg2.getSentAt());
+            }
+        });*/
+        this.latestMessages.addAll(latestMessages);
         notifyDataSetChanged();
     }
 
@@ -128,7 +140,6 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
                 }
             }
         }
-
 
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

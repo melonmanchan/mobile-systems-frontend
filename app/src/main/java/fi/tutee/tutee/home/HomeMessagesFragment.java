@@ -13,6 +13,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.UserChatListAdapter;
@@ -27,6 +29,8 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
     private ArrayList<GeneralMessage> latestMessages = null;
     private ArrayList<User> chatUsers = null;
+
+    private UserChatListAdapter adapter;
 
     public HomeMessagesFragment() {}
 
@@ -66,19 +70,28 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
     private void checkIfShouldInitializeMessageArray() {
         if (chatUsers != null && latestMessages != null) {
-            UserChatListAdapter adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, chatUsers);
+            Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
 
-            adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
                 @Override
-                public void onSelected(User user) {
-                    Intent intent = new Intent(getActivity(), MessagingActivity.class);
-                    intent.putExtra(USER_ID, user.getId());
-                    startActivity(intent);
+                public int compare(GeneralMessage msg1, GeneralMessage msg2) {
+                    return msg2.getSentAt().compareTo(msg1.getSentAt());
                 }
             });
+            if (adapter == null) {
+                adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, chatUsers);
 
+                adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
+                    @Override
+                    public void onSelected(User user) {
+                        Intent intent = new Intent(getActivity(), MessagingActivity.class);
+                        intent.putExtra(USER_ID, user.getId());
+                        startActivity(intent);
+                    }
+                });
+
+                messageUsersList.setAdapter(adapter);
+            }
             adapter.setLatestMessages(latestMessages);
-            messageUsersList.setAdapter(adapter);
         }
     }
 

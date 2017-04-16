@@ -36,7 +36,7 @@
             android:id="@+id/partial_message_content"
             android:scrollHorizontally="true"
             android:ellipsize="end"
-            android:maxLines="4"
+            android:maxLines="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
