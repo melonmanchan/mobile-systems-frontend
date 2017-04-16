@@ -17,11 +17,11 @@ import fi.tutee.tutee.registertutorextra.RegisterExtraContract;
 public interface ReserveCalendarContract {
 
     interface View extends BaseView<ReserveCalendarContract.Presenter> {
-        void setTimes(ArrayList<WeekViewEvent> events);
+        void setFreeTimes(ArrayList<WeekViewEvent> events);
     }
 
     interface Presenter extends BasePresenter {
-        void getTimes(int tutorID);
+        void getFreeTimes(int tutorID);
 
     }
 }

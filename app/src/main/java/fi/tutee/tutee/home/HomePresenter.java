@@ -4,11 +4,11 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
@@ -119,12 +119,23 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void setFreeTime(WeekViewEvent event) {
+    public void createFreeTime(WeekViewEvent event) {
+        CreateFreeTimeRequest req = new CreateFreeTimeRequest(event.getStartTime().getTime(), event.getEndTime().getTime());
 
+        this.repository.createFreeTime(req, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                // TODO:
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable throwable) {
+                // TODO:
+            }});
     }
 
     @Override
-    public void removeFreeTime(WeekView event) {
+    public void removeTime(WeekView event) {
 
     }
 
@@ -135,19 +146,19 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void getReservedTimes() {
-        this.repository.getReservedTimes(new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+        this.repository.getTimes(new Callback<APIResponse<TimesResponse>>() {
             @Override
-            public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
-                APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+            public void onResponse(Call<APIResponse<TimesResponse>> call, Response<APIResponse<TimesResponse>> response) {
+                APIResponse<TimesResponse> resp = response.body();
 
                 if (resp != null && resp.isSuccessful()) {
-                    ArrayList<WeekViewEvent> events = resp.getResponse();
-                    view.setReservedTimes(events);
+                    TimesResponse events = resp.getResponse();
+                    view.setTimes(events);
                 }
             }
 
             @Override
-            public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<TimesResponse>> call, Throwable t) {
                 // TODO
             }
         });

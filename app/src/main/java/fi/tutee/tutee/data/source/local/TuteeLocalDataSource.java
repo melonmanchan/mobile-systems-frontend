@@ -18,6 +18,7 @@ import java.util.HashSet;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -25,6 +26,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
@@ -53,7 +55,8 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
     private Context context;
-    private ArrayList<WeekViewEvent> cachedTimes;
+    private TimesResponse cachedTimes;
+    private ArrayList<WeekViewEvent> cachedFreeTimes;
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
@@ -215,20 +218,20 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
         cb.onFailure(null, new Exception("Cannot set free time locally"));
     }
 
     @Override
-    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+    public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
         cb.onFailure(null, new Exception("Cannot remove free time locally"));
     }
 
     @Override
-    public void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        if (this.hasCachedTimes(tutorID)) {
+    public void getFreeTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.hasCachedFreeTimes(tutorID)) {
             APIResponse<ArrayList<WeekViewEvent>> apiResponse = new APIResponse<ArrayList<WeekViewEvent>>();
-            apiResponse.setResponse(cachedTimes);
+            apiResponse.setResponse(cachedFreeTimes);
             apiResponse.setStatus(200);
             Response<APIResponse<ArrayList<WeekViewEvent>>> resp = retrofit2.Response.success(apiResponse);
             cb.onResponse(null, resp);
@@ -236,12 +239,12 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        if (this.hasCachedReservedTimes()) {
-            APIResponse<ArrayList<WeekViewEvent>> apiResponse = new APIResponse<ArrayList<WeekViewEvent>>();
+    public void getTimes(Callback<APIResponse<TimesResponse>> cb) {
+        if (this.hasCachedTimes()) {
+            APIResponse<TimesResponse> apiResponse = new APIResponse<TimesResponse>();
             apiResponse.setResponse(cachedTimes);
             apiResponse.setStatus(200);
-            Response<APIResponse<ArrayList<WeekViewEvent>>> resp = retrofit2.Response.success(apiResponse);
+            Response<APIResponse<TimesResponse>> resp = retrofit2.Response.success(apiResponse);
             cb.onResponse(null, resp);
         }
     }
@@ -372,12 +375,21 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         }
     }
 
-    public boolean hasCachedTimes(int tutorID) {
+    public boolean hasCachedFreeTimes(int tutorID) {
         //TODO:
         return false;
     }
 
-    public void setCachedTimes(int tutorID, ArrayList<WeekViewEvent> events) {
+    public boolean hasCachedTimes() {
+        // TODO:
+        return false;
+    }
+
+    public void setCachedFreeTimes(int tutorID, ArrayList<WeekViewEvent> events) {
+        // TODO:
+    }
+
+    public void setCachedTimes(TimesResponse events) {
         //TODO:
     }
 

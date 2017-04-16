@@ -2,7 +2,6 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
-import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -19,6 +19,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
@@ -409,28 +410,28 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        remote.setFreeTime(event, cb);
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+        remote.createFreeTime(req, cb);
     }
 
     @Override
-    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        remote.removeFreeTime(event, cb);
+    public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        remote.removeTime(event, cb);
     }
 
     @Override
-    public void getTimes(final int tutorID, final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        if (this.local.hasCachedTimes(tutorID)) {
-            this.local.getTimes(tutorID,  cb);
+    public void getFreeTimes(final int tutorID, final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.local.hasCachedFreeTimes(tutorID)) {
+            this.local.getFreeTimes(tutorID,  cb);
         } else {
-            this.remote.getTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+            this.remote.getFreeTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
                 @Override
                 public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
                     APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
 
                     if (resp != null && resp.isSuccessful()) {
                         ArrayList<WeekViewEvent> events = resp.getResponse();
-                        local.setCachedTimes(tutorID, events);
+                        local.setCachedFreeTimes(tutorID, events);
                     }
 
                     cb.onResponse(call, response);
@@ -446,25 +447,25 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void getReservedTimes(final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        if (this.local.hasCachedReservedTimes()) {
-            this.local.getReservedTimes(cb);
+    public void getTimes(final Callback<APIResponse<TimesResponse>> cb) {
+        if (this.local.hasCachedTimes()) {
+            this.local.getTimes(cb);
         } else {
-            this.remote.getReservedTimes(new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+            this.remote.getTimes(new Callback<APIResponse<TimesResponse>>() {
                 @Override
-                public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
-                    APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+                public void onResponse(Call<APIResponse<TimesResponse>> call, Response<APIResponse<TimesResponse>> response) {
+                    APIResponse<TimesResponse> resp = response.body();
 
                     if (resp != null && resp.isSuccessful()) {
-                        ArrayList<WeekViewEvent> events = resp.getResponse();
-                        local.setCachedReservedTimes(events);
+                        TimesResponse events = resp.getResponse();
+                        local.setCachedTimes(events);
                     }
 
                     cb.onResponse(call, response);
                 }
 
                 @Override
-                public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+                public void onFailure(Call<APIResponse<TimesResponse>> call, Throwable t) {
                     cb.onFailure(call, t);
                 }
             });

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.BasePresenter;
 import fi.tutee.tutee.BaseView;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.usertypeselection.UserTypeSelectionContract;
@@ -20,8 +21,8 @@ public interface HomeContract {
         void getMessages();
         void getSubjects();
         void getLatestMessages();
-        void setFreeTime(WeekViewEvent event);
-        void removeFreeTime(WeekView event);
+        void createFreeTime(WeekViewEvent event);
+        void removeTime(WeekView event);
         User getUser();
         void getReservedTimes();
     }
@@ -31,6 +32,6 @@ public interface HomeContract {
         void setSubjects(ArrayList<Subject> subjects);
         void setLatestMessages(ArrayList<GeneralMessage> latestMessages);
 
-        void setReservedTimes(ArrayList<WeekViewEvent> events);
+        void setTimes(TimesResponse events);
     }
 }

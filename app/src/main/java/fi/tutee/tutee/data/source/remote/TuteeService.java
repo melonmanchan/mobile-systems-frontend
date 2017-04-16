@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -13,6 +14,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
@@ -75,16 +77,16 @@ public interface TuteeService {
     Call<APIResponse<ArrayList<GeneralMessage>>> getLatestMessages();
 
     @POST("event/")
-    Call<APIResponse> setFreeTime(@Body WeekViewEvent event);
+    Call<APIResponse> createFreeTime(@Body CreateFreeTimeRequest req);
 
     @DELETE("event/")
-    Call<APIResponse> removeFreeTime(@Body WeekViewEvent event);
+    Call<APIResponse> removeTime(@Body WeekViewEvent event);
 
     @GET("event/{id}")
-    Call<APIResponse<ArrayList<WeekViewEvent>>> getTimes(@Path("id") int tutorID);
+    Call<APIResponse<ArrayList<WeekViewEvent>>> getFreeTimes(@Path("id") int tutorID);
 
     @GET("event/")
-    Call<APIResponse<ArrayList<WeekViewEvent>>> getReservedTimes();
+    Call<APIResponse<TimesResponse>> getTimes();
 
 
 

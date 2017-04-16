@@ -19,6 +19,7 @@ import java.util.List;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
@@ -138,8 +139,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void setReservedTimes(ArrayList<WeekViewEvent> events) {
-        this.tuteeScheduleFragment.setReservedTimes(events);
+    public void setTimes(TimesResponse events) {
+        if (this.presenter.getUser().isTutor()) {
+            //this.tutorScheduleFragment.setTim
+        } else {
+            this.tuteeScheduleFragment.setTimes(events);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

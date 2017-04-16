@@ -3,9 +3,11 @@ package fi.tutee.tutee.data.source;
 import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -13,6 +15,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
@@ -60,13 +63,13 @@ public interface TuteeDataSource {
 
     void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
 
-    void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb);
+    void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb);
 
-    void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb);
+    void removeTime(WeekViewEvent event, Callback<APIResponse> cb);
 
-    void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
+    void getFreeTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
 
-    void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
+    void getTimes(Callback<APIResponse<TimesResponse>> cb);
 
 
     // Other misc. helpers

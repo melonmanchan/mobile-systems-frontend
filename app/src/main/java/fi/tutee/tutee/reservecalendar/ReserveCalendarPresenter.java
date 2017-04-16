@@ -5,7 +5,6 @@ import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
-import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,15 +35,15 @@ public class ReserveCalendarPresenter implements ReserveCalendarContract.Present
     }
 
     @Override
-    public void getTimes(int tutorID)  {
-        this.repository.getTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+    public void getFreeTimes(int tutorID)  {
+        this.repository.getFreeTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
             @Override
             public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
                 APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
 
-                if (resp.isSuccessful()) {
+                if (resp != null && resp.isSuccessful()) {
                     ArrayList<WeekViewEvent> events = resp.getResponse();
-                    view.setTimes(events);
+                    view.setFreeTimes(events);
                 }
             }
 

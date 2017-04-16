@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.EventListAdapter;
+import fi.tutee.tutee.data.entities.TimesResponse;
 
 /**
  * Created by lehtone1 on 16/04/17.
@@ -47,9 +48,9 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
     }
 
 
-    public void setReservedTimes(ArrayList<WeekViewEvent> events) {
+    public void setTimes(TimesResponse events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
-        adapter.setEvents(events);
+        adapter.setEvents(events.getReservedEvents());
     }
 
 

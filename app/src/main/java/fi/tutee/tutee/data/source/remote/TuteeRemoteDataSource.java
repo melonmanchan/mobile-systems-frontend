@@ -1,7 +1,6 @@
 package fi.tutee.tutee.data.source.remote;
 
 import android.content.Context;
-import android.text.format.Time;
 
 import com.alamkanak.weekview.WeekViewEvent;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -12,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
+import fi.tutee.tutee.data.entities.CreateFreeTimeRequest;
 import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.CreateTutorshipRequest;
 import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
@@ -19,6 +19,7 @@ import fi.tutee.tutee.data.entities.LoginRequest;
 import fi.tutee.tutee.data.entities.RegisterRequest;
 import fi.tutee.tutee.data.entities.RegisterTutorExtraRequest;
 import fi.tutee.tutee.data.entities.Subject;
+import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
@@ -233,26 +234,26 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        Call<APIResponse> call = service.setFreeTime(event);
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.createFreeTime(req);
         call.enqueue(cb);
     }
 
     @Override
-    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        Call<APIResponse> call = service.removeFreeTime(event);
+    public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.removeTime(event);
         call.enqueue(cb);
     }
 
     @Override
-    public void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        Call<APIResponse<ArrayList<WeekViewEvent>>> call = service.getTimes(tutorID);
+    public void getFreeTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        Call<APIResponse<ArrayList<WeekViewEvent>>> call = service.getFreeTimes(tutorID);
         call.enqueue(cb);
     }
 
     @Override
-    public void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
-        Call<APIResponse<ArrayList<WeekViewEvent>>> call = service.getReservedTimes();
+    public void getTimes(Callback<APIResponse<TimesResponse>> cb) {
+        Call<APIResponse<TimesResponse>> call = service.getTimes();
         call.enqueue(cb);
     }
 

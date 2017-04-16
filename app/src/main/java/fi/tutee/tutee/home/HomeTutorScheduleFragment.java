@@ -175,7 +175,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         endTime.add(Calendar.HOUR, 1);
 
         // Create a new event.
-        WeekViewEvent event = new WeekViewEvent(20, null, time, endTime);
+        WeekViewEvent event = new WeekViewEvent(time, endTime);
         //event.setColor(100);
         if (!mNewEvents.contains(event)) {
             mNewEvents.add(event);
