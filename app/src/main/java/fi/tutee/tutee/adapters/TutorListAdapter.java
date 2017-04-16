@@ -14,7 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.vision.text.Line;
+import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
+
+import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,7 +32,7 @@ public class TutorListAdapter extends ArrayAdapter<User> {
     private Context context;
 
     //alternate white and lightgrey background
-    private int[] colors = new int[] { 0x30ffffff, 0x30eaeaea };
+    private int[] colors = new int[] { 0x30ffffff, 0x30ededed };
 
     public interface OnTutorSelectedListener {
         void onSelected(User tutor);
@@ -66,10 +70,10 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         CircleImageView profilePicture = (CircleImageView) convertView.findViewById(R.id.small_profile_picture);
         TextView name = (TextView) convertView.findViewById(R.id.small_profile_name);
         TextView description = (TextView) convertView.findViewById(R.id.small_profile_description);
-        LinearLayout subjectsWrapper = (LinearLayout)  convertView.findViewById(R.id.small_profile_subjects_wrapper);
+        FlowLayout subjectsWrapper = (FlowLayout)  convertView.findViewById(R.id.small_profile_subjects_wrapper);
 
         int colorPos = position % colors.length;
-        subjectsWrapper.setBackgroundColor(colors[colorPos]);
+        convertView.setBackgroundColor(colors[colorPos]);
 
         initializeSubjectsWrapper(subjectsWrapper, subjects);
 
@@ -81,13 +85,14 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         return convertView;
     }
 
-    private void initializeSubjectsWrapper(LinearLayout wrapper, ArrayList<Subject> subjects) {
+    private void initializeSubjectsWrapper(FlowLayout wrapper, ArrayList<Subject> subjects) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (Subject s: subjects) {
-            TextView subjectTextView = (TextView) inflater.inflate(R.layout.partial_rounded_textview, null);
+            LinearLayout subjectTextLayout = (LinearLayout) inflater.inflate(R.layout.partial_rounded_textview, null);
+            TextView subjectTextView = (TextView) subjectTextLayout.findViewById(R.id.subject_name);
             subjectTextView.setText(s.getType());
-            wrapper.addView(subjectTextView);
+            wrapper.addView(subjectTextLayout);
         }
     }
 }
