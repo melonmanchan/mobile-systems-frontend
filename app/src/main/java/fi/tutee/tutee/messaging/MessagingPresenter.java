@@ -81,9 +81,9 @@ public class MessagingPresenter implements MessagingContract.Presenter {
     public void createMessage(int receiverID, String content) {
         final CreateMessageRequest req = new CreateMessageRequest(receiverID, content);
 
-        repository.createMessage(req, new Callback<APIResponse>() {
+        repository.createMessage(req, new Callback<APIResponse<GeneralMessage>>() {
             @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+            public void onResponse(Call<APIResponse<GeneralMessage>> call, Response<APIResponse<GeneralMessage>> response) {
                 APIResponse resp = response.body();
 
                 if (resp.isSuccessful()) {
@@ -94,7 +94,7 @@ public class MessagingPresenter implements MessagingContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
+            public void onFailure(Call<APIResponse<GeneralMessage>> call, Throwable t) {
                 view.createMessageFailed(req, null);
             }
         });

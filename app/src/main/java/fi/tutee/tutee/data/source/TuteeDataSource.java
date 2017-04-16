@@ -56,7 +56,7 @@ public interface TuteeDataSource {
 
     void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb);
 
-    void createMessage(CreateMessageRequest req, Callback<APIResponse> cb);
+    void createMessage(CreateMessageRequest req, Callback<APIResponse<GeneralMessage>> cb);
 
     void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
 

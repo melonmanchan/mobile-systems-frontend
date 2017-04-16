@@ -69,7 +69,7 @@ public interface TuteeService {
     Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId);
 
     @POST("message/")
-    Call<APIResponse> createMessage(@Body CreateMessageRequest req);
+    Call<APIResponse<GeneralMessage>> createMessage(@Body CreateMessageRequest req);
 
     @GET("message/latest")
     Call<APIResponse<ArrayList<GeneralMessage>>> getLatestMessages();

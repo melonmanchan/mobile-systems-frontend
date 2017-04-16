@@ -359,8 +359,26 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
-        remote.createMessage(req, cb);
+    public void createMessage(CreateMessageRequest req, final Callback<APIResponse<GeneralMessage>> cb) {
+        remote.createMessage(req, new Callback<APIResponse<GeneralMessage>>() {
+            @Override
+            public void onResponse(Call<APIResponse<GeneralMessage>> call, Response<APIResponse<GeneralMessage>> response) {
+                APIResponse<GeneralMessage> resp = response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    GeneralMessage msg = resp.getResponse();
+                    local.updateCachedMessage(msg);
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<GeneralMessage>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
+
     }
 
     @Override

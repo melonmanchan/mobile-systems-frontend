@@ -9,6 +9,10 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -25,6 +29,7 @@ import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
+import fi.tutee.tutee.data.entities.events.LatestMessagesChangedEvent;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.MultipartBody;
 import retrofit2.Callback;
@@ -55,6 +60,8 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
         gson = new Gson();
         pref = PreferenceManager.getDefaultSharedPreferences(context);
+        EventBus.getDefault().register(this);
+
     }
 
     public static TuteeLocalDataSource getInstance(Context context) {
@@ -120,6 +127,15 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         cachedUsers = new SparseArray<User>();
         tutorIDs = new HashSet<Integer>();
         tuteeIDs = new HashSet<Integer>();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(GeneralMessage message) {
+        updateCachedMessage(message);
+        EventBus.getDefault().post(new LatestMessagesChangedEvent());
     }
 
     public void persistUserLogin(AuthResponse authResponse) {
@@ -183,7 +199,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse<GeneralMessage>> cb) {
         cb.onFailure(null, new Exception("Cannot create message locally"));
     }
 
@@ -315,6 +331,29 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     public boolean hasCachedLatestMessages() {
         return (this.cachedLatestMessages != null && this.cachedLatestMessages.size() > 0);
+    }
+
+    public void updateCachedMessage(GeneralMessage msg) {
+        int receiverId = msg.getReceiverId();
+        int senderId = msg.getSenderId();
+        int i;
+        boolean found = false;
+        for (i = 0; i < cachedLatestMessages.size(); i++) {
+            GeneralMessage message = cachedLatestMessages.get(i);
+            int cachedMessageReceiverId = message.getReceiverId();
+            int cachedMessageSenderId = message.getSenderId();
+
+            if (receiverId == cachedMessageReceiverId && senderId == cachedMessageSenderId) {
+                found = true;
+                break;
+            } else if (receiverId == cachedMessageSenderId && senderId == cachedMessageReceiverId) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            cachedLatestMessages.set(i, msg);
+        }
     }
 
     public AuthResponse fetchPersistedUserLogin() {
