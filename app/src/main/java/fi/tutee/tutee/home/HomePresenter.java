@@ -59,6 +59,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
             @Override
             public void onFailure(Call<APIResponse<TutorshipsResponse>> call, Throwable t) {
+                System.out.println("asdasdasd");
                 // TODO
             }
         });
