@@ -128,31 +128,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     public void addMessages(ArrayList<GeneralMessage> messages) {
         this.messages.addAll(0, messages);
-        notifyDataSetChanged();
-    }
-
-    public void setMessages(ArrayList<GeneralMessage> messages) {
-        this.messageIDs = new HashSet<Integer>();
-        this.messages = messages;
-
-        int thisUserId = thisUser.getId();
-        int otherUserId = otherUser.getId();
-
-        for (GeneralMessage message: messages) {
-            int receiverId = message.getReceiverId();
-            int senderId = message.getSenderId();
-
-            if (receiverId != thisUserId && senderId != thisUserId) {
-                return;
-            }
-
-            if (receiverId != otherUserId && senderId != otherUserId) {
-                return;
-            }
-
-            messageIDs.add(message.getId());
-        }
-
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, messages.size());
     }
 }
