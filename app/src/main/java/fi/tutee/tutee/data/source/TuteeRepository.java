@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -393,6 +394,33 @@ public class TuteeRepository implements TuteeDataSource {
     @Override
     public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
         remote.removeFreeTime(event, cb);
+    }
+
+    @Override
+    public void getTimes(final int tutorID, final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.local.hasCachedTimes(tutorID)) {
+            this.local.getTimes(tutorID,  cb);
+        } else {
+            this.remote.getTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
+                    APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        ArrayList<WeekViewEvent> events = resp.getResponse();
+                        local.setCachedTimes(tutorID, events);
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+            // TODO
+        }
     }
 
 

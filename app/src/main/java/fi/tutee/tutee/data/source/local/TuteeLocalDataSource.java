@@ -49,6 +49,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
     private Context context;
+    private ArrayList<WeekViewEvent> cachedTimes;
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
@@ -208,6 +209,17 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.hasCachedTimes(tutorID)) {
+            APIResponse<ArrayList<WeekViewEvent>> apiResponse = new APIResponse<ArrayList<WeekViewEvent>>();
+            apiResponse.setResponse(cachedTimes);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<WeekViewEvent>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return tutorIDs.contains(user.getId());
     }
@@ -308,5 +320,14 @@ public class TuteeLocalDataSource implements TuteeDataSource {
             this.logOut();
             return null;
         }
+    }
+
+    public boolean hasCachedTimes(int tutorID) {
+        //TODO:
+        return false;
+    }
+
+    public void setCachedTimes(int tutorID, ArrayList<WeekViewEvent> events) {
+        //TODO:
     }
 }

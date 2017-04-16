@@ -64,6 +64,8 @@ public interface TuteeDataSource {
 
     void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb);
 
+    void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
+
 
     // Other misc. helpers
     boolean isUserTutor(User user);

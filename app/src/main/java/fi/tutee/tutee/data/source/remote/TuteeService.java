@@ -74,11 +74,14 @@ public interface TuteeService {
     @GET("message/latest")
     Call<APIResponse<ArrayList<GeneralMessage>>> getLatestMessages();
 
-    @POST("event/set_free_time")
+    @POST("event/")
     Call<APIResponse> setFreeTime(@Body WeekViewEvent event);
 
-    @DELETE("event/delete_free_time")
+    @DELETE("event/")
     Call<APIResponse> removeFreeTime(@Body WeekViewEvent event);
+
+    @GET("event/{id}")
+    Call<APIResponse<ArrayList<WeekViewEvent>>> getTimes(@Path("id") int tutorID);
 
 
 
