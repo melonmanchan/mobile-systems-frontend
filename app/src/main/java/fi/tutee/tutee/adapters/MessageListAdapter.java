@@ -108,10 +108,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     public void addItem(GeneralMessage message) {
-        if (messageIDs.contains(message.getId())) {
-            return;
-        }
-
         int receiverId = message.getReceiverId();
         int senderId = message.getSenderId();
 

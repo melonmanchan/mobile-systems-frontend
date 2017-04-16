@@ -132,6 +132,9 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     public void addTempMessage(String message) {
         GeneralMessage generalMessage = new GeneralMessage();
         generalMessage.setContent(message);
+        generalMessage.setReceiverId(otherUserId);
+        generalMessage.setSenderId(user.getId());
+        generalMessage.setSentAt(new Date());
         addMessage(generalMessage);
         writeMessage.setText("");
     }
