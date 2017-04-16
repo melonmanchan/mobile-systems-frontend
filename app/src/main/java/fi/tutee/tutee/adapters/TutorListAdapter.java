@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.Subject;
@@ -30,9 +32,10 @@ public class TutorListAdapter extends ArrayAdapter<User> {
     private ArrayList<User> tutors;
     private OnTutorSelectedListener listener;
     private Context context;
+    private HashSet<Subject> subjectsAdded = new HashSet<>();
 
     //alternate white and lightgrey background
-    private int[] colors = new int[] { 0x30ffffff, 0x30ededed };
+    private int[] colors = new int[] { 0x30ffffff, 0x30e2e2e2 };
 
     public interface OnTutorSelectedListener {
         void onSelected(User tutor);
@@ -89,11 +92,15 @@ public class TutorListAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (Subject s: subjects) {
-            LinearLayout subjectTextLayout = (LinearLayout) inflater.inflate(R.layout.partial_rounded_textview, null);
-            TextView subjectTextView = (TextView) subjectTextLayout.findViewById(R.id.subject_name);
-            subjectTextView.setText(s.getType());
-            wrapper.addView(subjectTextLayout);
+            if (!subjectsAdded.contains(s)) {
+                LinearLayout subjectTextLayout = (LinearLayout) inflater.inflate(R.layout.partial_rounded_textview, null);
+                TextView subjectTextView = (TextView) subjectTextLayout.findViewById(R.id.subject_name);
+                subjectTextView.setText(s.getType());
+                wrapper.addView(subjectTextLayout);
+            }
         }
+
+        subjectsAdded.addAll(subjects);
     }
 }
 
