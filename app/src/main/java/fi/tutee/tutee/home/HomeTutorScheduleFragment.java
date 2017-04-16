@@ -185,10 +185,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
             mWeekView.notifyDatasetChanged();
         }
 
-
-
         // Refresh the week view. onMonthChange will be called again.
-
     }
 
     @Override

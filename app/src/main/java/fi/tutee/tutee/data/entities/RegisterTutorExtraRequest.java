@@ -32,4 +32,8 @@ public class RegisterTutorExtraRequest  {
     public ArrayList<Subject> getSubjects() {
         return subjects;
     }
+
+    public int getPrice() { return price; }
+
+    public String getDescription() { return description; }
 }

@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
-
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
@@ -21,6 +19,9 @@ import fi.tutee.tutee.messaging.MessagingActivity;
 public class HomeMessagesFragment extends HomeBaseFragment {
     private ListView messageUsersList;
     public final static String USER_ID = "fi.tutee.tutee.USER_ID";
+
+    private ArrayList<GeneralMessage> latestMessages = null;
+    private ArrayList<User> chatUsers = null;
 
     public HomeMessagesFragment() {}
 
@@ -38,28 +39,37 @@ public class HomeMessagesFragment extends HomeBaseFragment {
         TextView emptyView = (TextView) root.findViewById(R.id.messages_user_list_empty);
         messageUsersList.setEmptyView(emptyView);
 
-        this.presenter.getMessages();
+        this.presenter.getLatestMessages();
         this.presenter.getTutorships();
 
         return root;
     }
 
+    private void checkIfShouldInitializeMessageArray() {
+        if (chatUsers != null && latestMessages != null) {
+            UserChatListAdapter adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, chatUsers);
+
+            adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
+                @Override
+                public void onSelected(User user) {
+                    Intent intent = new Intent(getActivity(), MessagingActivity.class);
+                    intent.putExtra(USER_ID, user.getId());
+                    startActivity(intent);
+                }
+            });
+
+            adapter.setLatestMessages(latestMessages);
+            messageUsersList.setAdapter(adapter);
+        }
+    }
+
     public void setMessageUsers(ArrayList<User> users) {
-        UserChatListAdapter adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, users);
-        adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
-            @Override
-            public void onSelected(User user) {
-                Intent intent = new Intent(getActivity(), MessagingActivity.class);
-                intent.putExtra(USER_ID, user.getId());
-                startActivity(intent);
-            }
-        });
-        messageUsersList.setAdapter(adapter);
-        this.presenter.getLatestMessages();
+        this.chatUsers = users;
+        checkIfShouldInitializeMessageArray();
     }
 
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
-        UserChatListAdapter adapter = (UserChatListAdapter) messageUsersList.getAdapter();
-        adapter.setLatestMessages(latestMessages);
+        this.latestMessages = latestMessages;
+        checkIfShouldInitializeMessageArray();
     }
 }

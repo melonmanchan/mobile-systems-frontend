@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,15 @@ import java.util.ArrayList;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
+
+import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
+import static android.text.format.DateUtils.FORMAT_ABBREV_RELATIVE;
+import static android.text.format.DateUtils.FORMAT_ABBREV_TIME;
+import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
+import static android.text.format.DateUtils.LENGTH_SHORTEST;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
 public class UserChatListAdapter  extends ArrayAdapter<User> {
     private ArrayList<User> users;
@@ -102,11 +112,18 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
             holder.latestMessage.setText("Lorem ipsum lorem ipsum");
             holder.lastMessageSent.setText("1h");
         } else {
-            for(GeneralMessage msg : latestMessages) {
+            for (GeneralMessage msg : latestMessages) {
                 if (msg.getReceiverId() == user.getId() ||
                         msg.getSenderId() == user.getId()) {
                     holder.latestMessage.setText(msg.getContent());
-                    //TODO: holder.lastMessageSent
+                    long now = System.currentTimeMillis();
+                    CharSequence date = DateUtils.getRelativeTimeSpanString(msg.getSentAt().getTime(), now,  MINUTE_IN_MILLIS, FORMAT_ABBREV_RELATIVE);
+                    if (date.toString().indexOf("min. ago") > -1) {
+                        date = date.toString().replaceAll("\\D+"," m");
+                    } else if (date.toString().indexOf("hr. ago") > -1) {
+                        date = date.toString().replaceAll("\\D+"," h");
+                    }
+                    holder.lastMessageSent.setText(date);
                     break;
                 }
             }

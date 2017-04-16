@@ -157,6 +157,10 @@ public class TuteeRepository implements TuteeDataSource {
 
                 if (resp.isSuccessful()) {
                     loggedInUser.setSubjects(req.getSubjects());
+                    loggedInUser.setPrice(req.getPrice());
+                    loggedInUser.setDescription(req.getDescription());
+                    UpdateUserRequest updateUserRequest = new UpdateUserRequest(loggedInUser);
+                    local.updateUser(updateUserRequest, null);
                 }
 
                 cb.onResponse(call, response);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/partial_message_wrapper"
     android:background="?attr/selectableItemBackground"
-    android:padding="8dp"
+    android:padding="10dp"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="100dp">
@@ -33,43 +33,20 @@
             android:id="@+id/small_profile_description"
             android:scrollHorizontally="true"
             android:ellipsize="end"
-            android:maxLines="4"
+            android:maxLines="1"
             android:layout_width="wrap_content"
-            android:layout_height="35dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"/>
 
         <org.apmem.tools.layouts.FlowLayout
+            xmlns:f="http://schemas.android.com/apk/res-auto"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="fill"
+            f:weightDefault="1.0"
+            android:gravity="left"
             android:id="@+id/small_profile_subjects_wrapper">
         </org.apmem.tools.layouts.FlowLayout>
     </LinearLayout>
 
-    <!--
-    <LinearLayout
-        android:layout_weight="0.1"
-        android:orientation="vertical"
-        android:layout_width="100dp"
-        android:layout_gravity="center"
-        android:layout_height="70dp">
-
-        <TextView
-            android:text="Classes Done"
-            android:id="@+id/small_profile_classes_done_text"
-            android:scrollHorizontally="true"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
-        <TextView
-            android:text="125"
-            android:id="@+id/small_profile_classes_done_number"
-            android:scrollHorizontally="true"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
-    </LinearLayout>
-    -->
 </LinearLayout>

@@ -1,12 +1,14 @@
 package fi.tutee.tutee.data.source.remote;
 
 import android.content.Context;
+import android.text.format.Time;
 
 import com.alamkanak.weekview.WeekViewEvent;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.AuthResponse;
@@ -65,6 +67,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
+
         httpClient.addInterceptor(new StethoInterceptor());
 
         httpClient.addInterceptor(new Interceptor() {
@@ -82,6 +85,9 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
             }
         })
         .addInterceptor(logging);
+
+        httpClient.readTimeout(30, TimeUnit.SECONDS);
+        httpClient.writeTimeout(30, TimeUnit.SECONDS);
 
         OkHttpClient client = httpClient.build();
 
@@ -113,6 +119,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
                     }
                 })
                 .addInterceptor(new StethoInterceptor())
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
 
 

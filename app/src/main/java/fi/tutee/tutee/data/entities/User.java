@@ -39,7 +39,6 @@ public class User {
     @SerializedName("email")
     private String email;
 
-
     @SerializedName("description")
     @Expose
     private String description;
@@ -159,6 +158,10 @@ public class User {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public AuthMethod getAuthMethod() {
