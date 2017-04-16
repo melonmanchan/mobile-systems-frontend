@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source.remote;
 
 import android.content.Context;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.IOException;
@@ -218,7 +219,33 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getLatestMessages();
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.setFreeTime(event);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.removeFreeTime(event);
+        call.enqueue(cb);
+    }
+
+    @Override
+    public void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        Call<APIResponse<ArrayList<WeekViewEvent>>> call = service.getTimes(tutorID);
+        call.enqueue(cb);
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return false;
     }
+
+
 }

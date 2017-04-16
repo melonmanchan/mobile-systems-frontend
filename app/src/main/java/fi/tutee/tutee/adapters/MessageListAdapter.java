@@ -1,17 +1,24 @@
 package fi.tutee.tutee.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import android.text.format.DateUtils;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
+
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
 /**
  * Created by lehtone1 on 12/04/17.
@@ -23,6 +30,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private User otherUser;
     private static int SENT_BY_THIS_USER = 0;
     private static int SENT_BY_OTHER_USER = 1;
+    private Context context;
 
     private HashSet<Integer> messageIDs = new HashSet<>();
 
@@ -31,11 +39,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTextView;
+        public TextView messageContent;
+        public TextView messageSent;
 
         public ViewHolder(LinearLayout layout) {
             super(layout);
-            mTextView = (TextView) layout.findViewById(R.id.message_text);
+            messageContent = (TextView) layout.findViewById(R.id.message_text);
+            messageSent = (TextView) layout.findViewById(R.id.message_sent_time);
         }
     }
 
@@ -67,6 +77,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public MessageListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
+        context = parent.getContext();
         LinearLayout layout;
         if (viewType == SENT_BY_THIS_USER) {
              layout = (LinearLayout) LayoutInflater.from(parent.getContext())
@@ -85,7 +96,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(messages.get(position).getContent());
+        holder.messageContent.setText(messages.get(position).getContent());
+        CharSequence date = DateUtils.getRelativeDateTimeString(context, messages.get(position).getSentAt().getTime(), MINUTE_IN_MILLIS,  WEEK_IN_MILLIS, 0);
+        holder.messageSent.setText(date);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

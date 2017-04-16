@@ -1,5 +1,8 @@
 package fi.tutee.tutee.home;
 
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,6 +10,7 @@ import fi.tutee.tutee.data.entities.APIResponse;
 import fi.tutee.tutee.data.entities.Subject;
 import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,5 +92,36 @@ public class HomePresenter implements HomeContract.Presenter {
                 // TODO
             }
         });
+    }
+
+
+    @Override
+    public void getLatestMessages() {
+        this.repository.getLatestMessages(new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
+                APIResponse<ArrayList<GeneralMessage>> resp = response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    ArrayList<GeneralMessage> messages = resp.getResponse();
+                    view.setLatestMessages(messages);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<GeneralMessage>>> call, Throwable t) {
+                // TODO
+            }
+        });
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event) {
+
+    }
+
+    @Override
+    public void removeFreeTime(WeekView event) {
+
     }
 }

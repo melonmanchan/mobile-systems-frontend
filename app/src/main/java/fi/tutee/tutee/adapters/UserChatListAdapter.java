@@ -21,9 +21,11 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
 public class UserChatListAdapter  extends ArrayAdapter<User> {
     private ArrayList<User> users;
+    private ArrayList<GeneralMessage> latestMessages;
     private OnUserSelectedListener listener;
     private Context context;
 
@@ -59,6 +61,11 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
         return users.get(position);
     }
 
+    public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
+        this.latestMessages = latestMessages;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -90,8 +97,21 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
         Picasso.with(context).load(avatar.toString()).into(holder.avatar);
 
         holder.userName.setText(user.getFirstName() + " " + user.getLastName());
-        holder.latestMessage.setText("Lorem ipsum lorem ipsum");
-        holder.lastMessageSent.setText("1h");
+
+        if(latestMessages == null) {
+            holder.latestMessage.setText("Lorem ipsum lorem ipsum");
+            holder.lastMessageSent.setText("1h");
+        } else {
+            for(GeneralMessage msg : latestMessages) {
+                if (msg.getReceiverId() == user.getId() ||
+                        msg.getSenderId() == user.getId()) {
+                    holder.latestMessage.setText(msg.getContent());
+                    //TODO: holder.lastMessageSent
+                    break;
+                }
+            }
+        }
+
 
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

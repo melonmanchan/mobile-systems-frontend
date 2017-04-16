@@ -1,5 +1,7 @@
 package fi.tutee.tutee.data.source.remote;
 
+import com.alamkanak.weekview.WeekViewEvent;
+
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -17,7 +19,9 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -66,4 +70,20 @@ public interface TuteeService {
 
     @POST("message/")
     Call<APIResponse> createMessage(@Body CreateMessageRequest req);
+
+    @GET("message/latest")
+    Call<APIResponse<ArrayList<GeneralMessage>>> getLatestMessages();
+
+    @POST("event/")
+    Call<APIResponse> setFreeTime(@Body WeekViewEvent event);
+
+    @DELETE("event/")
+    Call<APIResponse> removeFreeTime(@Body WeekViewEvent event);
+
+    @GET("event/{id}")
+    Call<APIResponse<ArrayList<WeekViewEvent>>> getTimes(@Path("id") int tutorID);
+
+
+
+
 }

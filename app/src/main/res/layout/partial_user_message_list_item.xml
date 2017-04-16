@@ -10,10 +10,10 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_weight="0.1"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:padding="3dp"
         android:id="@+id/partial_message_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         />
 
     <LinearLayout
@@ -21,7 +21,8 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_gravity="center"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:textStyle="bold"

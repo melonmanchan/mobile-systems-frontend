@@ -2,6 +2,8 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.net.MalformedURLException;
@@ -356,6 +358,71 @@ public class TuteeRepository implements TuteeDataSource {
     public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
         remote.createMessage(req, cb);
     }
+
+    @Override
+    public void getLatestMessages(final Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        if (this.local.hasCachedLatestMessages()) {
+            this.local.getLatestMessages(cb);
+        } else {
+            this.remote.getLatestMessages(new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
+                    APIResponse<ArrayList<GeneralMessage>> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        ArrayList<GeneralMessage> messages = resp.getResponse();
+                        local.setCachedLatestMessages(messages);
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<ArrayList<GeneralMessage>>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+            // TODO
+        }
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        remote.setFreeTime(event, cb);
+    }
+
+    @Override
+    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        remote.removeFreeTime(event, cb);
+    }
+
+    @Override
+    public void getTimes(final int tutorID, final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.local.hasCachedTimes(tutorID)) {
+            this.local.getTimes(tutorID,  cb);
+        } else {
+            this.remote.getTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
+                    APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        ArrayList<WeekViewEvent> events = resp.getResponse();
+                        local.setCachedTimes(tutorID, events);
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+            // TODO
+        }
+    }
+
 
     @Override
     public boolean isUserTutor(User user) {

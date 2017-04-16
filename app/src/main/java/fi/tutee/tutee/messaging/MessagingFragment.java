@@ -168,13 +168,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mAdapter = new MessageListAdapter(a, this.user, user);
         mRecyclerView.setAdapter(mAdapter);
 
-        GeneralMessage msg = new GeneralMessage();
-        msg.setId(1);
-        msg.setContent("received message");
-        msg.setReceiverId(this.user.getId());
-        msg.setSenderId(user.getId());
-        msg.setSentAt(new Date());
-        addMessage(msg);
     }
 
     @Override

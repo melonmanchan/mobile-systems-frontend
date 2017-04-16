@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -39,11 +40,16 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     private ArrayList<Subject> cachedSubjects;
 
+
+    private ArrayList<GeneralMessage> cachedLatestMessages;
+
+
     private SparseArray<User> cachedUsers;
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
     private Context context;
+    private ArrayList<WeekViewEvent> cachedTimes;
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
@@ -182,6 +188,38 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        if (this.hasCachedSubjects()) {
+            APIResponse<ArrayList<GeneralMessage>> apiResponse = new APIResponse<ArrayList<GeneralMessage>>();
+            apiResponse.setResponse(cachedLatestMessages);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<GeneralMessage>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    @Override
+    public void setFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot set free time locally"));
+    }
+
+    @Override
+    public void removeFreeTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot remove free time locally"));
+    }
+
+    @Override
+    public void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.hasCachedTimes(tutorID)) {
+            APIResponse<ArrayList<WeekViewEvent>> apiResponse = new APIResponse<ArrayList<WeekViewEvent>>();
+            apiResponse.setResponse(cachedTimes);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<WeekViewEvent>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return tutorIDs.contains(user.getId());
     }
@@ -241,6 +279,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         }
     }
 
+    public void setCachedLatestMessages(ArrayList<GeneralMessage> cachedLatestMessages) {
+        this.cachedLatestMessages = cachedLatestMessages;
+    }
+
+
     public void markUserAsTutor(int tutorID) {
         if (!tutorIDs.contains(tutorID)) {
             tutorIDs.add(tutorID);
@@ -259,6 +302,10 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         return (this.cachedSubjects != null && this.cachedSubjects.size() > 0);
     }
 
+    public boolean hasCachedLatestMessages() {
+        return (this.cachedLatestMessages != null && this.cachedLatestMessages.size() > 0);
+    }
+
     public AuthResponse fetchPersistedUserLogin() {
         String json = pref.getString(PERSIST_LOGIN_DATA, null);
 
@@ -273,5 +320,14 @@ public class TuteeLocalDataSource implements TuteeDataSource {
             this.logOut();
             return null;
         }
+    }
+
+    public boolean hasCachedTimes(int tutorID) {
+        //TODO:
+        return false;
+    }
+
+    public void setCachedTimes(int tutorID, ArrayList<WeekViewEvent> events) {
+        //TODO:
     }
 }
