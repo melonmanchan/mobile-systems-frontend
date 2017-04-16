@@ -44,13 +44,9 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     private HashSet<Integer> tutorIDs = new HashSet<Integer>();
     private HashSet<Integer> tuteeIDs = new HashSet<Integer>();
-
-    private ArrayList<Subject> cachedSubjects;
-
-    private ArrayList<GeneralMessage> cachedLatestMessages;
-
-
-    private SparseArray<User> cachedUsers;
+    private ArrayList<Subject> cachedSubjects = new ArrayList<Subject>();
+    private ArrayList<GeneralMessage> cachedLatestMessages = new ArrayList<GeneralMessage>();
+    private SparseArray<User> cachedUsers = new SparseArray<User>();
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
@@ -325,7 +321,8 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     public boolean hasCachedTutorships() {
-        return (this.tuteeIDs != null && this.tutorIDs != null && this.cachedUsers != null);
+        return (this.tuteeIDs != null && this.tutorIDs != null && this.cachedUsers != null
+                && this.cachedUsers.size() > 0);
     }
 
     public boolean hasCachedSubjects() {
