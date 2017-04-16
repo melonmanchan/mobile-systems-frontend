@@ -9,6 +9,10 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -55,6 +59,8 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
         gson = new Gson();
         pref = PreferenceManager.getDefaultSharedPreferences(context);
+        EventBus.getDefault().register(this);
+
     }
 
     public static TuteeLocalDataSource getInstance(Context context) {
@@ -120,6 +126,14 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         cachedUsers = new SparseArray<User>();
         tutorIDs = new HashSet<Integer>();
         tuteeIDs = new HashSet<Integer>();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(GeneralMessage message) {
+        updateCachedMessage(message);
     }
 
     public void persistUserLogin(AuthResponse authResponse) {
@@ -317,7 +331,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         return (this.cachedLatestMessages != null && this.cachedLatestMessages.size() > 0);
     }
 
-    public void updateCachedMessages(GeneralMessage msg) {
+    public void updateCachedMessage(GeneralMessage msg) {
         int receiverId = msg.getReceiverId();
         int senderId = msg.getSenderId();
         int i;

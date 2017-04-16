@@ -367,7 +367,7 @@ public class TuteeRepository implements TuteeDataSource {
 
                 if (resp != null && resp.isSuccessful()) {
                     GeneralMessage msg = resp.getResponse();
-                    local.updateCachedMessages(msg);
+                    local.updateCachedMessage(msg);
                 }
 
                 cb.onResponse(call, response);
