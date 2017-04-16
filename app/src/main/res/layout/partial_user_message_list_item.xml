@@ -41,16 +41,15 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_weight="0.1"
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_gravity="center"
+    <RelativeLayout
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
         android:layout_height="70dp">
         <TextView
             android:text="2h"
             android:id="@+id/partial_message_last_sent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
