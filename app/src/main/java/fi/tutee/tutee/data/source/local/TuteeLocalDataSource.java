@@ -40,7 +40,6 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     private ArrayList<Subject> cachedSubjects;
 
-
     private ArrayList<GeneralMessage> cachedLatestMessages;
 
 
@@ -117,6 +116,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         editor.commit();
 
         cachedSubjects = new ArrayList<Subject>();
+        cachedLatestMessages = new ArrayList<GeneralMessage>();
         cachedUsers = new SparseArray<User>();
         tutorIDs = new HashSet<Integer>();
         tuteeIDs = new HashSet<Integer>();
