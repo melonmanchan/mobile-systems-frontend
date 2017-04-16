@@ -8,12 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.UserChatListAdapter;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
+import fi.tutee.tutee.data.entities.events.LatestMessagesChangedEvent;
 import fi.tutee.tutee.messaging.MessagingActivity;
 
 public class HomeMessagesFragment extends HomeBaseFragment {
@@ -24,6 +29,23 @@ public class HomeMessagesFragment extends HomeBaseFragment {
     private ArrayList<User> chatUsers = null;
 
     public HomeMessagesFragment() {}
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LatestMessagesChangedEvent event) {
+        this.presenter.getLatestMessages();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

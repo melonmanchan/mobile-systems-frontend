@@ -29,6 +29,7 @@ import fi.tutee.tutee.data.entities.TutorshipsResponse;
 import fi.tutee.tutee.data.entities.UpdateUserRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
+import fi.tutee.tutee.data.entities.events.LatestMessagesChangedEvent;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import okhttp3.MultipartBody;
 import retrofit2.Callback;
@@ -134,6 +135,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(GeneralMessage message) {
         updateCachedMessage(message);
+        EventBus.getDefault().post(new LatestMessagesChangedEvent());
     }
 
     public void persistUserLogin(AuthResponse authResponse) {
