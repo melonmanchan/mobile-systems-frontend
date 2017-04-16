@@ -204,8 +204,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void getMessagesFrom(int userId, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
-        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getMessagesFrom(userId);
+    public void getMessagesFrom(int userId, int fromOffset, int toOffset, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+        Call<APIResponse<ArrayList<GeneralMessage>>> call = service.getMessagesFrom(userId, fromOffset, toOffset);
         call.enqueue(cb);
     }
 

@@ -53,7 +53,7 @@ public interface TuteeDataSource {
 
     void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb);
 
-    void getMessagesFrom(int userId, Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
+    void getMessagesFrom(int userId, int fromOffset, int toOffset, Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
 
     void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb);
 

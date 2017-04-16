@@ -51,6 +51,12 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private int otherUserId;
     private User user;
 
+    private int showMessageFrom = 0;
+    private int showMessageTo = 10;
+    private int messageIncrement = 10;
+
+    boolean moreMessagesLeft = true;
+
     public static MessagingFragment newInstance(int userId) {
         Bundle arguments = new Bundle();
         MessagingFragment fragment = new MessagingFragment();
@@ -92,11 +98,9 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mRecyclerView = (RecyclerView) root.findViewById(R.id.messaging_view);
         mLayoutManager = new LinearLayoutManager(root.getContext());
 
-
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-
+        //mRecyclerView.setHasFixedSize(true);
 
         writeMessage = (EditText) root.findViewById(R.id.write_message);
         sendMessage = (Button) root.findViewById(R.id.send_message_button);
@@ -145,7 +149,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     }
 
     public void getMessages() {
-        presenter.getMessagesFrom(otherUserId);
+        presenter.getMessagesFrom(otherUserId, showMessageFrom, showMessageTo);
     }
 
     public void getUser() {
@@ -171,6 +175,20 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mAdapter = new MessageListAdapter(a, this.user, user);
         mRecyclerView.setAdapter(mAdapter);
 
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int scrollDy = 0;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (moreMessagesLeft && !recyclerView.canScrollVertically(-1)) {
+                    showMessageFrom = showMessageTo;
+                    showMessageTo += messageIncrement;
+                    getMessages();
+                }
+            }
+        });
     }
 
     @Override
@@ -199,8 +217,12 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     }
 
     @Override
-    public void setMessages(ArrayList<GeneralMessage> messages) {
-        mAdapter.setMessages(messages);
+    public void addMessages(ArrayList<GeneralMessage> messages) {
+        if (messages.size() < messageIncrement) {
+            moreMessagesLeft = false;
+        }
+
+        mAdapter.addMessages(messages);
     }
 
     @Override

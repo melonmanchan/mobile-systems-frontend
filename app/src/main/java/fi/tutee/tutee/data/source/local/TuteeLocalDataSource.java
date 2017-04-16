@@ -172,7 +172,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void getMessagesFrom(int userId, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+    public void getMessagesFrom(int userId, int fromOffset, int toOffset, Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
         cb.onFailure(null, new Exception("Not yet implemented!"));
     }
 

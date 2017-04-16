@@ -30,6 +30,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface TuteeService {
 
@@ -68,7 +69,9 @@ public interface TuteeService {
     Call<APIResponse<TutorshipsResponse>> getTutorships();
 
     @GET("message/{id}")
-    Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId);
+    Call<APIResponse<ArrayList<GeneralMessage>>> getMessagesFrom(@Path("id") int userId,
+                                                                 @Query("from") int fromOffset,
+                                                                 @Query("to") int toOffset);
 
     @POST("message/")
     Call<APIResponse<GeneralMessage>> createMessage(@Body CreateMessageRequest req);
@@ -87,8 +90,4 @@ public interface TuteeService {
 
     @GET("event/")
     Call<APIResponse<TimesResponse>> getTimes();
-
-
-
-
 }

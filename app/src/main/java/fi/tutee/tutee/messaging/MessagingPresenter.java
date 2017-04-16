@@ -37,14 +37,14 @@ public class MessagingPresenter implements MessagingContract.Presenter {
     }
 
     @Override
-    public void getMessagesFrom(int otherUserId) {
-        this.repository.getMessagesFrom(otherUserId, new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+    public void getMessagesFrom(int otherUserId, int fromOffset, int toOffset) {
+        this.repository.getMessagesFrom(otherUserId, fromOffset, toOffset, new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
             @Override
             public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
                     APIResponse<ArrayList<GeneralMessage>> resp = response.body();
 
                     if (resp.isSuccessful()) {
-                            view.setMessages(resp.getResponse());
+                            view.addMessages(resp.getResponse());
                     } else {
                             view.getMessagesFailed(resp.getErrors());
                     }

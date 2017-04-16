@@ -16,7 +16,7 @@ import fi.tutee.tutee.data.entities.events.GeneralMessage;
 public interface MessagingContract {
 
     interface View extends BaseView<MessagingContract.Presenter> {
-        void setMessages(ArrayList<GeneralMessage> messages);
+        void addMessages(ArrayList<GeneralMessage> messages);
 
         void getMessagesFailed(ArrayList<APIError> errors);
 
@@ -30,7 +30,7 @@ public interface MessagingContract {
     }
 
     interface Presenter extends BasePresenter {
-        void getMessagesFrom(int userId);
+        void getMessagesFrom(int userId, int fromOffset, int toOffset);
 
         void getUserByID(int userId);
 

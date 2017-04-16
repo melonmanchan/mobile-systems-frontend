@@ -288,10 +288,9 @@ public class TuteeRepository implements TuteeDataSource {
 
 
     @Override
-    public void getMessagesFrom(int userId, final Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
+    public void getMessagesFrom(int userId, int fromOffset, int toOffset, final Callback<APIResponse<ArrayList<GeneralMessage>>> cb) {
 
-
-        this.remote.getMessagesFrom(userId, new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
+        this.remote.getMessagesFrom(userId, fromOffset, toOffset, new Callback<APIResponse<ArrayList<GeneralMessage>>>() {
             @Override
             public void onResponse(Call<APIResponse<ArrayList<GeneralMessage>>> call, Response<APIResponse<ArrayList<GeneralMessage>>> response) {
                 APIResponse<ArrayList<GeneralMessage>> resp = response.body();
