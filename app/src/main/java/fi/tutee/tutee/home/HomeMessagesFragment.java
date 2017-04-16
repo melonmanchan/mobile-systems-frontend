@@ -39,9 +39,6 @@ public class HomeMessagesFragment extends HomeBaseFragment {
         TextView emptyView = (TextView) root.findViewById(R.id.messages_user_list_empty);
         messageUsersList.setEmptyView(emptyView);
 
-        this.presenter.getLatestMessages();
-        this.presenter.getTutorships();
-
         return root;
     }
 
@@ -71,5 +68,12 @@ public class HomeMessagesFragment extends HomeBaseFragment {
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
         this.latestMessages = latestMessages;
         checkIfShouldInitializeMessageArray();
+    }
+
+    @Override
+    public void onResume() {
+        this.presenter.getLatestMessages();
+        this.presenter.getTutorships();
+        super.onResume();
     }
 }

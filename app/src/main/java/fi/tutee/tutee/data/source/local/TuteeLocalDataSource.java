@@ -183,7 +183,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse<GeneralMessage>> cb) {
         cb.onFailure(null, new Exception("Cannot create message locally"));
     }
 
@@ -315,6 +315,29 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     public boolean hasCachedLatestMessages() {
         return (this.cachedLatestMessages != null && this.cachedLatestMessages.size() > 0);
+    }
+
+    public void updateCachedMessages(GeneralMessage msg) {
+        int receiverId = msg.getReceiverId();
+        int senderId = msg.getSenderId();
+        int i;
+        boolean found = false;
+        for (i = 0; i < cachedLatestMessages.size(); i++) {
+            GeneralMessage message = cachedLatestMessages.get(i);
+            int cachedMessageReceiverId = message.getReceiverId();
+            int cachedMessageSenderId = message.getSenderId();
+
+            if (receiverId == cachedMessageReceiverId && senderId == cachedMessageSenderId) {
+                found = true;
+                break;
+            } else if (receiverId == cachedMessageSenderId && senderId == cachedMessageReceiverId) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            cachedLatestMessages.set(i, msg);
+        }
     }
 
     public AuthResponse fetchPersistedUserLogin() {

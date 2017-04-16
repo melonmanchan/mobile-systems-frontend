@@ -221,8 +221,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createMessage(CreateMessageRequest req, Callback<APIResponse> cb) {
-        Call<APIResponse> call = service.createMessage(req);
+    public void createMessage(CreateMessageRequest req, Callback<APIResponse<GeneralMessage>> cb) {
+        Call<APIResponse<GeneralMessage>> call = service.createMessage(req);
         call.enqueue(cb);
     }
 
