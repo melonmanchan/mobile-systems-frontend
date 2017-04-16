@@ -22,6 +22,8 @@ public interface HomeContract {
         void getLatestMessages();
         void setFreeTime(WeekViewEvent event);
         void removeFreeTime(WeekView event);
+        User getUser();
+        void getReservedTimes();
     }
 
     interface View extends BaseView<Presenter> {
@@ -29,5 +31,6 @@ public interface HomeContract {
         void setSubjects(ArrayList<Subject> subjects);
         void setLatestMessages(ArrayList<GeneralMessage> latestMessages);
 
+        void setReservedTimes(ArrayList<WeekViewEvent> events);
     }
 }

@@ -30,6 +30,7 @@
         app:todayBackgroundColor="#1848adff"
         app:headerColumnBackground="#ffffffff"
         app:eventColor="#5dba6b"
+        app:tutee="true"
         android:layout_below="@+id/days"/>
 
 </LinearLayout>

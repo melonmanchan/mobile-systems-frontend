@@ -52,5 +52,6 @@
         <attr name="verticalFlingEnabled" format="boolean"/>
         <attr name="allDayEventHeight" format="dimension"/>
         <attr name="scrollDuration" format="integer"/>
+        <attr name="tutee" format="boolean"/>
     </declare-styleable>
 </resources>

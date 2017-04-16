@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.TuteeApplication;
-import fi.tutee.tutee.reservecalendar.ReserveCalendarFragment;
-import fi.tutee.tutee.reservecalendar.ReserveCalendarPresenter;
 import fi.tutee.tutee.utils.ActivityUtils;
 
 public class RegisterExtraActivity extends AppCompatActivity {
@@ -22,23 +20,23 @@ public class RegisterExtraActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Choose a time");
+        title.setText("Fill your profile");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
-        ReserveCalendarFragment reserveCalendarFragment = (ReserveCalendarFragment) getSupportFragmentManager()
+        RegisterExtraFragment registerExtraFragment = (RegisterExtraFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
-        if (reserveCalendarFragment == null) {
-            reserveCalendarFragment = ReserveCalendarFragment.newInstance();
+        if (registerExtraFragment == null) {
+            registerExtraFragment = RegisterExtraFragment.newInstance();
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    reserveCalendarFragment, R.id.contentFrame);
+                    registerExtraFragment, R.id.contentFrame);
         }
 
-        new ReserveCalendarPresenter(
+        new RegisterExtraPresenter(
                 app.repository,
-                reserveCalendarFragment
+                registerExtraFragment
         );
     }
 }

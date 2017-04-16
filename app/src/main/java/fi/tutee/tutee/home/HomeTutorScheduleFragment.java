@@ -2,7 +2,6 @@ package fi.tutee.tutee.home;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +21,13 @@ import java.util.Locale;
 
 import fi.tutee.tutee.R;
 
-public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
+public class HomeTutorScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
     public WeekView mWeekView;
     public TabLayout days;
     private Calendar day;
     private ArrayList<WeekViewEvent> mNewEvents;
 
-    public HomeScheduleFragment() {
+    public HomeTutorScheduleFragment() {
         // Required empty public constructor
     }
 
@@ -41,7 +40,7 @@ public class HomeScheduleFragment extends HomeBaseFragment implements MonthLoade
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.content_home_schedule, container, false);
+        View root = inflater.inflate(R.layout.content_home_tutor_schedule, container, false);
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);

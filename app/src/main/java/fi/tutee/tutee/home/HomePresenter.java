@@ -19,6 +19,7 @@ import retrofit2.Response;
 public class HomePresenter implements HomeContract.Presenter {
     private final TuteeRepository repository;
 
+
     private final HomeContract.View view;
 
     public HomePresenter(TuteeRepository repository,
@@ -123,5 +124,30 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void removeFreeTime(WeekView event) {
 
+    }
+
+    @Override
+    public User getUser() {
+        return repository.getLoggedInUser();
+    }
+
+    @Override
+    public void getReservedTimes() {
+        this.repository.getReservedTimes(new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
+                APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+
+                if (resp != null && resp.isSuccessful()) {
+                    ArrayList<WeekViewEvent> events = resp.getResponse();
+                    view.setReservedTimes(events);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+                // TODO
+            }
+        });
     }
 }

@@ -27,6 +27,12 @@
             ></activity>
 
         <activity
+            android:name=".reservecalendar.ReserveCalendarActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:name=".usertypeselection.UserTypeSelectionActivity"
             android:screenOrientation="portrait" ></activity>
 

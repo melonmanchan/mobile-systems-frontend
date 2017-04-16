@@ -220,6 +220,17 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.hasCachedReservedTimes()) {
+            APIResponse<ArrayList<WeekViewEvent>> apiResponse = new APIResponse<ArrayList<WeekViewEvent>>();
+            apiResponse.setResponse(cachedTimes);
+            apiResponse.setStatus(200);
+            Response<APIResponse<ArrayList<WeekViewEvent>>> resp = retrofit2.Response.success(apiResponse);
+            cb.onResponse(null, resp);
+        }
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return tutorIDs.contains(user.getId());
     }
@@ -328,6 +339,16 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     public void setCachedTimes(int tutorID, ArrayList<WeekViewEvent> events) {
+        //TODO:
+    }
+
+
+    public boolean hasCachedReservedTimes() {
+        //TODO:
+        return false;
+    }
+
+    public void setCachedReservedTimes(ArrayList<WeekViewEvent> events) {
         //TODO:
     }
 }

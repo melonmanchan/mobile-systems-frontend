@@ -146,6 +146,8 @@ public class WeekView extends View {
     private int mAllDayEventHeight = 100;
     private int mScrollDuration = 250;
 
+    private boolean tutee = true;
+
     // Listeners.
     private EventClickListener mEventClickListener;
     private EventLongPressListener mEventLongPressListener;
@@ -332,6 +334,7 @@ public class WeekView extends View {
             mVerticalFlingEnabled = a.getBoolean(R.styleable.WeekView_verticalFlingEnabled, mVerticalFlingEnabled);
             mAllDayEventHeight = a.getDimensionPixelSize(R.styleable.WeekView_allDayEventHeight, mAllDayEventHeight);
             mScrollDuration = a.getInt(R.styleable.WeekView_scrollDuration, mScrollDuration);
+            tutee = a.getBoolean(R.styleable.WeekView_tutee, tutee);
         } finally {
             a.recycle();
         }
@@ -467,7 +470,9 @@ public class WeekView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        drawPleaseText(canvas);
+        if (!tutee) {
+            drawPleaseText(canvas);
+        }
 
         // Draw the header row.
         drawHeaderRowAndEvents(canvas);

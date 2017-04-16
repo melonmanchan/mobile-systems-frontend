@@ -66,6 +66,8 @@ public interface TuteeDataSource {
 
     void getTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
 
+    void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
+
 
     // Other misc. helpers
     boolean isUserTutor(User user);

@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private ViewPager viewPager;
 
     private HomeMessagesFragment messagesFragment;
-    private HomeScheduleFragment scheduleFragment;
+    private HomeTutorScheduleFragment tutorScheduleFragment;
+    private HomeTuteeScheduleFragment tuteeScheduleFragment;
     private HomeSearchFragment searchFragment;
     private HomeSettingsFragment settingsFragment;
 
@@ -95,17 +97,24 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
+        if (presenter.getUser().isTutor()) {
+            this.tutorScheduleFragment = new HomeTutorScheduleFragment();
+            this.tutorScheduleFragment.setPresenter(this.presenter);
+            adapter.addFragment(tutorScheduleFragment, "");
+        } else {
+            this.tuteeScheduleFragment = new HomeTuteeScheduleFragment();
+            this.tuteeScheduleFragment.setPresenter(this.presenter);
+            adapter.addFragment(tuteeScheduleFragment, "");
+        }
+
         this.messagesFragment = new HomeMessagesFragment();
-        this.scheduleFragment = new HomeScheduleFragment();
         this.searchFragment = new HomeSearchFragment();
         this.settingsFragment = new HomeSettingsFragment();
 
         this.messagesFragment.setPresenter(this.presenter);
-        this.scheduleFragment.setPresenter(this.presenter);
         this.searchFragment.setPresenter(this.presenter);
         this.settingsFragment.setPresenter(this.presenter);
 
-        adapter.addFragment(scheduleFragment, "");
         adapter.addFragment(messagesFragment, "");
         adapter.addFragment(searchFragment, "");
         adapter.addFragment(settingsFragment, "");
@@ -126,6 +135,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
         this.messagesFragment.setLatestMessages(latestMessages);
+    }
+
+    @Override
+    public void setReservedTimes(ArrayList<WeekViewEvent> events) {
+        this.tuteeScheduleFragment.setReservedTimes(events);
+    }
+
+    public void getReservedTimes() {
+        this.presenter.getReservedTimes();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

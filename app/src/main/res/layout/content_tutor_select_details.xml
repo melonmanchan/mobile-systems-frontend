@@ -65,6 +65,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <Button
+                android:id="@+id/available_times"
                 android:layout_weight="0.5"
                 android:text="Available times"
                 android:layout_width="wrap_content"

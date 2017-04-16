@@ -1,5 +1,6 @@
 package fi.tutee.tutee.tutorselectdetails;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.data.entities.User;
+import fi.tutee.tutee.reservecalendar.ReserveCalendarActivity;
 
 /**
  * Created by mat on 12/04/2017.
@@ -32,8 +34,9 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private TextView userName;
     private TextView userDescription;
     private TextView tutorPrice;
+    private Button availableTimes;
 
-    public static String TUTOR_ID = "TUTOR_ID";
+    public static String TUTOR_ID = "fi.tutee.tutee.TUTOR_ID";
 
     public static TutorSelectDetailsFragment newInstance(int userID) {
         Bundle arguments = new Bundle(1);
@@ -58,6 +61,16 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         userDescription = (TextView) root.findViewById(R.id.tutor_select_details_description);
         chooseTutor = (Button)  root.findViewById(R.id.tutor_select_details_choose_tutor);
         tutorPrice = (TextView) root.findViewById(R.id.tutor_price);
+        availableTimes = (Button) root.findViewById(R.id.available_times);
+
+        availableTimes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
+                intent.putExtra(TUTOR_ID, getArguments().getInt(TUTOR_ID));
+                startActivity(intent);
+            }
+        });
 
         chooseTutor.setOnClickListener(new View.OnClickListener() {
             @Override

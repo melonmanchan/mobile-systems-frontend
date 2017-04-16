@@ -243,6 +243,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void getReservedTimes(Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        Call<APIResponse<ArrayList<WeekViewEvent>>> call = service.getReservedTimes();
+        call.enqueue(cb);
+    }
+
+    @Override
     public boolean isUserTutor(User user) {
         return false;
     }

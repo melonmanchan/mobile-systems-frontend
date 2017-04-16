@@ -423,6 +423,33 @@ public class TuteeRepository implements TuteeDataSource {
         }
     }
 
+    @Override
+    public void getReservedTimes(final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
+        if (this.local.hasCachedReservedTimes()) {
+            this.local.getReservedTimes(cb);
+        } else {
+            this.remote.getReservedTimes(new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
+                @Override
+                public void onResponse(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Response<APIResponse<ArrayList<WeekViewEvent>>> response) {
+                    APIResponse<ArrayList<WeekViewEvent>> resp = response.body();
+
+                    if (resp != null && resp.isSuccessful()) {
+                        ArrayList<WeekViewEvent> events = resp.getResponse();
+                        local.setCachedReservedTimes(events);
+                    }
+
+                    cb.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse<ArrayList<WeekViewEvent>>> call, Throwable t) {
+                    cb.onFailure(call, t);
+                }
+            });
+            // TODO
+        }
+    }
+
 
     @Override
     public boolean isUserTutor(User user) {

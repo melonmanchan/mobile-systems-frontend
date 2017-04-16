@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsActivity;
+import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment;
 
 
 /**
@@ -36,12 +38,14 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     public TabLayout days;
     private Calendar day;
     private ArrayList<WeekViewEvent> mNewEvents;
+    private int tutorID;
 
     public ReserveCalendarFragment() {}
 
-    public static ReserveCalendarFragment newInstance() {
+    public static ReserveCalendarFragment newInstance(int tutordID) {
         Bundle arguments = new Bundle();
         ReserveCalendarFragment fragment = new ReserveCalendarFragment();
+        arguments.putInt(TutorSelectDetailsFragment.TUTOR_ID, tutordID);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -52,6 +56,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.content_reserve_calendar, container, false);
+        tutorID = getArguments().getInt(TutorSelectDetailsFragment.TUTOR_ID);
 
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);
@@ -90,6 +95,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
         setupDateTimeInterpreter();
         showMoreDates();
+        presenter.getTimes(tutorID);
 
 
         return root;
@@ -180,6 +186,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
     @Override
     public void setTimes(ArrayList<WeekViewEvent> events) {
-        
+        mNewEvents = events;
+        mWeekView.notifyDatasetChanged();
     }
 }

@@ -83,6 +83,9 @@ public interface TuteeService {
     @GET("event/{id}")
     Call<APIResponse<ArrayList<WeekViewEvent>>> getTimes(@Path("id") int tutorID);
 
+    @GET("event/")
+    Call<APIResponse<ArrayList<WeekViewEvent>>> getReservedTimes();
+
 
 
 
