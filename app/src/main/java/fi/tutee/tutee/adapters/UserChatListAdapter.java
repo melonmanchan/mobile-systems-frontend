@@ -1,6 +1,7 @@
 package fi.tutee.tutee.adapters;
 
 import android.content.Context;
+import android.location.GnssClock;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,29 +15,17 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 
-import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
 import static android.text.format.DateUtils.FORMAT_ABBREV_RELATIVE;
-import static android.text.format.DateUtils.FORMAT_ABBREV_TIME;
-import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
-import static android.text.format.DateUtils.LENGTH_SHORTEST;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
-public class UserChatListAdapter  extends ArrayAdapter<User> {
+public class UserChatListAdapter  extends ArrayAdapter<GeneralMessage> {
     private ArrayList<User> users;
     private ArrayList<GeneralMessage> latestMessages;
     private OnUserSelectedListener listener;
@@ -56,13 +45,15 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
         public TextView lastMessageSent;
     }
 
-    public UserChatListAdapter(@NonNull Context context, @LayoutRes int resource, ArrayList<User> users) {
-        super(context, resource, users);
+    public UserChatListAdapter(@NonNull Context context, @LayoutRes int resource, ArrayList<GeneralMessage> messages, ArrayList<User> users) {
+        super(context, resource, messages);
 
         this.context = context;
+        this.latestMessages = new ArrayList<GeneralMessage>();
+        this.latestMessages.addAll(messages);
+
         this.users = new ArrayList<User>();
         this.users.addAll(users);
-        this.latestMessages = new ArrayList<>();
     }
 
     public void setListener(OnUserSelectedListener listener) {
@@ -70,22 +61,29 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
     }
 
     @Override
-    public User getItem(final int position) {
-        return users.get(position);
+    public GeneralMessage getItem(final int position) {
+        return latestMessages.get(position);
     }
 
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
-        //this.latestMessages = latestMessages;
         this.latestMessages.clear();
-        /*Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
-
-            @Override
-            public int compare(GeneralMessage msg1, GeneralMessage msg2) {
-                return msg1.getSentAt().compareTo(msg2.getSentAt());
-            }
-        });*/
         this.latestMessages.addAll(latestMessages);
         notifyDataSetChanged();
+    }
+
+    public User getUserForMessage(GeneralMessage message) {
+        User user = null;
+
+        int sender = message.getSenderId();
+        int receiver = message.getReceiverId();
+
+        for (User u: users) {
+            if (u.getId() == sender || u.getId() == receiver) {
+                user = u;
+            }
+        }
+
+        return user;
     }
 
     @NonNull
@@ -112,7 +110,8 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
             holder = (UserChatListHolder) convertView.getTag();
         }
 
-        final User user = users.get(position);
+        final GeneralMessage message = latestMessages.get(position);
+        final User user = getUserForMessage(message);
 
         URI avatar = user.getAvatar();
 
@@ -120,26 +119,17 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
 
         holder.userName.setText(user.getFirstName() + " " + user.getLastName());
 
-        if(latestMessages == null) {
-            holder.latestMessage.setText("Lorem ipsum lorem ipsum");
-            holder.lastMessageSent.setText("1h");
-        } else {
-            for (GeneralMessage msg : latestMessages) {
-                if (msg.getReceiverId() == user.getId() ||
-                        msg.getSenderId() == user.getId()) {
-                    holder.latestMessage.setText(msg.getContent());
-                    long now = System.currentTimeMillis();
-                    CharSequence date = DateUtils.getRelativeTimeSpanString(msg.getSentAt().getTime(), now,  MINUTE_IN_MILLIS, FORMAT_ABBREV_RELATIVE);
-                    if (date.toString().indexOf("min. ago") > -1) {
-                        date = date.toString().replaceAll("\\D+"," m");
-                    } else if (date.toString().indexOf("hr. ago") > -1) {
-                        date = date.toString().replaceAll("\\D+"," h");
-                    }
-                    holder.lastMessageSent.setText(date);
-                    break;
-                }
-            }
+        holder.latestMessage.setText(message.getContent());
+        long now = System.currentTimeMillis();
+        CharSequence date = DateUtils.getRelativeTimeSpanString(message.getSentAt().getTime(), now,  MINUTE_IN_MILLIS, FORMAT_ABBREV_RELATIVE);
+
+        if (date.toString().indexOf("min. ago") > -1) {
+            date = date.toString().replaceAll("\\D+"," m");
+        } else if (date.toString().indexOf("hr. ago") > -1) {
+            date = date.toString().replaceAll("\\D+"," h");
         }
+
+        holder.lastMessageSent.setText(date);
 
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -70,15 +70,8 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
     private void checkIfShouldInitializeMessageArray() {
         if (chatUsers != null && latestMessages != null) {
-            Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
-
-                @Override
-                public int compare(GeneralMessage msg1, GeneralMessage msg2) {
-                    return msg2.getSentAt().compareTo(msg1.getSentAt());
-                }
-            });
             if (adapter == null) {
-                adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, chatUsers);
+                adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, latestMessages, chatUsers);
 
                 adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
                     @Override
@@ -91,6 +84,7 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
                 messageUsersList.setAdapter(adapter);
             }
+
             adapter.setLatestMessages(latestMessages);
         }
     }
@@ -101,6 +95,14 @@ public class HomeMessagesFragment extends HomeBaseFragment {
     }
 
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
+        Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
+
+            @Override
+            public int compare(GeneralMessage msg1, GeneralMessage msg2) {
+                return msg2.getSentAt().compareTo(msg1.getSentAt());
+            }
+        });
+
         this.latestMessages = latestMessages;
         checkIfShouldInitializeMessageArray();
     }
