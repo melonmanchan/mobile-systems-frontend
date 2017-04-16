@@ -117,7 +117,7 @@ public class UserChatListAdapter  extends ArrayAdapter<User> {
                         msg.getSenderId() == user.getId()) {
                     holder.latestMessage.setText(msg.getContent());
                     long now = System.currentTimeMillis();
-                    CharSequence date = DateUtils.getRelativeTimeSpanString(latestMessages.get(latestMessages.size() - 1).getSentAt().getTime(), now,  MINUTE_IN_MILLIS, FORMAT_ABBREV_RELATIVE);
+                    CharSequence date = DateUtils.getRelativeTimeSpanString(msg.getSentAt().getTime(), now,  MINUTE_IN_MILLIS, FORMAT_ABBREV_RELATIVE);
                     if (date.toString().indexOf("min. ago") > -1) {
                         date = date.toString().replaceAll("\\D+"," m");
                     } else if (date.toString().indexOf("hr. ago") > -1) {
