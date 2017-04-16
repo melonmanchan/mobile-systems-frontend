@@ -142,10 +142,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         this.tuteeScheduleFragment.setReservedTimes(events);
     }
 
-    public void getReservedTimes() {
-        this.presenter.getReservedTimes();
-    }
-
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
