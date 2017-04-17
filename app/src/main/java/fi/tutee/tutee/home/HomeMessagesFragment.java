@@ -15,6 +15,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Random;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.UserChatListAdapter;
@@ -68,9 +71,48 @@ public class HomeMessagesFragment extends HomeBaseFragment {
         return root;
     }
 
+    private void addPlaceHolderMessagesIfNeeded() {
+        if (latestMessages.size() == chatUsers.size()) {
+            return;
+        }
+
+        // We have more tuteeships than messages! Need to create a dummy message
+        HashSet<Integer> userIds = new HashSet<Integer>();
+
+        for (User u: chatUsers) {
+            userIds.add(u.getId());
+        }
+
+        for (GeneralMessage m: latestMessages) {
+            int receiverID = m.getReceiverId();
+            int senderID = m.getSenderId();
+
+            if (userIds.contains(receiverID)) {
+                userIds.remove(receiverID);
+            } else if (userIds.contains(senderID)) {
+                userIds.remove(senderID);
+            }
+        }
+
+        // Now we only have the user IDs who don't have any messages
+        // Create a temporary message for them!
+        for (int i: userIds) {
+            GeneralMessage temp = new GeneralMessage();
+            temp.setSentAt(new Date());
+            temp.setContent("");
+            temp.setSenderId(i);
+            temp.setReceiverId(i);
+            temp.setId(new Random().nextInt(Integer.MAX_VALUE));
+            latestMessages.add(0, temp);
+        }
+    }
+
     private void checkIfShouldInitializeMessageArray() {
         if (chatUsers != null && latestMessages != null) {
+            addPlaceHolderMessagesIfNeeded();
+
             if (adapter == null) {
+
                 adapter = new UserChatListAdapter(getContext(), R.layout.partial_user_message_list_item, latestMessages, chatUsers);
 
                 adapter.setListener(new UserChatListAdapter.OnUserSelectedListener() {
