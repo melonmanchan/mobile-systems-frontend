@@ -30,6 +30,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -176,8 +178,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int scrollDy = 0;
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -221,6 +221,13 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
         if (messages.size() < messageIncrement) {
             moreMessagesLeft = false;
         }
+
+        Collections.sort(messages, new Comparator<GeneralMessage>() {
+            @Override
+            public int compare(GeneralMessage msg1, GeneralMessage msg2) {
+                return msg1.getSentAt().compareTo(msg2.getSentAt());
+            }
+        });
 
         mAdapter.addMessages(messages);
     }
