@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -42,6 +43,9 @@ import fi.tutee.tutee.data.entities.CreateMessageRequest;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.home.HomeMessagesFragment;
+import fi.tutee.tutee.reservecalendar.ReserveCalendarActivity;
+
+import static fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment.TUTOR_ID;
 
 public class MessagingFragment extends Fragment implements MessagingContract.View {
     private MessagingContract.Presenter presenter;
@@ -56,6 +60,8 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private int showMessageFrom = 0;
     private int showMessageTo = 10;
     private int messageIncrement = 10;
+
+    private  boolean isOtherUserTutor = true;
 
     boolean moreMessagesLeft = true;
 
@@ -93,6 +99,18 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_go_to_calendar:
+                Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
+                intent.putExtra(TUTOR_ID, otherUserId);
+                startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -102,7 +120,6 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //mRecyclerView.setHasFixedSize(true);
 
         writeMessage = (EditText) root.findViewById(R.id.write_message);
         sendMessage = (Button) root.findViewById(R.id.send_message_button);
@@ -124,7 +141,12 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
             }
         });
 
+        setHasOptionsMenu(true);
         return root;
+    }
+
+    public boolean isOtherUserTutor() {
+        return isOtherUserTutor;
     }
 
     private void createMessage(int receiver, String content) {
@@ -166,6 +188,11 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
         parent.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         parent.getSupportActionBar().setCustomView(R.layout.actionbar_message);
+
+        if (!user.isTutor()) {
+            isOtherUserTutor = false;
+            parent.invalidateOptionsMenu();
+        }
 
         TextView title = (TextView) parent.getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
         ImageView avatar = (ImageView)  parent.getSupportActionBar().getCustomView().findViewById(R.id.action_bar_avatar);

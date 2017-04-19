@@ -16,10 +16,20 @@ import fi.tutee.tutee.utils.ActivityUtils;
  */
 
 public class MessagingActivity extends AppCompatActivity {
+    private MessagingFragment messagingFragment;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_messaging, menu);
+
+        if (messagingFragment != null) {
+            boolean isTutor = messagingFragment.isOtherUserTutor();
+
+            if (!isTutor) {
+                menu.findItem(R.id.action_go_to_calendar).setVisible(false);
+            }
+        }
         return true;
     }
 
@@ -30,7 +40,7 @@ public class MessagingActivity extends AppCompatActivity {
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
-        MessagingFragment messagingFragment = (MessagingFragment) getSupportFragmentManager()
+        messagingFragment = (MessagingFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
         if (messagingFragment == null) {
@@ -51,6 +61,5 @@ public class MessagingActivity extends AppCompatActivity {
     public void setTitle(String string) {
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
         title.setText(string);
-
     }
 }
