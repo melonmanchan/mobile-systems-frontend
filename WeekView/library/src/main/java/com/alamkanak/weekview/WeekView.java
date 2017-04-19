@@ -67,7 +67,7 @@ public class WeekView extends View {
     private float mHeaderHeight;
     private GestureDetectorCompat mGestureDetector;
     private OverScroller mScroller;
-    private PointF mCurrentOrigin = new PointF(0f, 0f);
+    public PointF mCurrentOrigin = new PointF(0f, 0f);
     private Direction mCurrentScrollDirection = Direction.NONE;
     private Paint mHeaderBackgroundPaint;
     private float mWidthPerDay;
@@ -482,7 +482,7 @@ public class WeekView extends View {
     }
 
     private void drawPleaseText(Canvas canvas) {
-        if (mCurrentOrigin.y < 0) return;
+        if (!(-800 > mCurrentOrigin.y && mCurrentOrigin.y > -1000)) return;
         Paint paint = new Paint();
         paint.setColor(Color.GRAY);
         paint.setTextSize(30);

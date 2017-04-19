@@ -53,14 +53,15 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         days.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                SimpleDateFormat format = new SimpleDateFormat("d/M", Locale.getDefault());
-                String date = tab.getText().toString();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String date = tab.getText().toString() + "/" + Calendar.getInstance().get(Calendar.YEAR);
 
                 Date selected = format.parse(date, new ParsePosition(0));
 
                 Calendar newCalendarInstance = Calendar.getInstance();
                 newCalendarInstance.setTime(selected);
                 mWeekView.goToDate(newCalendarInstance);
+                mWeekView.mCurrentOrigin.y = -950;
 
 
             }
