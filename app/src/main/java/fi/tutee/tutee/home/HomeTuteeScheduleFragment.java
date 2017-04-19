@@ -1,6 +1,7 @@
 package fi.tutee.tutee.home;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import fi.tutee.tutee.data.entities.TimesResponse;
 
 public class HomeTuteeScheduleFragment extends HomeBaseFragment {
 
-    private ListView eventList;
+    private RecyclerView eventList;
 
     public HomeTuteeScheduleFragment() {
         // Required empty public constructor
@@ -37,11 +38,9 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
 
         View root = inflater.inflate(R.layout.content_home_tutee_schedule, container, false);
 
-        eventList = (ListView) root.findViewById(R.id.event_list);
-        EventListAdapter adapter = new EventListAdapter(getContext(), -1);
-        eventList.setAdapter(adapter);
+        eventList = (RecyclerView) root.findViewById(R.id.event_list);
 
-        presenter.getReservedTimes();
+        presenter.getTimes();
 
 
         return root;
@@ -49,8 +48,8 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
 
 
     public void setTimes(TimesResponse events) {
-        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
-        adapter.setEvents(events.getReservedEvents());
+        EventListAdapter adapter = new EventListAdapter(events.getReservedEvents());
+        eventList.setAdapter(adapter);
     }
 
 

@@ -120,7 +120,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void createFreeTime(WeekViewEvent event) {
-        CreateFreeTimeRequest req = new CreateFreeTimeRequest(event.getStartTime().getTime(), event.getEndTime().getTime());
+        CreateFreeTimeRequest req = new CreateFreeTimeRequest(event.getStartTime().getTime());
 
         this.repository.createFreeTime(req, new Callback<APIResponse>() {
             @Override
@@ -145,7 +145,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getReservedTimes() {
+    public void getTimes() {
         this.repository.getTimes(new Callback<APIResponse<TimesResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<TimesResponse>> call, Response<APIResponse<TimesResponse>> response) {
