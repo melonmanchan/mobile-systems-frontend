@@ -138,7 +138,6 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
     public void setLatestMessages(ArrayList<GeneralMessage> latestMessages) {
         Collections.sort(latestMessages, new Comparator<GeneralMessage>() {
-
             @Override
             public int compare(GeneralMessage msg1, GeneralMessage msg2) {
                 return msg2.getSentAt().compareTo(msg1.getSentAt());
