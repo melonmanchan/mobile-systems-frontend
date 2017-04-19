@@ -3,6 +3,7 @@ package fi.tutee.tutee.messaging;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.widget.TextView;
 
 import fi.tutee.tutee.R;
@@ -15,6 +16,12 @@ import fi.tutee.tutee.utils.ActivityUtils;
  */
 
 public class MessagingActivity extends AppCompatActivity {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_messaging, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
