@@ -45,10 +45,13 @@
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" />
+
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".registertutorextra.RegisterExtraActivity"
             android:label="RegisterTutorExtraActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".home.HomeActivity"
             android:label="Tutee"
