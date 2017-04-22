@@ -43,6 +43,8 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
         mLayoutManager = new LinearLayoutManager(root.getContext());
         eventList.setLayoutManager(mLayoutManager);
+        EventListAdapter adapter = new EventListAdapter();
+        eventList.setAdapter(adapter);
         
         presenter.getTimes();
 

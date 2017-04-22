@@ -43,7 +43,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-        public static class ViewHolderHeader extends RecyclerView.ViewHolder {
+    public static class ViewHolderHeader extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView text;
 
@@ -91,7 +91,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         if(viewType == TYPE_HEADER) {
-
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_header_item, parent, false);
             holder = new ViewHolderHeader(layout);
@@ -117,7 +116,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ViewHolderItem item = (ViewHolderItem) holder;
                 WeekViewEvent event = (WeekViewEvent) events.get(position);
                 item.name.setText("blöö");
-                item.time.setText(event.getStartTime().get(Calendar.HOUR) + "-" + event.getEndTime().get(Calendar.HOUR));
+                item.time.setText("blää");
+                //item.time.setText(event.getStartTime().get(Calendar.HOUR) + "-" + event.getEndTime().get(Calendar.HOUR));
                 break;
         }
     }
