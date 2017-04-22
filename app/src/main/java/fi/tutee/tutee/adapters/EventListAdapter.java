@@ -38,9 +38,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int TYPE_ITEM = 1;
 
 
-    public EventListAdapter(ArrayList<WeekViewEvent> events) {
+    public EventListAdapter() {
         this.events = new ArrayList<>();
-        setEvents(events);
     }
 
 
@@ -149,7 +148,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 this.events.add(curr);
             }
         }
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     private void sortEvents(List<WeekViewEvent> events) {

@@ -3,6 +3,7 @@ package fi.tutee.tutee.reservecalendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
 
     private int tutorID;
+    private LinearLayoutManager mLayoutManager;
 
     public ReserveCalendarFragment() {}
 
@@ -50,6 +52,10 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         tutorID = getArguments().getInt(TutorSelectDetailsFragment.TUTOR_ID);
 
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
+        mLayoutManager = new LinearLayoutManager(root.getContext());
+        EventListAdapter adapter = new EventListAdapter();
+        eventList.setAdapter(adapter);
+        eventList.setLayoutManager(mLayoutManager);
 
         presenter.getFreeTimes(tutorID);
 
@@ -66,8 +72,8 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
     @Override
     public void setFreeTimes(ArrayList<WeekViewEvent> events) {
-        EventListAdapter adapter = new EventListAdapter(events);
-        eventList.setAdapter(adapter);
+        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
+        adapter.setEvents(events);
 
     }
 
