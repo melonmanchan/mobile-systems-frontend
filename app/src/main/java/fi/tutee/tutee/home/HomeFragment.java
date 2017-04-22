@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void setTimes(TimesResponse events) {
         if (this.presenter.getUser().isTutor()) {
-            //this.tutorScheduleFragment.setTim
+            this.tutorScheduleFragment.setTimes(events);
         } else {
             this.tuteeScheduleFragment.setTimes(events);
         }

@@ -48,7 +48,6 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         return root;
     }
 
-
     public void setTimes(TimesResponse events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         adapter.setEvents(events.getReservedEvents());

@@ -27,8 +27,6 @@ public interface HomeContract {
 
         User getUser();
         void getTimes();
-
-        void getTutorTimes();
     }
 
     interface View extends BaseView<Presenter> {

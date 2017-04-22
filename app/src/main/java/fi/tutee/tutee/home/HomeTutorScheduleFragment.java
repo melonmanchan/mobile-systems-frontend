@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.data.entities.TimesResponse;
 
 public class HomeTutorScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
     public WeekView mWeekView;
@@ -180,6 +181,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         // Refresh the week view. onMonthChange will be called again.
     }
 
+    public void setTimes(TimesResponse events) {
+        ArrayList<WeekViewEvent> ownEvents = events.getOwnEvents();
+    }
+
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
@@ -190,7 +195,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
     @Override
     public void onResume() {
-        presenter.getTutorTimes();
+        presenter.getTimes();
         super.onResume();
     }
 }

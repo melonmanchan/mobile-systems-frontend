@@ -21,18 +21,10 @@ public class TimesResponse {
     ArrayList<WeekViewEvent> reservedEvents = new ArrayList<>();
 
     public ArrayList<WeekViewEvent> getOwnEvents() {
-        if (ownEvents == null) {
-            return new ArrayList<WeekViewEvent>();
-        }
-
         return ownEvents;
     }
 
     public ArrayList<WeekViewEvent> getReservedEvents() {
-        if (reservedEvents == null) {
-            return new ArrayList<WeekViewEvent>();
-        }
-
         return reservedEvents;
     }
 
