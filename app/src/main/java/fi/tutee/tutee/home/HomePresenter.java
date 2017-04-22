@@ -20,7 +20,6 @@ import retrofit2.Response;
 public class HomePresenter implements HomeContract.Presenter {
     private final TuteeRepository repository;
 
-
     private final HomeContract.View view;
 
     public HomePresenter(TuteeRepository repository,
@@ -61,20 +60,9 @@ public class HomePresenter implements HomeContract.Presenter {
 
             @Override
             public void onFailure(Call<APIResponse<TutorshipsResponse>> call, Throwable t) {
-                System.out.println("asdasdasd");
                 // TODO
             }
         });
-    }
-
-    @Override
-    public void getMessages() {
-        User user = this.repository.getLoggedInUser();
-
-        ArrayList<User> users = new ArrayList<>();
-        users.add(user);
-
-        //this.view.setMessageUsers(users);
     }
 
     @Override
@@ -122,21 +110,32 @@ public class HomePresenter implements HomeContract.Presenter {
     public void createFreeTime(WeekViewEvent event) {
         CreateFreeTimeRequest req = new CreateFreeTimeRequest(event.getStartTime().getTime());
 
-        this.repository.createFreeTime(req, new Callback<APIResponse>() {
+        this.repository.createFreeTime(req, new Callback<APIResponse<WeekViewEvent>>() {
             @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                // TODO:
+            public void onResponse(Call<APIResponse<WeekViewEvent>> call, Response<APIResponse<WeekViewEvent>> response) {
+                // TODO
+                APIResponse<WeekViewEvent> resp = response.body();
             }
 
             @Override
-            public void onFailure(Call<APIResponse> call, Throwable throwable) {
-                // TODO:
+            public void onFailure(Call<APIResponse<WeekViewEvent>> call, Throwable throwable) {
+                // TODO
             }});
     }
 
     @Override
-    public void removeTime(WeekView event) {
+    public void removeTime(WeekViewEvent event) {
+        this.repository.removeTime(event, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+            }
 
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

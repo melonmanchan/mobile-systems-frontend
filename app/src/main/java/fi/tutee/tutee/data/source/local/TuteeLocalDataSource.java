@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -47,12 +48,12 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     private ArrayList<Subject> cachedSubjects = new ArrayList<Subject>();
     private ArrayList<GeneralMessage> cachedLatestMessages = new ArrayList<GeneralMessage>();
     private SparseArray<User> cachedUsers = new SparseArray<User>();
+    private ArrayList<WeekViewEvent> cachedFreeTimes = new ArrayList<WeekViewEvent>();
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
     private Context context;
     private TimesResponse cachedTimes;
-    private ArrayList<WeekViewEvent> cachedFreeTimes;
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
@@ -126,6 +127,9 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         cachedUsers = new SparseArray<User>();
         tutorIDs = new HashSet<Integer>();
         tuteeIDs = new HashSet<Integer>();
+
+        cachedFreeTimes = new ArrayList<WeekViewEvent>();
+        cachedTimes = null;
 
         EventBus.getDefault().unregister(this);
     }
@@ -214,13 +218,17 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb) {
         cb.onFailure(null, new Exception("Cannot set free time locally"));
     }
 
     @Override
     public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        cb.onFailure(null, new Exception("Cannot remove free time locally"));
+        if (this.cachedTimes != null) {
+            ArrayList<WeekViewEvent> events = this.cachedTimes.getOwnEvents();
+            events.remove(event);
+            cachedTimes.setOwnEvents(events);
+        }
     }
 
     @Override
@@ -382,23 +390,35 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         return false;
     }
 
-    public boolean hasCachedTimes() {
-        // TODO:
-        return false;
-    }
-
     public void setCachedFreeTimes(int tutorID, ArrayList<WeekViewEvent> events) {
         // TODO:
     }
 
     public void setCachedTimes(TimesResponse events) {
         //TODO:
+        cachedTimes = events;
+    }
+
+    public boolean hasCachedTimes() {
+        return (cachedTimes != null);
     }
 
 
+    public void addCachedFreeTime(WeekViewEvent event) {
+        ArrayList<WeekViewEvent> ownEvents = cachedTimes.getOwnEvents();
+
+        if (ownEvents == null) {
+            ownEvents = new ArrayList<WeekViewEvent>();
+        }
+
+        ownEvents.add(event);
+
+        cachedTimes.setOwnEvents(ownEvents);
+    }
+
     public boolean hasCachedReservedTimes() {
         //TODO:
-        return false;
+        return (cachedTimes != null && cachedTimes.getReservedEvents() != null);
     }
 
     public void setCachedReservedTimes(ArrayList<WeekViewEvent> events) {

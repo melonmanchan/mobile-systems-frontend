@@ -18,11 +18,13 @@ public interface HomeContract {
         void logOut();
 
         void getTutorships();
-        void getMessages();
+
         void getSubjects();
         void getLatestMessages();
+
         void createFreeTime(WeekViewEvent event);
-        void removeTime(WeekView event);
+        void removeTime(WeekViewEvent event);
+
         User getUser();
         void getTimes();
     }

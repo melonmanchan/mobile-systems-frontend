@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -409,13 +410,50 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+    public void createFreeTime(final CreateFreeTimeRequest req, final Callback<APIResponse<WeekViewEvent>> cb) {
         remote.createFreeTime(req, cb);
+
+        remote.createFreeTime(req, new Callback<APIResponse<WeekViewEvent>>() {
+            @Override
+            public void onResponse(Call<APIResponse<WeekViewEvent>> call, Response<APIResponse<WeekViewEvent>> response) {
+                APIResponse<WeekViewEvent> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    WeekViewEvent event = resp.getResponse();
+                    local.addCachedFreeTime(event);
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<WeekViewEvent>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
     }
 
     @Override
-    public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        remote.removeTime(event, cb);
+    public void removeTime(final WeekViewEvent event, final Callback<APIResponse> cb) {
+        remote.removeTime(event, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.removeTime(event, cb);
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                // TODO
+                cb.onFailure(call, t);
+
+            }
+        });
     }
 
     @Override

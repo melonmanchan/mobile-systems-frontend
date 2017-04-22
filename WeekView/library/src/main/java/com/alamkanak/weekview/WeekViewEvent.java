@@ -15,17 +15,14 @@ import static com.alamkanak.weekview.WeekViewUtil.*;
  * Website: http://april-shower.com
  */
 public class WeekViewEvent {
-
-
-
     @SerializedName("id")
     @Expose
     private int ID;
 
+    // Integer type because it might be null
     @SerializedName("tutee")
     @Expose
     private Integer tuteeID;
-
 
     @SerializedName("tutor")
     @Expose

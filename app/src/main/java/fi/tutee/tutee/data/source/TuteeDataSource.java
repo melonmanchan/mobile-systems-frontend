@@ -28,7 +28,7 @@ import retrofit2.Callback;
  */
 
 public interface TuteeDataSource {
-    // API-related methods
+    // Auth
     void basicLogin(LoginRequest req, Callback<APIResponse<AuthResponse>> cb);
 
     void googleLogin(String token);
@@ -41,6 +41,7 @@ public interface TuteeDataSource {
 
     void registerTutorExtra(RegisterTutorExtraRequest req, Callback<APIResponse> cb);
 
+    // User
     void registerUserDevice(DeviceRegisterRequest req);
 
     void removeUserDevice(DeviceRegisterRequest req);
@@ -49,21 +50,25 @@ public interface TuteeDataSource {
 
     void updateUser(UpdateUserRequest req, Callback<APIResponse<User>> cb);
 
+    // Subjects
     void getSubjects(Callback<APIResponse<ArrayList<Subject>>> cb);
 
     void getTutorsBySubject(int subjectID, Callback<APIResponse<ArrayList<User>>> cb);
 
-    void getMessagesFrom(int userId, int fromOffset, int toOffset, Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
-
+    // Tutorships
     void createTutorship(CreateTutorshipRequest req, Callback<APIResponse> cb);
 
     void getTutorships(Callback<APIResponse<TutorshipsResponse>> cb);
+
+    // Messages
+    void getMessagesFrom(int userId, int fromOffset, int toOffset, Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
 
     void createMessage(CreateMessageRequest req, Callback<APIResponse<GeneralMessage>> cb);
 
     void getLatestMessages(Callback<APIResponse<ArrayList<GeneralMessage>>> cb);
 
-    void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb);
+    // Events
+    void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb);
 
     void removeTime(WeekViewEvent event, Callback<APIResponse> cb);
 
@@ -72,7 +77,6 @@ public interface TuteeDataSource {
     void reserveTime(WeekViewEvent event, Callback<APIResponse> cb);
 
     void getTimes(Callback<APIResponse<TimesResponse>> cb);
-
 
     // Other misc. helpers
     boolean isUserTutor(User user);

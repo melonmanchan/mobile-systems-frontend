@@ -45,23 +45,17 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         eventList.setLayoutManager(mLayoutManager);
         EventListAdapter adapter = new EventListAdapter();
         eventList.setAdapter(adapter);
-        
-        presenter.getTimes();
-
-
         return root;
     }
-
 
     public void setTimes(TimesResponse events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         adapter.setEvents(events.getReservedEvents());
     }
 
-
-
-
-
-
-
+    @Override
+    public void onResume() {
+        presenter.getTimes();
+        super.onResume();
+    }
 }

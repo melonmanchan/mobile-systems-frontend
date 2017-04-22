@@ -80,9 +80,9 @@ public interface TuteeService {
     Call<APIResponse<ArrayList<GeneralMessage>>> getLatestMessages();
 
     @POST("event/")
-    Call<APIResponse> createFreeTime(@Body CreateFreeTimeRequest req);
+    Call<APIResponse<WeekViewEvent>> createFreeTime(@Body CreateFreeTimeRequest req);
 
-    @DELETE("event/")
+    @PUT("event/remove")
     Call<APIResponse> removeTime(@Body WeekViewEvent event);
 
     @GET("event/{id}")

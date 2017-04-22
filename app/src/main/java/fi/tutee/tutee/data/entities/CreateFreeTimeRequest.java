@@ -10,7 +10,6 @@ import java.util.Date;
  */
 
 public class CreateFreeTimeRequest {
-
     @SerializedName("start_time")
     @Expose
     private Date startTime;
@@ -26,6 +25,4 @@ public class CreateFreeTimeRequest {
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
-
-
 }
