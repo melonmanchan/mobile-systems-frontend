@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private HomeTutorScheduleFragment tutorScheduleFragment;
     private HomeTuteeScheduleFragment tuteeScheduleFragment;
     private HomeSearchFragment searchFragment;
-    private HomeSettingsFragment settingsFragment;
 
     private int[] tabIcons = {
             R.drawable.ic_perm_contact_calendar_white_24dp,
@@ -114,15 +113,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         this.messagesFragment = new HomeMessagesFragment();
         this.searchFragment = new HomeSearchFragment();
-        this.settingsFragment = new HomeSettingsFragment();
 
         this.messagesFragment.setPresenter(this.presenter);
         this.searchFragment.setPresenter(this.presenter);
-        this.settingsFragment.setPresenter(this.presenter);
 
         adapter.addFragment(messagesFragment, "");
         adapter.addFragment(searchFragment, "");
-        //adapter.addFragment(settingsFragment, "");
 
         viewPager.setAdapter(adapter);
     }

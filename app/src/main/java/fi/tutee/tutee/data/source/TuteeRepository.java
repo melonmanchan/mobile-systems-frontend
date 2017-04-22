@@ -411,8 +411,6 @@ public class TuteeRepository implements TuteeDataSource {
 
     @Override
     public void createFreeTime(final CreateFreeTimeRequest req, final Callback<APIResponse<WeekViewEvent>> cb) {
-        remote.createFreeTime(req, cb);
-
         remote.createFreeTime(req, new Callback<APIResponse<WeekViewEvent>>() {
             @Override
             public void onResponse(Call<APIResponse<WeekViewEvent>> call, Response<APIResponse<WeekViewEvent>> response) {
@@ -459,7 +457,7 @@ public class TuteeRepository implements TuteeDataSource {
     @Override
     public void getFreeTimes(final int tutorID, final Callback<APIResponse<ArrayList<WeekViewEvent>>> cb) {
         if (this.local.hasCachedFreeTimes(tutorID)) {
-            this.local.getFreeTimes(tutorID,  cb);
+            this.local.getFreeTimes(tutorID, cb);
         } else {
             this.remote.getFreeTimes(tutorID, new Callback<APIResponse<ArrayList<WeekViewEvent>>>() {
                 @Override
