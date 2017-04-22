@@ -68,6 +68,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
                 intent.putExtra(TUTOR_ID, getArguments().getInt(TUTOR_ID));
+                // TODO: intent.putExtra(ALREADY_PAIRED, presenter.alreadyPairedWith(getArguments().getInt(TUTOR_ID)));
                 startActivity(intent);
             }
         });
