@@ -6,21 +6,26 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -33,13 +38,25 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private ArrayList<Object> events;
     private Context context;
+    private static onEventSelectedListener listener;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private SimpleDateFormat headerFormat = new SimpleDateFormat("EEE dd.MM");
+    private SimpleDateFormat itemFormat = new SimpleDateFormat("HH:mm");
+
 
 
     public EventListAdapter() {
         this.events = new ArrayList<>();
+    }
+
+    public interface onEventSelectedListener {
+        void onSelected(int position);
+    }
+
+    public void setListener(onEventSelectedListener listener) {
+        this.listener = listener;
     }
 
 
@@ -56,12 +73,21 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static class ViewHolderItem extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView time;
-        public TextView name;
+        //public TextView name;
 
-        public ViewHolderItem(LinearLayout layout) {
+        public ViewHolderItem(RelativeLayout layout) {
             super(layout);
-            name = (TextView) layout.findViewById(R.id.even_list_item_name);
+            //name = (TextView) layout.findViewById(R.id.even_list_item_name);
             time = (TextView) layout.findViewById(R.id.event_list_item_time);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        final int position = getAdapterPosition();
+                        listener.onSelected(position);
+                    }
+                }
+            });
         }
     }
 
@@ -86,19 +112,19 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
         context = parent.getContext();
-        LinearLayout layout;
+        View layout;
         RecyclerView.ViewHolder holder;
 
 
         if(viewType == TYPE_HEADER) {
-            layout = (LinearLayout) LayoutInflater.from(parent.getContext())
+            layout = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_header_item, parent, false);
-            holder = new ViewHolderHeader(layout);
+            holder = new ViewHolderHeader((LinearLayout) layout);
         } else {
             // create a new view
-            layout = (LinearLayout) LayoutInflater.from(parent.getContext())
+            layout = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_item, parent, false);
-            holder = new ViewHolderItem(layout);
+            holder = new ViewHolderItem((RelativeLayout) layout);
         }
 
         return holder;
@@ -115,9 +141,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case TYPE_ITEM:
                 ViewHolderItem item = (ViewHolderItem) holder;
                 WeekViewEvent event = (WeekViewEvent) events.get(position);
-                item.name.setText("blöö");
-                item.time.setText("blää");
-                //item.time.setText(event.getStartTime().get(Calendar.HOUR) + "-" + event.getEndTime().get(Calendar.HOUR));
+                item.time.setText(itemFormat.format(event.getStart()) + " - " + itemFormat.format(event.getEnd()));
                 break;
         }
     }
@@ -136,14 +160,14 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             currDay = curr.getStartTime().get(Calendar.DAY_OF_YEAR);
 
             if (i == 0) {
-                this.events.add("header");
+                this.events.add(headerFormat.format(currDay));
                 this.events.add(curr);
             } else {
                 prev = events.get(i - 1);
                 prevDay = prev.getStartTime().get(Calendar.DAY_OF_YEAR);
 
                 if (currDay != prevDay) {
-                    this.events.add("header");
+                    this.events.add(headerFormat.format(currDay));
                 }
                 this.events.add(curr);
             }

@@ -69,6 +69,8 @@ public interface TuteeDataSource {
 
     void getFreeTimes(int tutorID, Callback<APIResponse<ArrayList<WeekViewEvent>>> cb);
 
+    void reserveTime(WeekViewEvent event, Callback<APIResponse> cb);
+
     void getTimes(Callback<APIResponse<TimesResponse>> cb);
 
 

@@ -2,12 +2,15 @@ package fi.tutee.tutee.reservecalendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alamkanak.weekview.WeekViewEvent;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.EventListAdapter;
+import fi.tutee.tutee.data.entities.APIError;
 import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment;
 
 
@@ -23,7 +27,7 @@ import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment;
  * Created by lehtone1 on 16/04/17.
  */
 
-public class ReserveCalendarFragment  extends Fragment implements ReserveCalendarContract.View {
+public class ReserveCalendarFragment  extends Fragment implements ReserveCalendarContract.View, EventListAdapter.onEventSelectedListener {
 
     private ReserveCalendarContract.Presenter presenter;
 
@@ -54,6 +58,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
         mLayoutManager = new LinearLayoutManager(root.getContext());
         EventListAdapter adapter = new EventListAdapter();
+        adapter.setListener(this);
         eventList.setAdapter(adapter);
         eventList.setLayoutManager(mLayoutManager);
 
@@ -77,4 +82,26 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
     }
 
+    @Override
+    public void onReserveTimeSuccess() {
+        presenter.getFreeTimes(tutorID);
+    }
+
+    @Override
+    public void onReserveTimeFail(ArrayList<APIError> errors) {
+        String errorMessage = "Something went wrong!";
+
+        if (errors != null && errors.size() > 0) {
+            errorMessage = errors.get(0).getMessage();
+        }
+
+        Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSelected(int position) {
+        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
+        WeekViewEvent event = (WeekViewEvent) adapter.getItem(position);
+        this.presenter.reserveTime(event);
+    }
 }

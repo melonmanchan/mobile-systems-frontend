@@ -252,6 +252,12 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void reserveTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        Call<APIResponse> call = service.reserveTime(event);
+        call.enqueue(cb);
+    }
+
+    @Override
     public void getTimes(Callback<APIResponse<TimesResponse>> cb) {
         Call<APIResponse<TimesResponse>> call = service.getTimes();
         call.enqueue(cb);
