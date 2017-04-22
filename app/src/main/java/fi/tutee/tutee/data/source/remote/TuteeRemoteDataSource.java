@@ -5,6 +5,8 @@ import android.content.Context;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.data.source.TuteeDataSource;
 import fi.tutee.tutee.utils.EmptyCallback;
+import io.gsonfire.DateSerializationPolicy;
+import io.gsonfire.GsonFireBuilder;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -63,12 +67,17 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         this.service = retrofit.create(TuteeService.class);
     }
 
+    private Gson buildGson() {
+        GsonFireBuilder builder = new GsonFireBuilder();
+        builder.dateSerializationPolicy(DateSerializationPolicy.rfc3339);
+        return builder.createGson();
+    }
+
     private Retrofit buildAuthenticatedRetrofit(final String authToken) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
 
         httpClient.addInterceptor(new StethoInterceptor());
 
@@ -96,7 +105,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://apartheidfun.club")
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .build();
 
         return retrofit;
@@ -129,7 +138,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://apartheidfun.club")
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .build();
 
         return retrofit;
