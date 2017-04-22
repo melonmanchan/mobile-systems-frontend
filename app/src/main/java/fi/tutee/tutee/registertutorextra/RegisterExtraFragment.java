@@ -75,8 +75,8 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
             View root = inflater.inflate(R.layout.content_register_extra, container, false);
 
-            registerCountrySpin = (Spinner) root.findViewById(R.id.registerCountrySpinner);
-            registerCitySpin = (Spinner) root.findViewById(R.id.registerCitySpinner);
+            // registerCountrySpin = (Spinner) root.findViewById(R.id.registerCountrySpinner);
+            // registerCitySpin = (Spinner) root.findViewById(R.id.registerCitySpinner);
             registerTutorExtraDescription = (EditText) root.findViewById(R.id.registerTutorExtraDescription);
             registerTutorExtraBtn = (Button) root.findViewById(R.id.registerTutorExtraButton);
             subjectsList = (ListView)  root.findViewById(R.id.register_extra_subjects);
@@ -85,7 +85,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
 
             presenter.getSubjects();
 
-            registerCountrySpin.post(new Runnable() {
+            /*registerCountrySpin.post(new Runnable() {
                 @Override
                 public void run() {
                     registerCountrySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -101,7 +101,7 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
                     });
 
                 }
-            });
+            });*/
 
             priceSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -249,9 +249,9 @@ public class RegisterExtraFragment extends Fragment implements RegisterExtraCont
             String country = obj.getCountryName();
             String city = obj.getLocality();
 
-            registerCountrySpin.setSelection(((ArrayAdapter) registerCountrySpin.getAdapter()).getPosition(country));
+            // registerCountrySpin.setSelection(((ArrayAdapter) registerCountrySpin.getAdapter()).getPosition(country));
             getCitiesFromJson(country);
-            registerCitySpin.setSelection(((ArrayAdapter) registerCitySpin.getAdapter()).getPosition(city));
+            // registerCitySpin.setSelection(((ArrayAdapter) registerCitySpin.getAdapter()).getPosition(city));
         } catch (IOException e) {
             e.printStackTrace();
         }

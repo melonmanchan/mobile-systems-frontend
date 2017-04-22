@@ -135,7 +135,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getReservedTimes() {
+    public void getTimes() {
         this.repository.getTimes(new Callback<APIResponse<TimesResponse>>() {
             @Override
             public void onResponse(Call<APIResponse<TimesResponse>> call, Response<APIResponse<TimesResponse>> response) {

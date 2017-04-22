@@ -20,13 +20,13 @@ public class WeekViewEvent {
     private int ID;
 
     // Integer type because it might be null
-    @SerializedName("tutee_id")
+    @SerializedName("tutee")
     @Expose
     private Integer tuteeID;
 
-    @SerializedName("tutor_id")
+    @SerializedName("tutor")
     @Expose
-    private int tutorID;
+    private Integer tutorID;
 
     @SerializedName("start_time")
     @Expose
@@ -148,7 +148,13 @@ public class WeekViewEvent {
 
 
     public Calendar getStartTime() {
-        return mStartTime;
+        if (mStartTime != null) {
+            return mStartTime;
+        } else {
+            Calendar c = Calendar.getInstance();
+            c.setTime(startTime);
+            return c;
+        }
     }
 
     public void setStartTime(Calendar startTime) {
@@ -157,13 +163,29 @@ public class WeekViewEvent {
     }
 
     public Calendar getEndTime() {
-        return mEndTime;
+        if (mEndTime != null) {
+            return mEndTime;
+        } else {
+            Calendar c = Calendar.getInstance();
+            c.setTime(endTime);
+            return c;
+        }
+
     }
 
     public void setEndTime(Calendar endTime) {
         this.mEndTime = endTime;
         this.endTime = endTime.getTime();
     }
+
+    public Date getEnd() {
+        return endTime;
+    }
+
+    public Date getStart() {
+        return startTime;
+    }
+
 
     public String getName() {
         return mName;
@@ -197,7 +219,7 @@ public class WeekViewEvent {
         this.mAllDay = allDay;
     }
 
-    public int getTuteeID() {
+    public Integer getTuteeID() {
         return tuteeID;
     }
 
@@ -205,7 +227,7 @@ public class WeekViewEvent {
         this.tuteeID = studentID;
     }
 
-    public int getTutorID() {
+    public Integer getTutorID() {
         return tutorID;
     }
 

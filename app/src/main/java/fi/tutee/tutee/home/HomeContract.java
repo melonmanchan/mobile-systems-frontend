@@ -26,7 +26,7 @@ public interface HomeContract {
         void removeTime(WeekViewEvent event);
 
         User getUser();
-        void getReservedTimes();
+        void getTimes();
     }
 
     interface View extends BaseView<Presenter> {
