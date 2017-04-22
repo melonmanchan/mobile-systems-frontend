@@ -47,12 +47,12 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     private ArrayList<Subject> cachedSubjects = new ArrayList<Subject>();
     private ArrayList<GeneralMessage> cachedLatestMessages = new ArrayList<GeneralMessage>();
     private SparseArray<User> cachedUsers = new SparseArray<User>();
+    private ArrayList<WeekViewEvent> cachedFreeTimes = new ArrayList<WeekViewEvent>();
 
     private static String PERSIST_LOGIN_DATA = "fi.tutee.tutee.PERSIST_LOGIN_DATA";
 
     private Context context;
     private TimesResponse cachedTimes;
-    private ArrayList<WeekViewEvent> cachedFreeTimes;
 
     public TuteeLocalDataSource(Context context) {
         this.context = context;
@@ -126,6 +126,9 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         cachedUsers = new SparseArray<User>();
         tutorIDs = new HashSet<Integer>();
         tuteeIDs = new HashSet<Integer>();
+
+        cachedFreeTimes = new ArrayList<WeekViewEvent>();
+        cachedTimes = null;
 
         EventBus.getDefault().unregister(this);
     }
@@ -214,7 +217,7 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb) {
         cb.onFailure(null, new Exception("Cannot set free time locally"));
     }
 

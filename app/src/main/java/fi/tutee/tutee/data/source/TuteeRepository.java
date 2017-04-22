@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source;
 
 import android.text.TextUtils;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -409,7 +410,7 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb) {
         remote.createFreeTime(req, cb);
     }
 

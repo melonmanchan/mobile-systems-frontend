@@ -62,8 +62,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
                 newCalendarInstance.setTime(selected);
                 mWeekView.goToDate(newCalendarInstance);
                 mWeekView.mCurrentOrigin.y = -950;
-
-
             }
 
             @Override
@@ -76,8 +74,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
             }
         });
-
-
 
         // Set an action when any event is clicked.
         //mWeekView.setOnEventClickListener(mEventClickListener);
@@ -100,16 +96,12 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
     }
 
     private void showMoreDates() {
-
         for (int i = 0; i < 20; i++) {
             String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(day.get(Calendar.MONTH) +1);
             days.addTab(days.newTab().setText(weekday + "/" + month));
             day.add(Calendar.DAY_OF_MONTH, 1);
-
         }
-
-
     }
 
     private void setupDateTimeInterpreter() {
@@ -135,7 +127,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
 
     private ArrayList<WeekViewEvent> getNewEvents(int year, int month) {
-
         // Get the starting point and ending point of the given month. We need this to find the
         // events of the given month.
         Calendar startOfMonth = Calendar.getInstance();
@@ -164,9 +155,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         return events;
     }
 
-
-
-
     @Override
     public void onEmptyViewClicked(Calendar time) {
         // Set the new event with duration one hour.
@@ -178,11 +166,14 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         // Create a new event.
         WeekViewEvent event = new WeekViewEvent(time, endTime);
         //event.setColor(100);
+
         if (!mNewEvents.contains(event)) {
             mNewEvents.add(event);
+            this.presenter.createFreeTime(event);
             mWeekView.notifyDatasetChanged();
         } else {
             mNewEvents.remove(event);
+            this.presenter.removeTime(event);
             mWeekView.notifyDatasetChanged();
         }
 

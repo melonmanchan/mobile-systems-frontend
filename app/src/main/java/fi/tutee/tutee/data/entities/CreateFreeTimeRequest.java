@@ -10,20 +10,12 @@ import java.util.Date;
  */
 
 public class CreateFreeTimeRequest {
-
-
-
     @SerializedName("start_time")
     @Expose
     private Date startTime;
 
-    @SerializedName("end_time")
-    @Expose
-    private Date endTime;
-
-    public CreateFreeTimeRequest(Date startTime, Date endTime) {
+    public CreateFreeTimeRequest(Date startTime) {
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public Date getStartTime() {
@@ -32,13 +24,5 @@ public class CreateFreeTimeRequest {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 }

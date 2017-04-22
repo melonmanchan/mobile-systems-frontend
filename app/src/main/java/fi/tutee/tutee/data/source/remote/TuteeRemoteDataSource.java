@@ -2,6 +2,7 @@ package fi.tutee.tutee.data.source.remote;
 
 import android.content.Context;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
@@ -234,8 +235,8 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse> cb) {
-        Call<APIResponse> call = service.createFreeTime(req);
+    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb) {
+        Call<APIResponse<WeekViewEvent>> call = service.createFreeTime(req);
         call.enqueue(cb);
     }
 
