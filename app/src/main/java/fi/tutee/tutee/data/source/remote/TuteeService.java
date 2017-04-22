@@ -90,4 +90,7 @@ public interface TuteeService {
 
     @GET("event/")
     Call<APIResponse<TimesResponse>> getTimes();
+
+    @PUT("event/reserve")
+    Call<APIResponse> reserveTime(@Body WeekViewEvent event);
 }

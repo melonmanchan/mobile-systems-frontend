@@ -18,10 +18,12 @@ public interface ReserveCalendarContract {
 
     interface View extends BaseView<ReserveCalendarContract.Presenter> {
         void setFreeTimes(ArrayList<WeekViewEvent> events);
+        void onReserveTimeSuccess();
+        void onReserveTimeFail(ArrayList<APIError> errors);
     }
 
     interface Presenter extends BasePresenter {
         void getFreeTimes(int tutorID);
-
+        void reserveTime(WeekViewEvent event);
     }
 }

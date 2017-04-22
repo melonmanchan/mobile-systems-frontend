@@ -243,6 +243,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
     }
 
     @Override
+    public void reserveTime(WeekViewEvent event, Callback<APIResponse> cb) {
+        cb.onFailure(null, new Exception("Cannot reserve time locally"));
+    }
+
+    @Override
     public void getTimes(Callback<APIResponse<TimesResponse>> cb) {
         if (this.hasCachedTimes()) {
             APIResponse<TimesResponse> apiResponse = new APIResponse<TimesResponse>();

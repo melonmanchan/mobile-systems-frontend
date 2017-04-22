@@ -5,6 +5,7 @@ import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
 
 import fi.tutee.tutee.data.entities.APIResponse;
+import fi.tutee.tutee.data.entities.DeviceRegisterRequest;
 import fi.tutee.tutee.data.source.TuteeRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,5 +54,26 @@ public class ReserveCalendarPresenter implements ReserveCalendarContract.Present
             }
         });
 
+    }
+
+    @Override
+    public void reserveTime(WeekViewEvent event) {
+        this.repository.reserveTime(event, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    view.onReserveTimeSuccess();
+                } else {
+                    view.onReserveTimeFail(resp.getErrors());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                view.onReserveTimeFail(null);
+            }
+        });
     }
 }
