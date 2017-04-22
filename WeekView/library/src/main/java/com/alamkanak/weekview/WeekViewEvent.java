@@ -47,6 +47,9 @@ public class WeekViewEvent {
 
     }
 
+    public boolean isReserved() {
+        return this.tuteeID != null && this.tuteeID != -1;
+    }
 
     /**
      * Initializes the event for week view.

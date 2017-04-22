@@ -156,6 +156,21 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         return events;
     }
 
+    private int getIndexForCalendars(Calendar start, Calendar end) {
+        int foundIndex = -1;
+
+        for (int i = 0; i < mNewEvents.size(); i++) {
+            WeekViewEvent event = mNewEvents.get(i);
+
+            if (event.getStartTime().equals(start) && event.getEndTime().equals(end)) {
+                foundIndex = i;
+                break;
+            }
+        }
+
+        return foundIndex;
+    }
+
     @Override
     public void onEmptyViewClicked(Calendar time) {
         // Set the new event with duration one hour.
@@ -166,19 +181,20 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
         // Create a new event.
         WeekViewEvent event = new WeekViewEvent(time, endTime);
-        //event.setColor(100);
 
         if (!mNewEvents.contains(event)) {
             mNewEvents.add(event);
             this.presenter.createFreeTime(event);
             mWeekView.notifyDatasetChanged();
         } else {
-            mNewEvents.remove(event);
-            this.presenter.removeTime(event);
-            mWeekView.notifyDatasetChanged();
-        }
+            int index = getIndexForCalendars(time, endTime);
 
-        // Refresh the week view. onMonthChange will be called again.
+            if (!mNewEvents.get(index).isReserved()) {
+                mNewEvents.remove(event);
+                this.presenter.removeTime(event);
+                mWeekView.notifyDatasetChanged();
+            }
+        }
     }
 
     public void setTimes(TimesResponse events) {
