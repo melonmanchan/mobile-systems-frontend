@@ -415,8 +415,22 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        remote.removeTime(event, cb);
+    public void removeTime(final WeekViewEvent event, final Callback<APIResponse> cb) {
+        remote.removeTime(event, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.removeTime(event, cb);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                // TODO
+            }
+        });
     }
 
     @Override

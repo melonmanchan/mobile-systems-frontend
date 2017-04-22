@@ -223,7 +223,11 @@ public class TuteeLocalDataSource implements TuteeDataSource {
 
     @Override
     public void removeTime(WeekViewEvent event, Callback<APIResponse> cb) {
-        cb.onFailure(null, new Exception("Cannot remove free time locally"));
+        if (this.cachedTimes != null) {
+            ArrayList<WeekViewEvent> events = this.cachedTimes.getOwnEvents();
+            events.remove(event);
+            cachedTimes.setOwnEvents(events);
+        }
     }
 
     @Override

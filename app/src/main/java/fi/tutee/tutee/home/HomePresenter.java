@@ -20,7 +20,6 @@ import retrofit2.Response;
 public class HomePresenter implements HomeContract.Presenter {
     private final TuteeRepository repository;
 
-
     private final HomeContract.View view;
 
     public HomePresenter(TuteeRepository repository,
@@ -126,7 +125,17 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void removeTime(WeekViewEvent event) {
-        // TODO
+        this.repository.removeTime(event, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

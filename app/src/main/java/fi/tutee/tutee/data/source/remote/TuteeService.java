@@ -82,7 +82,7 @@ public interface TuteeService {
     @POST("event/")
     Call<APIResponse<WeekViewEvent>> createFreeTime(@Body CreateFreeTimeRequest req);
 
-    @DELETE("event/")
+    @PUT("event/remove")
     Call<APIResponse> removeTime(@Body WeekViewEvent event);
 
     @GET("event/{id}")
