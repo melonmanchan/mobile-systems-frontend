@@ -58,6 +58,7 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".profile.ProfileActivity"
             android:label="Profile"
             android:screenOrientation="portrait" />

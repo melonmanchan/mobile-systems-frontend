@@ -13,7 +13,7 @@
     android:focusableInTouchMode="true"
     tools:context="fi.tutee.tutee.register.RegisterFragment">
 
-    <android.support.v7.widget.AppCompatSpinner
+    <!--<android.support.v7.widget.AppCompatSpinner
         android:id = "@+id/registerCountrySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         android:id = "@+id/registerCitySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/register_spinner_padding"/>
+        android:paddingTop="@dimen/register_spinner_padding"/>-->
 
     <ListView
         android:id="@+id/register_extra_subjects"
@@ -55,7 +55,7 @@
     <EditText
         android:id = "@+id/registerTutorExtraDescription"
         android:hint="Description"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
 

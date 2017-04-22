@@ -39,6 +39,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
     private TextView firstname;
     private TextView lastname;
     private TextView email;
+    private TextView description;
     private Button edit;
     private User user;
 
@@ -92,6 +93,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
         email = (EditText) root.findViewById(R.id.profile_email);
         email.setText(user.getEmail());
 
+        description = (EditText) root.findViewById(R.id.profile_description);
+        description.setText(user.getDescription());
+
+
         priceSlider = (SeekBar) root.findViewById(R.id.price_slider);
         priceDisplay = (TextView) root.findViewById(R.id.price_display);
 
@@ -123,10 +128,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View  {
 
                 String firstName = firstname.getText().toString();
                 String lastName = lastname.getText().toString();
+                String desc = description.getText().toString();
                 int price = priceSlider.getProgress();
 
                 if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
-                    presenter.updateUser(firstName, lastName, price);
+                    presenter.updateUser(firstName, lastName, desc, price);
                 }
 
                 if (avatarChanged) {
