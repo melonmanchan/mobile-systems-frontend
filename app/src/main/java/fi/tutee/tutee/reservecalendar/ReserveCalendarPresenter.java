@@ -68,6 +68,7 @@ public class ReserveCalendarPresenter implements ReserveCalendarContract.Present
                 } else {
                     view.onReserveTimeFail(resp.getErrors());
                 }
+
             }
 
             @Override

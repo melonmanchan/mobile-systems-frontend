@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.adapters.EventListAdapter;
 import fi.tutee.tutee.data.entities.TimesResponse;
+import fi.tutee.tutee.data.entities.User;
 
 /**
  * Created by lehtone1 on 16/04/17.
@@ -45,6 +46,9 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         eventList.setLayoutManager(mLayoutManager);
         EventListAdapter adapter = new EventListAdapter();
         eventList.setAdapter(adapter);
+
+        presenter.getTimes();
+
         return root;
     }
 
@@ -57,5 +61,10 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
     public void onResume() {
         presenter.getTimes();
         super.onResume();
+    }
+
+    public void setTutorNames(ArrayList<User> tutors) {
+        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
+        adapter.setTutors(tutors);
     }
 }

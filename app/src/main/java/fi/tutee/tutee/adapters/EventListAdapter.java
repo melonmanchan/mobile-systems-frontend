@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.android.gms.vision.text.Line;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private ArrayList<Object> events;
     private Context context;
     private static onEventSelectedListener listener;
+    private ArrayList<User> tutors;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
@@ -73,11 +75,11 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static class ViewHolderItem extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView time;
-        //public TextView name;
+        public TextView name;
 
-        public ViewHolderItem(RelativeLayout layout) {
+        public ViewHolderItem(LinearLayout layout) {
             super(layout);
-            //name = (TextView) layout.findViewById(R.id.even_list_item_name);
+            name = (TextView) layout.findViewById(R.id.event_list_item_name);
             time = (TextView) layout.findViewById(R.id.event_list_item_time);
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,19 +114,19 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
         context = parent.getContext();
-        View layout;
+        LinearLayout layout;
         RecyclerView.ViewHolder holder;
 
 
         if(viewType == TYPE_HEADER) {
-            layout = LayoutInflater.from(parent.getContext())
+            layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_header_item, parent, false);
-            holder = new ViewHolderHeader((LinearLayout) layout);
+            holder = new ViewHolderHeader(layout);
         } else {
             // create a new view
-            layout = LayoutInflater.from(parent.getContext())
+            layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_item, parent, false);
-            holder = new ViewHolderItem((RelativeLayout) layout);
+            holder = new ViewHolderItem(layout);
         }
 
         return holder;
@@ -142,8 +144,22 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ViewHolderItem item = (ViewHolderItem) holder;
                 WeekViewEvent event = (WeekViewEvent) events.get(position);
                 item.time.setText(itemFormat.format(event.getStart()) + " - " + itemFormat.format(event.getEnd()));
+                if(tutors != null) {
+                    item.name.setText(getTutorName(event.getTutorID()));
+                } else {
+                    item.name.setText("Blöö");
+                }
                 break;
         }
+    }
+
+    private String getTutorName(int tutorID) {
+        for (User tutor : tutors) {
+            if (tutor.getId() == tutorID) {
+                return tutor.getFirstName() + " " + tutor.getLastName();
+            }
+        }
+        return "Couldn't find tutors name";
     }
 
     public void setEvents(ArrayList<WeekViewEvent> events) {
@@ -160,18 +176,23 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             currDay = curr.getStartTime().get(Calendar.DAY_OF_YEAR);
 
             if (i == 0) {
-                this.events.add(headerFormat.format(currDay));
+                this.events.add(headerFormat.format(curr.getStart()));
                 this.events.add(curr);
             } else {
                 prev = events.get(i - 1);
                 prevDay = prev.getStartTime().get(Calendar.DAY_OF_YEAR);
 
                 if (currDay != prevDay) {
-                    this.events.add(headerFormat.format(currDay));
+                    this.events.add(headerFormat.format(curr.getStart()));
                 }
                 this.events.add(curr);
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void setTutors(ArrayList<User> tutors) {
+        this.tutors = tutors;
         notifyDataSetChanged();
     }
 

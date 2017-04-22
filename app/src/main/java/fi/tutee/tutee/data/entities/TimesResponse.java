@@ -16,7 +16,7 @@ public class TimesResponse {
     @Expose
     ArrayList<WeekViewEvent> ownEvents = new ArrayList<>();
 
-    @SerializedName("tutee_events")
+    @SerializedName("reserved_events")
     @Expose
     ArrayList<WeekViewEvent> reservedEvents = new ArrayList<>();
 
