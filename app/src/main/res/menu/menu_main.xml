@@ -7,4 +7,10 @@
         app:showAsAction="never"
         android:title="Log out"
         />
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Edit profile"
+        />
 </menu>

@@ -23,6 +23,7 @@ import fi.tutee.tutee.data.entities.TimesResponse;
 import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.pickauthentication.AuthenticationActivity;
+import fi.tutee.tutee.profile.ProfileActivity;
 
 /**
  * Created by mat on 12/03/2017.
@@ -44,7 +45,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             R.drawable.ic_perm_contact_calendar_white_24dp,
             R.drawable.ic_message_white_24dp,
             R.drawable.ic_search_white_24dp,
-            R.drawable.ic_settings_white_24dp
     };
 
     public static HomeFragment newInstance() {
@@ -89,6 +89,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 presenter.logOut();
                 Intent intent = new Intent(getContext(), AuthenticationActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_profile:
+                Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
+                startActivity(profileIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -118,7 +122,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         adapter.addFragment(messagesFragment, "");
         adapter.addFragment(searchFragment, "");
-        adapter.addFragment(settingsFragment, "");
+        //adapter.addFragment(settingsFragment, "");
 
         viewPager.setAdapter(adapter);
     }
