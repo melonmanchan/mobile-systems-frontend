@@ -187,4 +187,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         events.addAll(newEvents);
         return events;
     }
+
+    @Override
+    public void onResume() {
+        presenter.getTutorTimes();
+        super.onResume();
+    }
 }
