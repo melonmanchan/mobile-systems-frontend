@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
+import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -384,23 +385,35 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         return false;
     }
 
-    public boolean hasCachedTimes() {
-        // TODO:
-        return false;
-    }
-
     public void setCachedFreeTimes(int tutorID, ArrayList<WeekViewEvent> events) {
         // TODO:
     }
 
     public void setCachedTimes(TimesResponse events) {
         //TODO:
+        cachedTimes = events;
+    }
+
+    public boolean hasCachedTimes() {
+        return (cachedTimes != null);
     }
 
 
+    public void addCachedFreeTime(WeekViewEvent event) {
+        ArrayList<WeekViewEvent> ownEvents = cachedTimes.getOwnEvents();
+
+        if (ownEvents == null) {
+            ownEvents = new ArrayList<WeekViewEvent>();
+        }
+
+        ownEvents.add(event);
+
+        cachedTimes.setOwnEvents(ownEvents);
+    }
+
     public boolean hasCachedReservedTimes() {
         //TODO:
-        return false;
+        return (cachedTimes != null && cachedTimes.getReservedEvents() != null);
     }
 
     public void setCachedReservedTimes(ArrayList<WeekViewEvent> events) {

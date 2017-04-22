@@ -410,8 +410,27 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void createFreeTime(CreateFreeTimeRequest req, Callback<APIResponse<WeekViewEvent>> cb) {
+    public void createFreeTime(final CreateFreeTimeRequest req, final Callback<APIResponse<WeekViewEvent>> cb) {
         remote.createFreeTime(req, cb);
+
+        remote.createFreeTime(req, new Callback<APIResponse<WeekViewEvent>>() {
+            @Override
+            public void onResponse(Call<APIResponse<WeekViewEvent>> call, Response<APIResponse<WeekViewEvent>> response) {
+                APIResponse<WeekViewEvent> resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    WeekViewEvent event = resp.getResponse();
+                    local.addCachedFreeTime(event);
+                }
+
+                cb.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<WeekViewEvent>> call, Throwable t) {
+                cb.onFailure(call, t);
+            }
+        });
     }
 
     @Override
@@ -424,11 +443,15 @@ public class TuteeRepository implements TuteeDataSource {
                 if (resp.isSuccessful()) {
                     local.removeTime(event, cb);
                 }
+
+                cb.onResponse(call, response);
             }
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 // TODO
+                cb.onFailure(call, t);
+
             }
         });
     }
