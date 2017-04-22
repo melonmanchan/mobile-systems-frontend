@@ -183,6 +183,9 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
     public void setTimes(TimesResponse events) {
         ArrayList<WeekViewEvent> ownEvents = events.getOwnEvents();
+        mNewEvents.clear();
+        mNewEvents.addAll(ownEvents);
+        mWeekView.notifyDatasetChanged();
     }
 
     @Override
