@@ -31,6 +31,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
     public WeekView mWeekView;
     public TabLayout days;
     private Calendar day;
+    private boolean snackShown = false;
     private ArrayList<WeekViewEvent> mNewEvents;
     private ArrayList<User> tutees;
 
@@ -104,7 +105,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
     }
 
     private void showTutorialSnack() {
-        Snackbar.make(getView(), "Tap the timeslots to mark times when you are available for tutoring!", Snackbar.LENGTH_LONG).show();
+        if (!snackShown) {
+            Snackbar.make(getView(), "Tap the timeslots to mark times when you are available for tutoring!", Snackbar.LENGTH_LONG).show();
+            snackShown = true;
+        }
     }
 
     private int[] getEventCountForDate() {
@@ -282,6 +286,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
     @Override
     public void onResume() {
         presenter.getTimes();
+        showTutorialSnack();
         super.onResume();
     }
 }
