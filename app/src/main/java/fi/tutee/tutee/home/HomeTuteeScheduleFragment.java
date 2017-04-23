@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekViewEvent;
 
@@ -25,6 +26,7 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
 
     private RecyclerView eventList;
     private LinearLayoutManager mLayoutManager;
+    private TextView emptyView;
 
     public HomeTuteeScheduleFragment() {
         // Required empty public constructor
@@ -46,6 +48,7 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         eventList.setLayoutManager(mLayoutManager);
         EventListAdapter adapter = new EventListAdapter();
         eventList.setAdapter(adapter);
+        emptyView = (TextView) root.findViewById(R.id.empty_view);
 
         presenter.getTimes();
 
@@ -55,6 +58,15 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
     public void setTimes(TimesResponse events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         adapter.setEvents(events.getReservedEvents());
+
+        if (events.getReservedEvents().isEmpty()) {
+            eventList.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            eventList.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
