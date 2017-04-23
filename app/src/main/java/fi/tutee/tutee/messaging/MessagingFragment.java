@@ -57,6 +57,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
     private Button sendMessage;
     private int otherUserId;
     private User user;
+    private User otherUser;
 
     private int showMessageFrom = 0;
     private int showMessageTo = 10;
@@ -106,6 +107,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
                 Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
                 intent.putExtra(TUTOR_ID, otherUserId);
                 intent.putExtra(TutorSelectDetailsFragment.ALREADY_PAIRED, true);
+                intent.putExtra(TutorSelectDetailsFragment.TUTOR_PRICE, otherUser.getPrice());
                 startActivity(intent);
         }
 
@@ -185,6 +187,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
 
     @Override
     public void setOtherUser(User user) {
+        otherUser = user;
         getActivity().setTitle(user.getFirstName());
         AppCompatActivity parent = (AppCompatActivity) getActivity();
 

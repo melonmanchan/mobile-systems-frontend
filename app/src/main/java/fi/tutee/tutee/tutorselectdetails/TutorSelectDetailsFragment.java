@@ -40,6 +40,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private boolean paired = false;
 
     public static String TUTOR_ID = "fi.tutee.tutee.TUTOR_ID";
+    public static String TUTOR_PRICE = "fi.tutee.tutee.TUTOR_PRICE";
     public static String ALREADY_PAIRED = "fi.tutee.tutee.ALREADY_PAIRED";
 
     public static TutorSelectDetailsFragment newInstance(int userID) {
@@ -74,6 +75,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
                 Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
                 intent.putExtra(TUTOR_ID, getArguments().getInt(TUTOR_ID));
                 intent.putExtra(ALREADY_PAIRED, paired);
+                intent.putExtra(TUTOR_PRICE, user.getPrice());
                 startActivity(intent);
             }
         });

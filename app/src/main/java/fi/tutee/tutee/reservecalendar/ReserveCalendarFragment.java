@@ -1,18 +1,17 @@
 package fi.tutee.tutee.reservecalendar;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekViewEvent;
@@ -39,15 +38,17 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     private FloatingActionButton openReserveModal;
 
     private int tutorID;
+    private int tutorPrice;
     private boolean paired;
     private LinearLayoutManager mLayoutManager;
 
     public ReserveCalendarFragment() {}
 
-    public static ReserveCalendarFragment newInstance(int tutordID, boolean paired) {
+    public static ReserveCalendarFragment newInstance(int tutordID, int tutorPrice, boolean paired) {
         Bundle arguments = new Bundle();
         ReserveCalendarFragment fragment = new ReserveCalendarFragment();
         arguments.putInt(TutorSelectDetailsFragment.TUTOR_ID, tutordID);
+        arguments.putInt(TutorSelectDetailsFragment.TUTOR_PRICE, tutorPrice);
         arguments.putBoolean(TutorSelectDetailsFragment.ALREADY_PAIRED, paired);
         fragment.setArguments(arguments);
         return fragment;
@@ -61,7 +62,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         View root = inflater.inflate(R.layout.content_reserve_calendar, container, false);
         tutorID = getArguments().getInt(TutorSelectDetailsFragment.TUTOR_ID);
         paired = getArguments().getBoolean(TutorSelectDetailsFragment.ALREADY_PAIRED);
-
+        tutorPrice = getArguments().getInt(TutorSelectDetailsFragment.TUTOR_PRICE);
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
         mLayoutManager = new LinearLayoutManager(root.getContext());
         EventListAdapter adapter = new EventListAdapter(null);
@@ -83,7 +84,26 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         openReserveModal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int eventCount = reservedTimes.size();
 
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Book " + eventCount + " hours?")
+                        .setMessage("Are you sure you want to pay " + eventCount * tutorPrice + "€?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                for (WeekViewEvent e: reservedTimes) {
+                                    presenter.reserveTime(e);
+                                }
+
+                                reservedTimes.clear();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -151,7 +171,6 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         }
 
         adapter.notifyDataSetChanged();
-        //this.presenter.reserveTime(event);
     }
 
     @Override

@@ -40,6 +40,7 @@ public class ReserveCalendarActivity extends AppCompatActivity {
         if (reserveCalendarFragment == null) {
             reserveCalendarFragment = ReserveCalendarFragment.newInstance(
                     getIntent().getIntExtra(TutorSelectDetailsFragment.TUTOR_ID, -1),
+                    getIntent().getIntExtra(TutorSelectDetailsFragment.TUTOR_PRICE, -1),
                     getIntent().getBooleanExtra(TutorSelectDetailsFragment.ALREADY_PAIRED, false));
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
