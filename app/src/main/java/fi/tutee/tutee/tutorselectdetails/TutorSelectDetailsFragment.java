@@ -2,6 +2,7 @@ package fi.tutee.tutee.tutorselectdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +30,8 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private TutorSelectDetailsContract.Presenter presenter;
     private User user;
 
-    private Button chooseTutor;
+    private FloatingActionButton chooseTutor;
+    private FloatingActionButton tutorChosen;
     private ImageView userImage;
     private TextView userName;
     private TextView userDescription;
@@ -61,7 +63,8 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         userImage = (ImageView) root.findViewById(R.id.tutor_select_details_avatar);
         userName = (TextView) root.findViewById(R.id.tutor_select_details_name);
         userDescription = (TextView) root.findViewById(R.id.tutor_select_details_description);
-        chooseTutor = (Button)  root.findViewById(R.id.tutor_select_details_choose_tutor);
+        chooseTutor = (FloatingActionButton)  root.findViewById(R.id.tutor_select_details_choose_tutor);
+        tutorChosen = (FloatingActionButton)  root.findViewById(R.id.tutor_select_details_tutor_chosen);
         tutorPrice = (TextView) root.findViewById(R.id.tutor_price);
         availableTimes = (Button) root.findViewById(R.id.available_times);
 
@@ -98,6 +101,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         if (presenter.alreadyPairedWith(user)) {
             paired = true;
             chooseTutor.setVisibility(View.GONE);
+            tutorChosen.setVisibility(View.VISIBLE);
         }
 
         Picasso.with(getContext()).load(user.getAvatar().toString()).into(userImage);
