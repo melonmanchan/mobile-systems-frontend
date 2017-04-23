@@ -62,9 +62,13 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
         mLayoutManager = new LinearLayoutManager(root.getContext());
         EventListAdapter adapter = new EventListAdapter();
+
         if (paired) {
             adapter.setListener(this);
         }
+
+        adapter.setAlreadyPaired(paired);
+
         eventList.setAdapter(adapter);
         eventList.setLayoutManager(mLayoutManager);
 
@@ -74,7 +78,6 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         presenter.getFreeTimes(tutorID);
 
         return root;
-
     }
 
 

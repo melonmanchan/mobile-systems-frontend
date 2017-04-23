@@ -42,6 +42,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static onEventSelectedListener listener;
     private ArrayList<User> tutors;
 
+    private boolean alreadyPaired = true;
+
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private SimpleDateFormat headerFormat = new SimpleDateFormat("EEE dd.MM");
@@ -61,6 +63,9 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.listener = listener;
     }
 
+    public void setAlreadyPaired(boolean alreadyPaired) {
+        this.alreadyPaired = alreadyPaired;
+    }
 
     public static class ViewHolderHeader extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -97,18 +102,16 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         Object item = getItem(position);
 
-        if(item instanceof WeekViewEvent) {
+        if (item instanceof WeekViewEvent) {
             return TYPE_ITEM;
         } else {
             return TYPE_HEADER;
         }
     }
 
-
     public Object getItem(final int position) {
         return events.get(position);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -116,7 +119,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         context = parent.getContext();
         LinearLayout layout;
         RecyclerView.ViewHolder holder;
-
 
         if(viewType == TYPE_HEADER) {
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
@@ -126,7 +128,13 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             // create a new view
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_item, parent, false);
+
+            if (!this.alreadyPaired) {
+                layout.setAlpha(0.5f);
+            }
+
             holder = new ViewHolderItem(layout);
+
         }
 
         return holder;
