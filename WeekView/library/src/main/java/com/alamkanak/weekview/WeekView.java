@@ -92,12 +92,13 @@ public class WeekView extends View {
     private int mFetchedPeriod = -1; // the middle period the calendar has fetched.
     private boolean mRefreshEvents = false;
     private Direction mCurrentFlingDirection = Direction.NONE;
-    private ScaleGestureDetector mScaleDetector;
+    //private ScaleGestureDetector mScaleDetector;
     private boolean mIsZooming;
     private Calendar mFirstVisibleDay;
     private Calendar mLastVisibleDay;
     private boolean mShowFirstDayOfWeekFirst = false;
     private int mDefaultEventColor = Color.parseColor("#9fc6e7");
+    private int mDefaultReservedEventColor = Color.parseColor("#00bcd4");
     private int mMinimumFlingVelocity = 0;
     private int mScaledTouchSlop = 0;
     // Attributes and their default values.
@@ -422,7 +423,7 @@ public class WeekView extends View {
         mEventTextPaint.setStyle(Paint.Style.FILL);
         mEventTextPaint.setColor(mEventTextColor);
         mEventTextPaint.setTextSize(mEventTextSize);
-
+        /*
         mScaleDetector = new ScaleGestureDetector(mContext, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
             public void onScaleEnd(ScaleGestureDetector detector) {
@@ -443,6 +444,7 @@ public class WeekView extends View {
                 return true;
             }
         });
+        */
     }
 
     // fix rotation changes
@@ -799,7 +801,7 @@ public class WeekView extends View {
                             bottom > mHeaderHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom
                             ) {
                         mEventRects.get(i).rectF = new RectF(left, top, right, bottom);
-                        mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
+                        mEventBackgroundPaint.setColor(mEventRects.get(i).event.getTuteeID() == null ? mDefaultEventColor : mDefaultReservedEventColor);
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
                         drawEventTitle(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
                     }
@@ -843,7 +845,7 @@ public class WeekView extends View {
                             bottom > 0
                             ) {
                         mEventRects.get(i).rectF = new RectF(left, top, right, bottom);
-                        mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
+                        mEventBackgroundPaint.setColor(mEventRects.get(i).event.getTuteeID() == null ? mDefaultEventColor : mDefaultReservedEventColor);
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
                         drawEventTitle(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
                     }
@@ -884,6 +886,7 @@ public class WeekView extends View {
         int availableWidth = (int) (rect.right - originalLeft - mEventPadding * 2);
 
         // Get text dimensions.
+        mEventTextPaint.setTextSize(50);
         StaticLayout textLayout = new StaticLayout(bob, mEventTextPaint, availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
         int lineHeight = textLayout.getHeight() / textLayout.getLineCount();
@@ -903,7 +906,7 @@ public class WeekView extends View {
 
             // Draw text.
             canvas.save();
-            canvas.translate(originalLeft + mEventPadding, originalTop + mEventPadding);
+            canvas.translate(originalLeft + mEventPadding + 20, originalTop + mEventPadding + 40);
             textLayout.draw(canvas);
             canvas.restore();
         }
@@ -1818,7 +1821,7 @@ public class WeekView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mScaleDetector.onTouchEvent(event);
+        //eDetector.onTouchEvent(event);
         boolean val = mGestureDetector.onTouchEvent(event);
 
         // Check after call of mGestureDetector, so mCurrentFlingDirection and mCurrentScrollDirection are set.
