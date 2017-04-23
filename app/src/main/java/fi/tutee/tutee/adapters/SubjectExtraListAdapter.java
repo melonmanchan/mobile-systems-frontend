@@ -93,7 +93,7 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
                     //holder.name.setChecked(true);
                     listener.onSelected(subject);
                 }
-
+                holder.name.setChecked(checked[position]);
             }
         });
 
