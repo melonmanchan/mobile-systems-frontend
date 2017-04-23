@@ -147,7 +147,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 if(tutors != null) {
                     item.name.setText(getTutorName(event.getTutorID()));
                 } else {
-                    item.name.setText("Blöö");
+                    item.name.setVisibility(View.GONE);
                 }
                 break;
         }

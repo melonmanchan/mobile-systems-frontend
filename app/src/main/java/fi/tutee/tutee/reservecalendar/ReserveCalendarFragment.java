@@ -69,7 +69,6 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
         presenter.getFreeTimes(tutorID);
 
-
         return root;
 
     }
