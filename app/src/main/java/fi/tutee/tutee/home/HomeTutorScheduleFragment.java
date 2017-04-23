@@ -11,6 +11,7 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.android.gms.vision.text.Text;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -96,8 +97,18 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
        // date.add(Calendar.DAY_OF_WEEK, 100);
         // mWeekView.goToDate(date);
         setupDateTimeInterpreter();
-        showMoreDates();
         return root;
+    }
+
+    private int getEventCountForDate() {
+        int count = 0;
+
+        for (WeekViewEvent e: mNewEvents) {
+            Calendar start = e.getStartTime();
+            Calendar end = e.getEndTime();
+        }
+
+        return count;
     }
 
     private void showMoreDates() {
@@ -108,6 +119,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
             TabLayout.Tab tab = days.newTab().setCustomView(R.layout.custom_date_tab);
             View customView = tab.getCustomView();
             TextView dateText = (TextView) customView.findViewById(R.id.custom_date_tab_date);
+
+            View badgeWrapper = customView.findViewById(R.id.custom_date_tab_badge_wrapper);
+            TextView badgeText = (TextView)  customView.findViewById(R.id.custom_date_tab_badge);
+
             dateText.setText(weekday + "/" + month);
 
             days.addTab(tab);
@@ -211,6 +226,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         ArrayList<WeekViewEvent> ownEvents = events.getOwnEvents();
         mNewEvents.clear();
         mNewEvents.addAll(ownEvents);
+        showMoreDates();
         mWeekView.notifyDatasetChanged();
     }
 
