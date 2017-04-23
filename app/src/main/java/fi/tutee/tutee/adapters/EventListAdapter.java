@@ -56,6 +56,10 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setListener(onEventSelectedListener listener) {
         this.listener = listener;
     }
+    
+    public void detachListener() {
+        this.listener = null;
+    }
 
     public void setAlreadyPaired(boolean alreadyPaired) {
         this.alreadyPaired = alreadyPaired;
