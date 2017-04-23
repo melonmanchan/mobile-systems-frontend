@@ -132,6 +132,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
     private void showMoreDates(int evs[]) {
         day = Calendar.getInstance();
+        days.removeAllTabs();
         for (int i = 0; i < 20; i++) {
             String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(day.get(Calendar.MONTH) +1);
