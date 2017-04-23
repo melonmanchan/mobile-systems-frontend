@@ -35,8 +35,10 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     private TextView userDescription;
     private TextView tutorPrice;
     private Button availableTimes;
+    private boolean paired = false;
 
     public static String TUTOR_ID = "fi.tutee.tutee.TUTOR_ID";
+    public static String ALREADY_PAIRED = "fi.tutee.tutee.ALREADY_PAIRED";
 
     public static TutorSelectDetailsFragment newInstance(int userID) {
         Bundle arguments = new Bundle(1);
@@ -68,7 +70,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
                 intent.putExtra(TUTOR_ID, getArguments().getInt(TUTOR_ID));
-                // TODO: intent.putExtra(ALREADY_PAIRED, presenter.alreadyPairedWith(getArguments().getInt(TUTOR_ID)));
+                intent.putExtra(ALREADY_PAIRED, paired);
                 startActivity(intent);
             }
         });
@@ -94,6 +96,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
         this.user = user;
 
         if (presenter.alreadyPairedWith(user)) {
+            paired = true;
             chooseTutor.setVisibility(View.GONE);
         }
 

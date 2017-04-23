@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="50sp"
-        android:background="@drawable/message_from_other_user"/>
+        android:background="@drawable/eventlist_header"/>
 
 </LinearLayout>
