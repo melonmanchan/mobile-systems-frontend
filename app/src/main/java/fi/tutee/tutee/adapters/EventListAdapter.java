@@ -61,6 +61,10 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.listener = listener;
     }
 
+    public void detachListener() {
+        this.listener = null;
+    }
+
 
     public static class ViewHolderHeader extends RecyclerView.ViewHolder {
         // each data item is just a string in this case

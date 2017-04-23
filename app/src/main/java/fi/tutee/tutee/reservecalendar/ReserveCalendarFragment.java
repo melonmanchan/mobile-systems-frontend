@@ -120,4 +120,11 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         WeekViewEvent event = (WeekViewEvent) adapter.getItem(position);
         this.presenter.reserveTime(event);
     }
+
+    @Override
+    public void onDestroy() {
+        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
+        adapter.detachListener();
+        super.onDestroy();
+    }
 }
