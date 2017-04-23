@@ -22,13 +22,16 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.adapters.EventListAdapter;
 import fi.tutee.tutee.data.entities.TimesResponse;
+import fi.tutee.tutee.data.entities.User;
 
 public class HomeTutorScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
     public WeekView mWeekView;
     public TabLayout days;
     private Calendar day;
     private ArrayList<WeekViewEvent> mNewEvents;
+    private ArrayList<User> tutees;
 
     public HomeTutorScheduleFragment() {
         // Required empty public constructor
@@ -240,6 +243,26 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         mNewEvents.addAll(ownEvents);
         int evs[] = getEventCountForDate();
         showMoreDates(evs);
+        showTimes();
+    }
+
+    public void setTuteeNames(ArrayList<User> tutees) {
+        this.tutees = tutees;
+        showTimes();
+    }
+
+    private void showTimes() {
+        if (tutees == null || mNewEvents.size() == 0) return;
+
+        for (WeekViewEvent e : mNewEvents) {
+            for (User tutee : tutees) {
+                if (e.getTuteeID() != null && e.getTuteeID() == tutee.getId()) {
+                    e.setName(tutee.getFirstName() + " " + tutee.getLastName());
+                    break;
+                }
+            }
+        }
+
         mWeekView.notifyDatasetChanged();
     }
 

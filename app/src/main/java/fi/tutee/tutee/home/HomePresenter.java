@@ -56,6 +56,7 @@ public class HomePresenter implements HomeContract.Presenter {
                     allUsers.addAll(tutorshipsResponse.getTutors());
                     view.setMessageUsers(allUsers);
                     view.setTutorNames(tutorshipsResponse.getTutors());
+                    view.setTuteeNames(tutorshipsResponse.getTutees());
                 }
             }
 
