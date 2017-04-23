@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekViewEvent;
 
@@ -32,7 +33,7 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     private ReserveCalendarContract.Presenter presenter;
 
     private RecyclerView eventList;
-
+    private TextView emptyView;
 
     private int tutorID;
     private boolean paired;
@@ -67,8 +68,10 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         eventList.setAdapter(adapter);
         eventList.setLayoutManager(mLayoutManager);
 
-        presenter.getFreeTimes(tutorID);
+        emptyView = (TextView) root.findViewById(R.id.empty_view);
+        emptyView.setText("This tutor has no available times.");
 
+        presenter.getFreeTimes(tutorID);
 
         return root;
 
@@ -84,6 +87,15 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     public void setFreeTimes(ArrayList<WeekViewEvent> events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         adapter.setEvents(events);
+
+        if (events.isEmpty()) {
+            eventList.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            eventList.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override

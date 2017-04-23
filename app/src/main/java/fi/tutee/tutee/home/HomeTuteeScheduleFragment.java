@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alamkanak.weekview.WeekViewEvent;
@@ -27,6 +30,8 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
     private RecyclerView eventList;
     private LinearLayoutManager mLayoutManager;
     private TextView emptyView;
+    private ImageView emptyIcon;
+    private LinearLayout emptyLayout;
 
     public HomeTuteeScheduleFragment() {
         // Required empty public constructor
@@ -49,6 +54,8 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         EventListAdapter adapter = new EventListAdapter();
         eventList.setAdapter(adapter);
         emptyView = (TextView) root.findViewById(R.id.empty_view);
+        emptyView.setText("You have not reserved any tutoring sessions.");
+        emptyLayout = (LinearLayout) root.findViewById(R.id.empty_view_layout);
 
         presenter.getTimes();
 
@@ -61,11 +68,11 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
 
         if (events.getReservedEvents().isEmpty()) {
             eventList.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.VISIBLE);
         }
         else {
             eventList.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.GONE);
         }
     }
 
