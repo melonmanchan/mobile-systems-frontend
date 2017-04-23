@@ -90,7 +90,7 @@ public class TutorListAdapter extends ArrayAdapter<User> {
 
     private void initializeSubjectsWrapper(FlowLayout wrapper, ArrayList<Subject> subjects) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        wrapper.removeAllViews();
         for (Subject s: subjects) {
             if (!subjectsAdded.contains(s)) {
                 LinearLayout subjectTextLayout = (LinearLayout) inflater.inflate(R.layout.partial_rounded_textview, null);
