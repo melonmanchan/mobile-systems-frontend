@@ -11,6 +11,6 @@
         android:textSize="30sp"
         android:padding="10dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/message_from_other_user"/>
+        android:background="@drawable/eventlist_header"/>
 
 </LinearLayout>
