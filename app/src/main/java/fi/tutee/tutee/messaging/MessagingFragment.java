@@ -44,6 +44,7 @@ import fi.tutee.tutee.data.entities.User;
 import fi.tutee.tutee.data.entities.events.GeneralMessage;
 import fi.tutee.tutee.home.HomeMessagesFragment;
 import fi.tutee.tutee.reservecalendar.ReserveCalendarActivity;
+import fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment;
 
 import static fi.tutee.tutee.tutorselectdetails.TutorSelectDetailsFragment.TUTOR_ID;
 
@@ -104,6 +105,7 @@ public class MessagingFragment extends Fragment implements MessagingContract.Vie
             case R.id.action_go_to_calendar:
                 Intent intent = new Intent(getActivity(), ReserveCalendarActivity.class);
                 intent.putExtra(TUTOR_ID, otherUserId);
+                intent.putExtra(TutorSelectDetailsFragment.ALREADY_PAIRED, true);
                 startActivity(intent);
         }
 
