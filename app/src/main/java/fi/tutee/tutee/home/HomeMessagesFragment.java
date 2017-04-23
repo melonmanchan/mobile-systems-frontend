@@ -150,8 +150,17 @@ public class HomeMessagesFragment extends HomeBaseFragment {
 
     @Override
     public void onResume() {
+        this.latestMessages = null;
+        this.chatUsers = null;
+        this.adapter = null;
+
         this.presenter.getLatestMessages();
         this.presenter.getTutorships();
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

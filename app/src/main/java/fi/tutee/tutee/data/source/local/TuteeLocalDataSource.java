@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 
 import fi.tutee.tutee.data.entities.APIResponse;
@@ -326,6 +327,16 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         if (!tutorIDs.contains(tutorID)) {
             tutorIDs.add(tutorID);
         }
+
+        GeneralMessage msg = new GeneralMessage();
+
+        msg.setSentAt(new Date());
+        msg.setReceiverId(tutorID);
+        msg.setSenderId(tutorID);
+        msg.setContent("");
+        msg.setId(0);
+
+        cachedLatestMessages.add(msg);
     }
 
     public void setCachedSubjects(ArrayList<Subject> cachedSubjects) {
