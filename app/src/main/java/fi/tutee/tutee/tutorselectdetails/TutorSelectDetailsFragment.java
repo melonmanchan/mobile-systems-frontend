@@ -109,6 +109,7 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
     @Override
     public void pairTutorSucceeded() {
         Snackbar.make(getView(), "Pairing with tutor succeeded!", Snackbar.LENGTH_LONG).show();
+        paired = true;
     }
 
     @Override
