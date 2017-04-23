@@ -1,32 +1,22 @@
 package fi.tutee.tutee.adapters;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.google.android.gms.vision.text.Line;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -51,7 +41,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-    public EventListAdapter() {
+    public EventListAdapter(ArrayList<User> tutors) {
+        this.tutors = tutors;
         this.events = new ArrayList<>();
     }
 
@@ -152,7 +143,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ViewHolderItem item = (ViewHolderItem) holder;
                 WeekViewEvent event = (WeekViewEvent) events.get(position);
                 item.time.setText(itemFormat.format(event.getStart()) + " - " + itemFormat.format(event.getEnd()));
-                if(tutors != null) {
+                if (tutors != null) {
                     item.name.setText(getTutorName(event.getTutorID()));
                 } else {
                     item.name.setVisibility(View.GONE);
@@ -196,11 +187,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 this.events.add(curr);
             }
         }
-        notifyDataSetChanged();
-    }
-
-    public void setTutors(ArrayList<User> tutors) {
-        this.tutors = tutors;
         notifyDataSetChanged();
     }
 
