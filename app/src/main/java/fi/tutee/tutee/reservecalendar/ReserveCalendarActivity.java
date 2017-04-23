@@ -28,7 +28,7 @@ public class ReserveCalendarActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Book a class");
+        title.setText("Book a session");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
