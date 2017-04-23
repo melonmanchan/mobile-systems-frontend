@@ -47,7 +47,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);
-        day = Calendar.getInstance();
         mNewEvents = new ArrayList<WeekViewEvent>();
 
         mWeekView.setMonthChangeListener(this);
@@ -100,18 +99,27 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         return root;
     }
 
-    private int getEventCountForDate() {
-        int count = 0;
+    private int[] getEventCountForDate() {
+        int[] events = new int[20];
+        day = Calendar.getInstance();
+        int day_day = day.get(Calendar.DAY_OF_YEAR);
 
         for (WeekViewEvent e: mNewEvents) {
             Calendar start = e.getStartTime();
             Calendar end = e.getEndTime();
+            int event_day = start.get(Calendar.DAY_OF_YEAR);
+            int diff = event_day - day_day;
+            if (diff >= 0) {
+                events[diff] += 1;
+            }
+
         }
 
-        return count;
+        return events;
     }
 
-    private void showMoreDates() {
+    private void showMoreDates(int evs[]) {
+        day = Calendar.getInstance();
         for (int i = 0; i < 20; i++) {
             String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(day.get(Calendar.MONTH) +1);
@@ -122,6 +130,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
             View badgeWrapper = customView.findViewById(R.id.custom_date_tab_badge_wrapper);
             TextView badgeText = (TextView)  customView.findViewById(R.id.custom_date_tab_badge);
+            if (evs[i] > 0) {
+                badgeWrapper.setVisibility(View.VISIBLE);
+                badgeText.setText("" + evs[i]);
+            }
 
             dateText.setText(weekday + "/" + month);
 
@@ -226,7 +238,8 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         ArrayList<WeekViewEvent> ownEvents = events.getOwnEvents();
         mNewEvents.clear();
         mNewEvents.addAll(ownEvents);
-        showMoreDates();
+        int evs[] = getEventCountForDate();
+        showMoreDates(evs);
         mWeekView.notifyDatasetChanged();
     }
 
