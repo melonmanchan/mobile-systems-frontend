@@ -70,7 +70,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
                 Calendar newCalendarInstance = Calendar.getInstance();
                 newCalendarInstance.setTime(selected);
                 mWeekView.goToDate(newCalendarInstance);
-                mWeekView.mCurrentOrigin.y = -950;
+                mWeekView.mCurrentOrigin.y = -1460;
             }
 
             @Override
