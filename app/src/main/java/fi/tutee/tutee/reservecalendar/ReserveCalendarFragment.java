@@ -2,6 +2,7 @@ package fi.tutee.tutee.reservecalendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,8 +33,10 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
     private ReserveCalendarContract.Presenter presenter;
 
+    private ArrayList<WeekViewEvent> reservedTimes = new ArrayList<>();
     private RecyclerView eventList;
     private TextView emptyView;
+    private FloatingActionButton openReserveModal;
 
     private int tutorID;
     private boolean paired;
@@ -75,6 +78,14 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         emptyView = (TextView) root.findViewById(R.id.empty_view);
         emptyView.setText("This tutor has no available times.");
 
+        openReserveModal = (FloatingActionButton) root.findViewById(R.id.events_open_order_modal);
+
+        openReserveModal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         presenter.getFreeTimes(tutorID);
 
         return root;
@@ -121,6 +132,16 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     public void onSelected(int position) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         WeekViewEvent event = (WeekViewEvent) adapter.getItem(position);
-        this.presenter.reserveTime(event);
+
+        if (reservedTimes.contains((event))) {
+            reservedTimes.remove(event);
+            adapter.setEventUnselected(event.getID());
+        } else {
+            reservedTimes.add(event);
+            adapter.setEventSelected(event.getID());
+        }
+
+        adapter.notifyDataSetChanged();
+        //this.presenter.reserveTime(event);
     }
 }
