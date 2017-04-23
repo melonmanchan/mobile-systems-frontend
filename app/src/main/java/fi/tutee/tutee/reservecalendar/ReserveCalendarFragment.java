@@ -86,6 +86,9 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
             }
         });
+
+        openReserveModal.hide();
+
         presenter.getFreeTimes(tutorID);
 
         return root;
@@ -139,6 +142,12 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
         } else {
             reservedTimes.add(event);
             adapter.setEventSelected(event.getID());
+        }
+
+        if (reservedTimes.size() == 0) {
+            openReserveModal.hide();
+        } else {
+            openReserveModal.show();
         }
 
         adapter.notifyDataSetChanged();
