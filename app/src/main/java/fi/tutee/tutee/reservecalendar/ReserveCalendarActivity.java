@@ -28,7 +28,7 @@ public class ReserveCalendarActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title_only);
 
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
-        title.setText("Book a class");
+        title.setText("Book a session");
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
@@ -37,7 +37,8 @@ public class ReserveCalendarActivity extends AppCompatActivity {
 
         if (reserveCalendarFragment == null) {
             reserveCalendarFragment = ReserveCalendarFragment.newInstance(
-                    getIntent().getIntExtra(TutorSelectDetailsFragment.TUTOR_ID, -1));
+                    getIntent().getIntExtra(TutorSelectDetailsFragment.TUTOR_ID, -1),
+                    getIntent().getBooleanExtra(TutorSelectDetailsFragment.ALREADY_PAIRED, false));
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     reserveCalendarFragment, R.id.contentFrame);

@@ -35,14 +35,16 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
 
     private int tutorID;
+    private boolean paired;
     private LinearLayoutManager mLayoutManager;
 
     public ReserveCalendarFragment() {}
 
-    public static ReserveCalendarFragment newInstance(int tutordID) {
+    public static ReserveCalendarFragment newInstance(int tutordID, boolean paired) {
         Bundle arguments = new Bundle();
         ReserveCalendarFragment fragment = new ReserveCalendarFragment();
         arguments.putInt(TutorSelectDetailsFragment.TUTOR_ID, tutordID);
+        arguments.putBoolean(TutorSelectDetailsFragment.ALREADY_PAIRED, paired);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -54,11 +56,14 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
 
         View root = inflater.inflate(R.layout.content_reserve_calendar, container, false);
         tutorID = getArguments().getInt(TutorSelectDetailsFragment.TUTOR_ID);
+        paired = getArguments().getBoolean(TutorSelectDetailsFragment.ALREADY_PAIRED);
 
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
         mLayoutManager = new LinearLayoutManager(root.getContext());
         EventListAdapter adapter = new EventListAdapter();
-        adapter.setListener(this);
+        if (paired) {
+            adapter.setListener(this);
+        }
         eventList.setAdapter(adapter);
         eventList.setLayoutManager(mLayoutManager);
 
@@ -79,7 +84,6 @@ public class ReserveCalendarFragment  extends Fragment implements ReserveCalenda
     public void setFreeTimes(ArrayList<WeekViewEvent> events) {
         EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
         adapter.setEvents(events);
-
     }
 
     @Override
