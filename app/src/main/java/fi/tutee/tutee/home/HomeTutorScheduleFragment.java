@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -53,9 +54,12 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
         days.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(TabLayout.Tab selectedTab) {
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String date = tab.getText().toString() + "/" + Calendar.getInstance().get(Calendar.YEAR);
+                View tab = selectedTab.getCustomView();
+                String date = ((TextView) tab.findViewById(R.id.custom_date_tab_date)).getText().toString();
+
+                date += "/" + Calendar.getInstance().get(Calendar.YEAR);
 
                 Date selected = format.parse(date, new ParsePosition(0));
 
@@ -100,7 +104,13 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         for (int i = 0; i < 20; i++) {
             String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(day.get(Calendar.MONTH) +1);
-            days.addTab(days.newTab().setText(weekday + "/" + month));
+
+            TabLayout.Tab tab = days.newTab().setCustomView(R.layout.custom_date_tab);
+            View customView = tab.getCustomView();
+            TextView dateText = (TextView) customView.findViewById(R.id.custom_date_tab_date);
+            dateText.setText(weekday + "/" + month);
+
+            days.addTab(tab);
             day.add(Calendar.DAY_OF_MONTH, 1);
         }
     }
