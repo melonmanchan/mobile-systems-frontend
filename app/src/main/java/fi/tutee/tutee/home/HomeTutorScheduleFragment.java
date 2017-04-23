@@ -106,10 +106,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
         for (WeekViewEvent e: mNewEvents) {
             Calendar start = e.getStartTime();
-            Calendar end = e.getEndTime();
+
             int event_day = start.get(Calendar.DAY_OF_YEAR);
             int diff = event_day - day_day;
-            if (diff >= 0) {
+            if (e.getTuteeID() != null && diff >= 0) {
                 events[diff] += 1;
             }
 
