@@ -136,6 +136,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
+    public void setTuteeNames(ArrayList<User> tutees) {
+        if (this.tutorScheduleFragment != null) {
+            this.tutorScheduleFragment.setTuteeNames(tutees);
+        }
+    }
+
+    @Override
     public void setSubjects(ArrayList<Subject> subjects) {
         this.searchFragment.setSubjects(subjects);
     }
