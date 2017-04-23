@@ -26,9 +26,10 @@
         app:noOfVisibleDays="1"
         app:headerRowBackgroundColor="#ffefefef"
         app:dayBackgroundColor="#05000000"
-        app:todayBackgroundColor="#1848adff"
+        app:todayBackgroundColor="#05000000"
+        app:todayHeaderTextColor="@color/colorPrimaryDark"
         app:headerColumnBackground="#ffffffff"
-        app:eventColor="#5dba6b"
+        app:eventColor="#83D699"
         app:tutee="false"
         android:layout_below="@+id/days"/>
 </RelativeLayout>
