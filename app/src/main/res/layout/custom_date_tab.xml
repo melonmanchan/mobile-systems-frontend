@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/custom_date_tab_badge_wrapper"
+        android:visibility="gone"
         android:layout_marginTop="2dp"
         android:layout_width="20dp"
         android:layout_height="20dp"

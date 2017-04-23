@@ -485,8 +485,9 @@ public class WeekView extends View {
         if (!(-800 > mCurrentOrigin.y && mCurrentOrigin.y > -1000)) return;
         Paint paint = new Paint();
         paint.setColor(Color.GRAY);
-        paint.setTextSize(30);
-        canvas.drawText("Touch the events to mark free tutoring times!", 100, 150,  paint);
+        paint.setTextSize(45);
+        canvas.drawText("Tap the timeslots to mark times when you", 160, 180,  paint);
+        canvas.drawText("are available for tutoring!", 160, 230,  paint);
     }
 
     //
@@ -868,7 +869,7 @@ public class WeekView extends View {
 
         // Prepare the name of the event.
         SpannableStringBuilder bob = new SpannableStringBuilder();
-        if (event.getName() != null) {
+        if (event.getTuteeID() != null) {
             bob.append(event.getName());
             bob.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, bob.length(), 0);
             bob.append(' ');
