@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -39,7 +42,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private SimpleDateFormat headerFormat = new SimpleDateFormat("EEE dd.MM");
     private SimpleDateFormat itemFormat = new SimpleDateFormat("HH:mm");
 
-
+    private HashSet<Integer> selectedEvents = new HashSet<>();
 
     public EventListAdapter(ArrayList<User> tutors) {
         this.tutors = tutors;
@@ -52,6 +55,10 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setListener(onEventSelectedListener listener) {
         this.listener = listener;
+    }
+    
+    public void detachListener() {
+        this.listener = null;
     }
 
     public void setAlreadyPaired(boolean alreadyPaired) {
@@ -70,11 +77,13 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static class ViewHolderItem extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public View wrapper;
         public TextView time;
         public TextView name;
 
         public ViewHolderItem(LinearLayout layout) {
             super(layout);
+            wrapper = layout.findViewById(R.id.event_list_item_wrapper);
             name = (TextView) layout.findViewById(R.id.event_list_item_name);
             time = (TextView) layout.findViewById(R.id.event_list_item_time);
             layout.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +107,14 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             return TYPE_HEADER;
         }
+    }
+
+    public void setEventSelected(int ID) {
+        selectedEvents.add(ID);
+    }
+
+    public void setEventUnselected(int ID) {
+        selectedEvents.remove(ID);
     }
 
     public Object getItem(final int position) {
@@ -125,7 +142,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
 
             holder = new ViewHolderItem(layout);
-
         }
 
         return holder;
@@ -148,6 +164,13 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 } else {
                     item.name.setVisibility(View.GONE);
                 }
+
+                if (selectedEvents.contains(event.getID())) {
+                    item.wrapper.setAlpha(0.5f);
+                } else {
+                    item.wrapper.setAlpha(1f);
+                }
+
                 break;
         }
     }

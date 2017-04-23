@@ -19,6 +19,8 @@ import fi.tutee.tutee.utils.ActivityUtils;
 
 public class ReserveCalendarActivity extends AppCompatActivity {
 
+    private ReserveCalendarFragment reserveCalendarFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class ReserveCalendarActivity extends AppCompatActivity {
 
         TuteeApplication app = (TuteeApplication)  getApplication();
 
-        ReserveCalendarFragment reserveCalendarFragment = (ReserveCalendarFragment) getSupportFragmentManager()
+        reserveCalendarFragment = (ReserveCalendarFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
         if (reserveCalendarFragment == null) {
@@ -48,5 +50,11 @@ public class ReserveCalendarActivity extends AppCompatActivity {
                 app.repository,
                 reserveCalendarFragment
         );
+    }
+
+    @Override
+    protected void onDestroy() {
+        reserveCalendarFragment.onDestroy();
+        super.onDestroy();
     }
 }
