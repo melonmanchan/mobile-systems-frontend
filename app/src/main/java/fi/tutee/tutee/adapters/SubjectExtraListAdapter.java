@@ -20,6 +20,7 @@ import fi.tutee.tutee.data.entities.Subject;
 
 public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
     private ArrayList<Subject> subjects;
+    private boolean[] checked;
     private Set<Integer> selectedSubjectIds;
     private Context context;
 
@@ -31,6 +32,7 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
         this.context = context;
         this.subjects = new ArrayList<Subject>();
         this.subjects.addAll(subjects);
+        checked = new boolean[subjects.size()];
 
         this.selectedSubjectIds = new HashSet<Integer>();
     }
@@ -68,7 +70,8 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
 
         final Subject subject = subjects.get(position);
 
-        holder.name.setText(subject.getType());
+        holder.name.setText(subject.getType ());
+        holder.name.setChecked(checked[position]);
 
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +84,16 @@ public class SubjectExtraListAdapter extends ArrayAdapter<Subject>{
 
                 if (selectedSubjectIds.contains(id)) {
                     selectedSubjectIds.remove(id);
-                    holder.name.setChecked(false);
+                    checked[position] = false;
+                    //holder.name.setChecked(false);
                     listener.onDeselected(subject);
                 } else {
                     selectedSubjectIds.add(id);
-                    holder.name.setChecked(true);
+                    checked[position] = true;
+                    //holder.name.setChecked(true);
                     listener.onSelected(subject);
                 }
+
             }
         });
 
