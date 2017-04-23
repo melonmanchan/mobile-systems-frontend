@@ -1,6 +1,7 @@
 package fi.tutee.tutee.home;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,6 +101,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         // mWeekView.goToDate(date);
         setupDateTimeInterpreter();
         return root;
+    }
+
+    private void showTutorialSnack() {
+        Snackbar.make(getView(), "Tap the timeslots to mark times when you are available for tutoring!", Snackbar.LENGTH_LONG).show();
     }
 
     private int[] getEventCountForDate() {

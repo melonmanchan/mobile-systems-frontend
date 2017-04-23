@@ -473,7 +473,7 @@ public class WeekView extends View {
         super.onDraw(canvas);
 
         if (!tutee) {
-            drawPleaseText(canvas);
+            //drawPleaseText(canvas);
         }
 
         // Draw the header row.
