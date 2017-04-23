@@ -122,13 +122,12 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         editor.remove(PERSIST_LOGIN_DATA);
         editor.commit();
 
-        cachedSubjects = new ArrayList<Subject>();
-        cachedLatestMessages = new ArrayList<GeneralMessage>();
-        cachedUsers = new SparseArray<User>();
-        tutorIDs = new HashSet<Integer>();
-        tuteeIDs = new HashSet<Integer>();
-
-        cachedFreeTimes = new ArrayList<WeekViewEvent>();
+        cachedSubjects.clear();
+        cachedLatestMessages.clear();
+        cachedUsers.clear();
+        tutorIDs.clear();
+        tuteeIDs.clear();
+        cachedFreeTimes.clear();
         cachedTimes = null;
 
         EventBus.getDefault().unregister(this);

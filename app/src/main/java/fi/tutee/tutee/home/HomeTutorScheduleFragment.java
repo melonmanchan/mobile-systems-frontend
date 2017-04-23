@@ -1,6 +1,7 @@
 package fi.tutee.tutee.home;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +23,17 @@ import java.util.List;
 import java.util.Locale;
 
 import fi.tutee.tutee.R;
+import fi.tutee.tutee.adapters.EventListAdapter;
 import fi.tutee.tutee.data.entities.TimesResponse;
+import fi.tutee.tutee.data.entities.User;
 
 public class HomeTutorScheduleFragment extends HomeBaseFragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
     public WeekView mWeekView;
     public TabLayout days;
     private Calendar day;
+    private boolean snackShown = false;
     private ArrayList<WeekViewEvent> mNewEvents;
+    private ArrayList<User> tutees;
 
     public HomeTutorScheduleFragment() {
         // Required empty public constructor
@@ -47,7 +52,6 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) root.findViewById(R.id.weekView);
         days = (TabLayout) root.findViewById(R.id.days);
-        day = Calendar.getInstance();
         mNewEvents = new ArrayList<WeekViewEvent>();
 
         mWeekView.setMonthChangeListener(this);
@@ -67,7 +71,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
                 Calendar newCalendarInstance = Calendar.getInstance();
                 newCalendarInstance.setTime(selected);
                 mWeekView.goToDate(newCalendarInstance);
-                mWeekView.mCurrentOrigin.y = -950;
+                mWeekView.mCurrentOrigin.y = -1460;
             }
 
             @Override
@@ -100,18 +104,34 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         return root;
     }
 
-    private int getEventCountForDate() {
-        int count = 0;
+    private void showTutorialSnack() {
+        if (!snackShown) {
+            Snackbar.make(getView(), "Tap the timeslots to mark times when you are available for tutoring!", Snackbar.LENGTH_LONG).show();
+            snackShown = true;
+        }
+    }
+
+    private int[] getEventCountForDate() {
+        int[] events = new int[20];
+        day = Calendar.getInstance();
+        int day_day = day.get(Calendar.DAY_OF_YEAR);
 
         for (WeekViewEvent e: mNewEvents) {
             Calendar start = e.getStartTime();
-            Calendar end = e.getEndTime();
+
+            int event_day = start.get(Calendar.DAY_OF_YEAR);
+            int diff = event_day - day_day;
+            if (e.getTuteeID() != null && diff >= 0) {
+                events[diff] += 1;
+            }
+
         }
 
-        return count;
+        return events;
     }
 
-    private void showMoreDates() {
+    private void showMoreDates(int evs[]) {
+        day = Calendar.getInstance();
         for (int i = 0; i < 20; i++) {
             String weekday = Integer.toString(day.get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(day.get(Calendar.MONTH) +1);
@@ -122,6 +142,10 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
 
             View badgeWrapper = customView.findViewById(R.id.custom_date_tab_badge_wrapper);
             TextView badgeText = (TextView)  customView.findViewById(R.id.custom_date_tab_badge);
+            if (evs[i] > 0) {
+                badgeWrapper.setVisibility(View.VISIBLE);
+                badgeText.setText("" + evs[i]);
+            }
 
             dateText.setText(weekday + "/" + month);
 
@@ -226,7 +250,28 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
         ArrayList<WeekViewEvent> ownEvents = events.getOwnEvents();
         mNewEvents.clear();
         mNewEvents.addAll(ownEvents);
-        showMoreDates();
+        int evs[] = getEventCountForDate();
+        showMoreDates(evs);
+        showTimes();
+    }
+
+    public void setTuteeNames(ArrayList<User> tutees) {
+        this.tutees = tutees;
+        showTimes();
+    }
+
+    private void showTimes() {
+        if (tutees == null || mNewEvents.size() == 0) return;
+
+        for (WeekViewEvent e : mNewEvents) {
+            for (User tutee : tutees) {
+                if (e.getTuteeID() != null && e.getTuteeID() == tutee.getId()) {
+                    e.setName(tutee.getFirstName() + " " + tutee.getLastName());
+                    break;
+                }
+            }
+        }
+
         mWeekView.notifyDatasetChanged();
     }
 
@@ -241,6 +286,7 @@ public class HomeTutorScheduleFragment extends HomeBaseFragment implements Month
     @Override
     public void onResume() {
         presenter.getTimes();
+        showTutorialSnack();
         super.onResume();
     }
 }

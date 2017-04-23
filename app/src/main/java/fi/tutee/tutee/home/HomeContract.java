@@ -32,6 +32,7 @@ public interface HomeContract {
     interface View extends BaseView<Presenter> {
         void setMessageUsers(ArrayList<User> users);
         void setTutorNames(ArrayList<User> tutors);
+        void setTuteeNames(ArrayList<User> tutees);
         void setSubjects(ArrayList<Subject> subjects);
         void setLatestMessages(ArrayList<GeneralMessage> latestMessages);
 

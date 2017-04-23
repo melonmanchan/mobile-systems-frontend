@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/tutorprofile_top"
         android:layout_height="300dp"
         android:layout_width="match_parent">
         <ImageView
@@ -30,8 +33,10 @@
     </FrameLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="300dp"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tutorprofile_top">
         <LinearLayout
             android:orientation="vertical"
             android:paddingTop="16dp"
@@ -70,9 +75,10 @@
                 <Button
                     android:id="@+id/available_times"
                     android:layout_weight="0.5"
-                    android:text="Available times"
+                    android:text="Available&#10;times"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:padding="10dp"/>
             </LinearLayout>
 
             <TextView
@@ -89,11 +95,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </TextView>
-            <Button
-                android:id="@+id/tutor_select_details_choose_tutor"
-                android:text="Choose tutor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/tutor_select_details_choose_tutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_person_add_white_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_alignBottom="@id/tutorprofile_top"
+        android:layout_marginBottom="-32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="15dp"
+        app:borderWidth="0dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/tutor_select_details_tutor_chosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_person_add_white_24dp"
+        android:backgroundTint="#ddd"
+        android:layout_alignBottom="@id/tutorprofile_top"
+        android:layout_marginBottom="-32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="15dp"
+        app:borderWidth="0dp"
+        android:visibility="gone"/>
+
+</RelativeLayout>

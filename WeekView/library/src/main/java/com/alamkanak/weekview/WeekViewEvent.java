@@ -66,7 +66,7 @@ public class WeekViewEvent {
      * @param endHour Hour (in 24-hour format) when the event ends.
      * @param endMinute Minute when the event ends.
      */
-    public WeekViewEvent(int ID, int tuteeID, int tutorID, String name, int startYear, int startMonth, int startDay, int startHour, int startMinute, int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+    public WeekViewEvent(int ID, Integer tuteeID, Integer tutorID, String name, int startYear, int startMonth, int startDay, int startHour, int startMinute, int endYear, int endMonth, int endDay, int endHour, int endMinute) {
         this.ID = ID;
         this.tuteeID = tuteeID;
         this.tutorID = tutorID;
@@ -100,7 +100,7 @@ public class WeekViewEvent {
      * @param endTime The time when the event ends.
      * @param allDay Is the event an all day event.
      */
-    public WeekViewEvent(int ID, int tuteeID, int tutorID, String name, String location, Calendar startTime, Calendar endTime, boolean allDay) {
+    public WeekViewEvent(int ID, Integer tuteeID, Integer tutorID, String name, String location, Calendar startTime, Calendar endTime, boolean allDay) {
         this.ID = ID;
         this.tuteeID = tuteeID;
         this.tutorID = tutorID;
@@ -122,7 +122,7 @@ public class WeekViewEvent {
      * @param startTime The time when the event starts.
      * @param endTime The time when the event ends.
      */
-    public WeekViewEvent(int ID, int tuteeID, int tutorID, String name, String location, Calendar startTime, Calendar endTime) {
+    public WeekViewEvent(int ID, Integer tuteeID, Integer tutorID, String name, String location, Calendar startTime, Calendar endTime) {
         this(ID, tuteeID, tutorID, name, location, startTime, endTime, false);
     }
 
@@ -133,12 +133,12 @@ public class WeekViewEvent {
      * @param startTime The time when the event starts.
      * @param endTime The time when the event ends.
      */
-    public WeekViewEvent(int ID, int tuteeID, int tutorID, String name, Calendar startTime, Calendar endTime) {
+    public WeekViewEvent(int ID, Integer tuteeID, Integer tutorID, String name, Calendar startTime, Calendar endTime) {
         this(ID, tuteeID, tutorID, name, null, startTime, endTime);
     }
 
     public WeekViewEvent(Calendar startTime, Calendar endTime) {
-        this(-1, -1, -1, null, startTime, endTime);
+        this(-1, null, null, null, startTime, endTime);
     }
 
     public int getID() {

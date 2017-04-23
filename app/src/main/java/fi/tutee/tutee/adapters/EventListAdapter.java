@@ -1,32 +1,22 @@
 package fi.tutee.tutee.adapters;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.google.android.gms.vision.text.Line;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import fi.tutee.tutee.R;
 import fi.tutee.tutee.data.entities.User;
@@ -42,6 +32,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static onEventSelectedListener listener;
     private ArrayList<User> tutors;
 
+    private boolean alreadyPaired = true;
+
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private SimpleDateFormat headerFormat = new SimpleDateFormat("EEE dd.MM");
@@ -49,7 +41,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-    public EventListAdapter() {
+    public EventListAdapter(ArrayList<User> tutors) {
+        this.tutors = tutors;
         this.events = new ArrayList<>();
     }
 
@@ -60,11 +53,14 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setListener(onEventSelectedListener listener) {
         this.listener = listener;
     }
-
+    
     public void detachListener() {
         this.listener = null;
     }
 
+    public void setAlreadyPaired(boolean alreadyPaired) {
+        this.alreadyPaired = alreadyPaired;
+    }
 
     public static class ViewHolderHeader extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -101,18 +97,16 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         Object item = getItem(position);
 
-        if(item instanceof WeekViewEvent) {
+        if (item instanceof WeekViewEvent) {
             return TYPE_ITEM;
         } else {
             return TYPE_HEADER;
         }
     }
 
-
     public Object getItem(final int position) {
         return events.get(position);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -120,7 +114,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         context = parent.getContext();
         LinearLayout layout;
         RecyclerView.ViewHolder holder;
-
 
         if(viewType == TYPE_HEADER) {
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
@@ -130,7 +123,13 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             // create a new view
             layout = (LinearLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.event_list_item, parent, false);
+
+            if (!this.alreadyPaired) {
+                layout.setAlpha(0.5f);
+            }
+
             holder = new ViewHolderItem(layout);
+
         }
 
         return holder;
@@ -148,7 +147,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ViewHolderItem item = (ViewHolderItem) holder;
                 WeekViewEvent event = (WeekViewEvent) events.get(position);
                 item.time.setText(itemFormat.format(event.getStart()) + " - " + itemFormat.format(event.getEnd()));
-                if(tutors != null) {
+                if (tutors != null) {
                     item.name.setText(getTutorName(event.getTutorID()));
                 } else {
                     item.name.setVisibility(View.GONE);
@@ -192,11 +191,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 this.events.add(curr);
             }
         }
-        notifyDataSetChanged();
-    }
-
-    public void setTutors(ArrayList<User> tutors) {
-        this.tutors = tutors;
         notifyDataSetChanged();
     }
 

@@ -32,6 +32,8 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
     private TextView emptyView;
     private ImageView emptyIcon;
     private LinearLayout emptyLayout;
+    private TimesResponse response;
+    private  ArrayList<User> users;
 
     public HomeTuteeScheduleFragment() {
         // Required empty public constructor
@@ -49,10 +51,13 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         View root = inflater.inflate(R.layout.content_home_tutee_schedule, container, false);
 
         eventList = (RecyclerView) root.findViewById(R.id.event_list);
+
         mLayoutManager = new LinearLayoutManager(root.getContext());
         eventList.setLayoutManager(mLayoutManager);
-        EventListAdapter adapter = new EventListAdapter();
-        eventList.setAdapter(adapter);
+
+        //EventListAdapter adapter = new EventListAdapter();
+        //eventList.setAdapter(adapter);
+
         emptyView = (TextView) root.findViewById(R.id.empty_view);
         emptyView.setText("You have not reserved any tutoring sessions.");
         emptyLayout = (LinearLayout) root.findViewById(R.id.empty_view_layout);
@@ -62,28 +67,36 @@ public class HomeTuteeScheduleFragment extends HomeBaseFragment {
         return root;
     }
 
-    public void setTimes(TimesResponse events) {
-        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
-        adapter.setEvents(events.getReservedEvents());
+    public void checkIfShouldInitializeEvents() {
+        if (users != null && response != null) {
+            EventListAdapter adapter = new EventListAdapter(users);
+            adapter.setEvents(response.getReservedEvents());
+            eventList.setAdapter(adapter);
 
-        if (events.getReservedEvents().isEmpty()) {
-            eventList.setVisibility(View.GONE);
-            emptyLayout.setVisibility(View.VISIBLE);
+            if (response.getReservedEvents().isEmpty()) {
+                eventList.setVisibility(View.GONE);
+                emptyLayout.setVisibility(View.VISIBLE);
+            }
+            else {
+                eventList.setVisibility(View.VISIBLE);
+                emptyLayout.setVisibility(View.GONE);
+            }
         }
-        else {
-            eventList.setVisibility(View.VISIBLE);
-            emptyLayout.setVisibility(View.GONE);
-        }
+    }
+
+    public void setTimes(TimesResponse events) {
+        this.response = events;
+        checkIfShouldInitializeEvents();
+    }
+
+    public void setTutorNames(ArrayList<User> tutors) {
+        this.users = tutors;
+        checkIfShouldInitializeEvents();
     }
 
     @Override
     public void onResume() {
         presenter.getTimes();
         super.onResume();
-    }
-
-    public void setTutorNames(ArrayList<User> tutors) {
-        EventListAdapter adapter = (EventListAdapter) eventList.getAdapter();
-        adapter.setTutors(tutors);
     }
 }
