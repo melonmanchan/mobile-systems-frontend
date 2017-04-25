@@ -482,10 +482,16 @@ public class TuteeRepository implements TuteeDataSource {
     }
 
     @Override
-    public void reserveTime(WeekViewEvent event, final Callback<APIResponse> cb) {
+    public void reserveTime(final WeekViewEvent event, final Callback<APIResponse> cb) {
         this.remote.reserveTime(event, new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                APIResponse resp = response.body();
+
+                if (resp.isSuccessful()) {
+                    local.addCachedReservedTime(event);
+                }
+
                 cb.onResponse(call, response);
             }
 

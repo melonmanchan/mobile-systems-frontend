@@ -273,6 +273,15 @@ public class TuteeLocalDataSource implements TuteeDataSource {
         return  users;
     }
 
+
+    public void addCachedReservedTime(WeekViewEvent event) {
+        ArrayList<WeekViewEvent> events = cachedTimes.getReservedEvents();
+
+        events.add(event);
+
+        cachedTimes.setReservedEvents(events);
+    }
+
     public ArrayList<User> getCachedTutors() {
         ArrayList<User> users = new ArrayList<>();
 
