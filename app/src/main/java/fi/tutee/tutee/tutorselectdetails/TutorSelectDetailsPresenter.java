@@ -71,6 +71,11 @@ public class TutorSelectDetailsPresenter implements TutorSelectDetailsContract.P
     }
 
     @Override
+    public User getCurrentUser() {
+        return repository.getLoggedInUser();
+    }
+
+    @Override
     public boolean alreadyPairedWith(User user) {
         return repository.isUserTutor(user);
     }

@@ -20,6 +20,8 @@ interface TutorSelectDetailsContract {
         void getTutorByID(int tutorID);
         void pairWithTutor(int tutorID);
 
+        User getCurrentUser();
+
         boolean alreadyPairedWith(User user);
     }
 }

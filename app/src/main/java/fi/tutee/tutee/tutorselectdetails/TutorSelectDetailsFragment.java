@@ -80,15 +80,20 @@ public class TutorSelectDetailsFragment extends Fragment implements  TutorSelect
             }
         });
 
-        chooseTutor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseTutor.setEnabled(false);
-                chooseTutor.setAlpha(0.5f);
 
-                presenter.pairWithTutor(user.getId());
-            }
-        });
+        if (!presenter.getCurrentUser().isTutor()) {
+            chooseTutor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    chooseTutor.setEnabled(false);
+                    chooseTutor.setAlpha(0.5f);
+
+                    presenter.pairWithTutor(user.getId());
+                }
+            });
+        } else {
+            chooseTutor.setVisibility(View.GONE);
+        }
 
         this.presenter.getTutorByID(getArguments().getInt(TUTOR_ID));
 
