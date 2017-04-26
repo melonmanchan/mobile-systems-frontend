@@ -103,7 +103,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
         OkHttpClient client = httpClient.build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://apartheidfun.club")
+                .baseUrl("https://tutee.herokuapp.com")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .build();
@@ -136,7 +136,7 @@ public class TuteeRemoteDataSource implements TuteeDataSource {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://apartheidfun.club")
+                .baseUrl("https://tutee.herokuapp.com")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .build();
